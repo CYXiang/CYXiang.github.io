@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -204,7 +204,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -284,7 +284,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T02:34:41+08:00">
                 2017-02-27
@@ -334,15 +334,12 @@
       
         
           
-            <p>##前言</p>
-<blockquote>
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
 <p>在<a href="http://www.jianshu.com/p/6eb7eabda386" target="_blank" rel="external">十分钟搭建主流框架_简单的网络部分(OC)
 </a>中，我们使用AFN框架顺利的发送网络请求并返回了有用数据，但对AFN框架的依赖十分严重，下面我们重构一下。</p>
-<p>######<a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">源码github地址</a></p>
-</blockquote>
+<h6 id="源码github地址"><a href="#源码github地址" class="headerlink" title="源码github地址"></a><a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">源码github地址</a></h6></blockquote>
 <hr>
-<p>##初步</p>
-<ul>
+<h2 id="初步"><a href="#初步" class="headerlink" title="初步"></a>初步</h2><ul>
 <li>很多时候，我们涉及到网络请求这块，都离不开几个第三方框架，<code>AFNetworking</code>，<code>MJExtention</code>, <code>MBProgressHUD（SV）</code>。</li>
 <li><p>初学的时候，都会把它们写到Controller里面，如下:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[[AFHTTPSessionManager manager] GET:CYXRequestURL parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) &#123;</div><div class="line">    NSLog(@&quot;请求成功&quot;);</div><div class="line"></div><div class="line">    // 利用MJExtension框架进行字典转模型</div><div class="line">    weakSelf.menus = [CYXMenu objectArrayWithKeyValuesArray:responseObject[@&quot;result&quot;]];</div><div class="line"></div><div class="line">    // 刷新数据（若不刷新数据会显示不出）</div><div class="line">    [weakSelf.tableView reloadData];</div><div class="line"></div><div class="line">&#125; failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) &#123;</div><div class="line">    NSLog(@&quot;请求失败 原因：%@&quot;,error);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
@@ -366,8 +363,7 @@
 <ul>
 <li>这样，已经降低了一点耦合度，也不需要在每个需要发送网络请求的Controller中引入AFN框架了。但对于MJExtension框架的依赖还是没有改善。</li>
 </ul>
-<p>##进阶</p>
-<ul>
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><ul>
 <li><p>通过观察，我们发现其实大部分的GET和POST请求的前几步基本使用步骤是大致相同的，相同的步骤如下：</p>
 <ul>
 <li>1.通过AFN请求回来JSON数据</li>
@@ -379,8 +375,7 @@
 </li>
 </ul>
 <hr>
-<p>###1.基层请求的封装</p>
-<ul>
+<h3 id="1-基层请求的封装"><a href="#1-基层请求的封装" class="headerlink" title="1.基层请求的封装"></a>1.基层请求的封装</h3><ul>
 <li>本文示例封装POST请求</li>
 <li>CYXHttpRequest.h文件</li>
 </ul>
@@ -393,8 +388,7 @@
 <li>现在已经可以把网络数据请求回来了，轮到第二个步骤了：观察请求回来的JSON数据，取出需要使用的字典数组/字典。在这里再作一层封装。举个简单的例子,假如返回的JSON数据结构如下:</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;error_code&quot;: 0,</div><div class="line">    &quot;reason&quot;: &quot;Success&quot;,</div><div class="line">    &quot;result&quot;: [&#123;</div><div class="line">        &quot;id&quot;: 370622,</div><div class="line">        &quot;title&quot;: &quot;西红柿蒜薹炒鸡蛋&quot;,</div><div class="line">        &quot;tags&quot;: &quot;厨房用具;厨具;加工工艺;基本工艺;菜品;菜肴;家常菜;炒;炒锅;热菜;防辐射;开胃;蔬菜类;果实类;蒜薹;西红柿;禽蛋类;蛋;鸡蛋;&quot;,</div><div class="line">        &quot;intro&quot;: &quot;我这的蒜薹鸡蛋都爱加西红柿、辣椒一起炒的，这是习惯所致，爱吃西红柿，爱吃辣椒，还爱把菜搭配的颜色亮丽，当然味道也不差。&quot;,</div><div class="line">        &quot;ingredients&quot;: &quot;西红柿:1个;蒜薹:200g;鸡蛋:2个;&quot;,</div><div class="line">        &quot;burden&quot;: &quot;油:适量;盐:适量;青辣椒:1个;红辣椒:1个;&quot;,</div><div class="line">        &quot;albums&quot;: &quot;http://imgs.haoservice.com/CaiPu/pic/recipe/l/be/a7/370622_86e12b.jpg&quot;,</div><div class="line">        &#125;</div><div class="line">       &#123;</div><div class="line">        &quot;id&quot;: 433079,</div><div class="line">        &quot;title&quot;: &quot;西红柿酸奶&quot;,</div><div class="line">        &quot;tags&quot;: &quot;促进食欲;减肥;懒人食谱;消暑食谱;美容养颜;&quot;,</div><div class="line">        &quot;intro&quot;: &quot;新疆人爱吃西红柿那是有目共睹的，菜里面加西红柿的数不胜数，就连舌尖2在吐鲁番拍的葡萄干抓饭里面都加西红柿。&quot;,</div><div class="line">        &quot;ingredients&quot;: &quot;酸奶:400g;西红柿:200g;&quot;,</div><div class="line">        &quot;burden&quot;: &quot;白糖:20g;&quot;,</div><div class="line">        &quot;albums&quot;: &quot;http://imgs.haoservice.com/CaiPu/pic/recipe/l/b7/9b/433079_377373.jpg&quot;,</div><div class="line">       &#125;</div><div class="line">       &#123;···&#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>###2.简单业务逻辑封装</p>
-<ul>
+<h3 id="2-简单业务逻辑封装"><a href="#2-简单业务逻辑封装" class="headerlink" title="2.简单业务逻辑封装"></a>2.简单业务逻辑封装</h3><ul>
 <li>现在只需要使用到<code>result</code>数据（并对应<code>CYXMenu</code>模型），在公司中，接口一般会有比较好的规范，即每个接口的模型属性一般都有统一的命名。</li>
 <li>我们使用时，通常会把<code>result</code>字典数组转化成<code>CYXMenu</code>模型数组。因此，可以进一步的封装出<code>CYXBaseRequest</code>对象。</li>
 <li><code>CYXBaseRequest</code>类实现思路如下：<ul>
@@ -414,8 +408,7 @@
 <ul>
 <li>到这里，轻量级的封装介绍已经全部介绍完了，更多的功能封装有待读者自己去研究了。既然封装好了，下面我们来介绍一下如何使用，其实非常简单。</li>
 </ul>
-<p>###使用介绍</p>
-<ul>
+<h3 id="使用介绍"><a href="#使用介绍" class="headerlink" title="使用介绍"></a>使用介绍</h3><ul>
 <li>1.把上述两个类的.h  .m 文化拖到您项目中，最好新建一个<request>文件夹。</request></li>
 <li>2.在需要发送请求的Controller中<code>#import &quot;CYXBaseRequest.h&quot;</code></li>
 <li>3.发送请求方法中的代码如下：<ul>
@@ -435,8 +428,7 @@
 <ul>
 <li>TIPS:建议使用者可以在每个模块都建立Request文件（继承CYXBaseRequest），统一进行网络请求，这样更方便管理。</li>
 </ul>
-<p>####注：</p>
-<ul>
+<h4 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h4><ul>
 <li>本封装实践只对网络请求进行初步的简单封装，仅适用于中小型的项目，并不涉及缓存、校验等高级功能，如果有高级需求，建议研究下猿题库的YTKNetwork网络库。</li>
 </ul>
 <ul>
@@ -519,7 +511,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T01:24:16+08:00">
                 2017-02-27
@@ -646,7 +638,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T00:46:37+08:00">
                 2017-02-27
@@ -782,7 +774,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">3</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -793,7 +785,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               </a>
             </div>
           
@@ -843,7 +835,7 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
