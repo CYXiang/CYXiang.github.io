@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -106,7 +106,7 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -129,7 +129,7 @@
   <title> Coder_CYX's Blog </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
 
@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            首页
           </a>
         </li>
       
@@ -204,7 +204,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -214,7 +214,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
-            Tags
+            标签
           </a>
         </li>
       
@@ -284,9 +284,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T01:04:38+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-28T01:04:38+08:00">
                 2017-02-28
               </time>
             
@@ -334,124 +334,23 @@
       
         
           
-            <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote>
-<p>UICollectionView是从iOS6开始引入使用的，目前应用非常广泛，很牛逼！<a href="http://oleb.net/blog/2012/09/uicollectionview/" target="_blank" rel="external">老外的博客也是这么说的(传送门)</a></p>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/620754-01fec83292757eb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="美丽说HIGO界面"></p>
-<h2 id="与UITableView的初步比较"><a href="#与UITableView的初步比较" class="headerlink" title="与UITableView的初步比较"></a>与UITableView的初步比较</h2><hr>
-<ul>
-<li><p>UITableView应该是大家最熟悉的控件了，UICollectionView的使用与之类似，但又有所区别，如下介绍。<br><code>相同点:</code></p>
-<ul>
-<li>1.都是通过datasource和delegate驱动的<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/DelegatesandDataSources/DelegatesandDataSources.html" target="_blank" rel="external">(datasource和delegate官方文档传送)</a>，因此在使用的时候必须实现数据源与代理协议方法;</li>
-<li>2.性能上都实现了循环利用的优化。</li>
-</ul>
-<p><code>不同点</code></p>
-<ul>
-<li>1.UITableView的cell是系统自动布局好的，不需要我们布局。但UICollectionView的cell是需要我们自己布局的。所以我们在创建UICollectionView的时候必须传递一个布局参数，系统提供并实现了一个布局样式：流水布局<code>(UICollectionViewFlowLayout)</code><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewFlowLayout_class/index.html#//apple_ref/occ/cl/UICollectionViewFlowLayout" target="_blank" rel="external">(流水布局官方文档传送)</a>。<ul>
-<li><code>注：</code><a href="https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/CollectionViewPGforIOS/UsingtheFlowLayout/UsingtheFlowLayout.html#//apple_ref/doc/uid/TP40012334-CH3-SW4" target="_blank" rel="external">苹果关于FlowLayout的解析</a></li>
-</ul>
-</li>
-<li>2.UITableViewController的<code>self.view == self.tableview;</code>,但UICollectionViewController的<code>self.view != self.collectionView；</code></li>
-<li>3.UITableView的滚动方式只能是垂直方向， UICollectionView既可以垂直滚动，也可以水平滚动；</li>
-<li>4.UICollectionView的cell只能通过注册来确定重用标识符。</li>
-</ul>
-<p><code>结论:  换句话说，UITableView的布局是UICollectionView的flow layout布局的一种特殊情况，类比于同矩形与正方形的关系</code></p>
-</li>
-</ul>
-<h2 id="下面简单介绍几个基本用法-难度从低到高"><a href="#下面简单介绍几个基本用法-难度从低到高" class="headerlink" title="下面简单介绍几个基本用法(难度从低到高)"></a>下面简单介绍几个基本用法(难度从低到高)</h2><hr>
-<h3 id="1-UICollectionView普通用法（FlowLayout布局）"><a href="#1-UICollectionView普通用法（FlowLayout布局）" class="headerlink" title="1. UICollectionView普通用法（FlowLayout布局）"></a>1. UICollectionView普通用法（FlowLayout布局）</h3><ul>
-<li>上面我们提到了UICollectionView与UITableView的用法非常类似，下面就让我们完全根据创建UITableView的方式来创建一个UICollectionView<code>（请读者类比UITableView的创建方式，实现数据源，代理等，这里就只提到与之不同的方面，详细代码可参考示例Demo）</code>。</li>
-<li>报错了，提示缺少布局参数，如下：<br><img src="http://upload-images.jianshu.io/upload_images/620754-d075d3c9c1a8e818.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="缺少布局参数报错示意图"></li>
-<li>解决报错，我们可以传FlowLayout参数方式，也可以重写内部init方法。我们这里采用重写init方法，传递布局参数。这样更加体现了封装的思想，把传递布局参数封装在<code>CYXNormalCollectionViewController</code>内，对外只提供统一的外部方法：<code>init方法</code>，代码如下：</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">  - (<span class="keyword">instancetype</span>)init&#123;</div><div class="line">    <span class="comment">// 设置流水布局</span></div><div class="line">    <span class="built_in">UICollectionViewFlowLayout</span> *layout = [[<span class="built_in">UICollectionViewFlowLayout</span> alloc]init];</div><div class="line">    <span class="comment">// UICollectionViewFlowLayout流水布局的内部成员属性有以下：</span></div><div class="line">    <span class="comment">/**</span></div><div class="line">     @property (nonatomic) CGFloat minimumLineSpacing;</div><div class="line">     @property (nonatomic) CGFloat minimumInteritemSpacing;</div><div class="line">     @property (nonatomic) CGSize itemSize;</div><div class="line">     @property (nonatomic) CGSize estimatedItemSize NS_AVAILABLE_IOS(8_0); // defaults to CGSizeZero - setting a non-zero size enables cells that self-size via -preferredLayoutAttributesFittingAttributes:</div><div class="line">     @property (nonatomic) UICollectionViewScrollDirection scrollDirection; // default is UICollectionViewScrollDirectionVertical</div><div class="line">     @property (nonatomic) CGSize headerReferenceSize;</div><div class="line">     @property (nonatomic) CGSize footerReferenceSize;</div><div class="line">     @property (nonatomic) UIEdgeInsets sectionInset;</div><div class="line">     */</div><div class="line">    <span class="comment">// 定义大小</span></div><div class="line">    layout.itemSize = <span class="built_in">CGSizeMake</span>(<span class="number">100</span>, <span class="number">100</span>);</div><div class="line">    <span class="comment">// 设置最小行间距</span></div><div class="line">    layout.minimumLineSpacing = <span class="number">2</span>;</div><div class="line">    <span class="comment">// 设置垂直间距</span></div><div class="line">    layout.minimumInteritemSpacing = <span class="number">2</span>;</div><div class="line">    <span class="comment">// 设置滚动方向（默认垂直滚动）</span></div><div class="line">    layout.scrollDirection = <span class="built_in">UICollectionViewScrollDirectionHorizontal</span>;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> initWithCollectionViewLayout:layout];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li><p>这里我们使用xib自定义cell，通过xib注册cell的代码如下</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 通过xib注册</span></div><div class="line">  [<span class="keyword">self</span>.collectionView registerNib:[<span class="built_in">UINib</span> nibWithNibName:<span class="built_in">NSStringFromClass</span>([CYXNormalCell <span class="keyword">class</span>]) bundle:<span class="literal">nil</span>] forCellWithReuseIdentifier:reuseIdentifier];</div></pre></td></tr></table></figure>
-</li>
-<li><p>初步效果图如下（这里就不详细实现了，剩下请读者参考UITableView的用法<a href="http://www.jianshu.com/p/6eb7eabda386" target="_blank" rel="external">（请点这里）</a>）<br><img src="http://upload-images.jianshu.io/upload_images/620754-3b4af7259d451de1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="初步效果图"></p>
-</li>
-</ul>
-<h3 id="2-新手引导页制作"><a href="#2-新手引导页制作" class="headerlink" title="2. 新手引导页制作"></a>2. 新手引导页制作</h3><ul>
-<li><strong>简述</strong><ul>
-<li>新手引导页，几乎是每个应用都有的，目的为了告诉用户应用的亮点，达到吸引用户的作用。</li>
-<li>利用UICollectionView的优势（循环利用）实现新手引导页，既简单又高效，何乐而不为呢。</li>
-</ul>
-</li>
-<li><p><strong>实现思路：</strong></p>
-<ul>
-<li><p>1.把UICollectionView的每个cell的尺寸设置为跟屏幕一样大；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layout.itemSize = [UIScreen mainScreen].bounds.size;</div></pre></td></tr></table></figure>
-</li>
-<li><p>2.设置为水平滚动方向，设置水平间距为0.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 设置间距</div><div class="line">    layout.minimumLineSpacing = 0;</div><div class="line">    layout.minimumInteritemSpacing = 0;</div><div class="line">// 设置滚动方向（默认垂直滚动）</div><div class="line">    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;</div></pre></td></tr></table></figure>
-</li>
-<li><p>3.开启分页滚动模式</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 开启分页</span></div><div class="line">    <span class="keyword">self</span>.collectionView.pagingEnabled = <span class="literal">YES</span>;</div><div class="line"><span class="comment">// 隐藏水平滚动条</span></div><div class="line">    <span class="keyword">self</span>.collectionView.showsHorizontalScrollIndicator = <span class="literal">NO</span>;</div><div class="line">    <span class="comment">// 取消弹簧效果</span></div><div class="line">    <span class="keyword">self</span>.collectionView.bounces = <span class="literal">NO</span>;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p><strong>以下是效果图：</strong><br><img src="http://upload-images.jianshu.io/upload_images/620754-498e816ed665c203.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="新手引导页"></p>
-</li>
-</ul>
-<ul>
-<li><em>实现详细步骤请参考示例代码：<a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">https://github.com/CYXiang/CYXTenMinDemo</a></em></li>
-</ul>
-<h3 id="3-图片循环轮播器"><a href="#3-图片循环轮播器" class="headerlink" title="3. 图片循环轮播器"></a>3. 图片循环轮播器</h3><ul>
-<li>请参考我之前的文章（内附代码）<a href="http://www.jianshu.com/p/b5b5a78e46ba" target="_blank" rel="external">《iOS上机题（附个人见解）》</a></li>
-</ul>
-<h3 id="4-带特效的图片浏览器（自定义布局-上）"><a href="#4-带特效的图片浏览器（自定义布局-上）" class="headerlink" title="4. 带特效的图片浏览器（自定义布局/上）"></a>4. 带特效的图片浏览器（自定义布局/上）</h3><blockquote>
-<p>以下内容分为两小节：<br>1&gt; Github例子分析<br>2&gt; 自己实现一个小Demo</p>
-</blockquote>
-<h5 id="（1）Github例子分析"><a href="#（1）Github例子分析" class="headerlink" title="（1）Github例子分析"></a>（1）Github例子分析</h5><ul>
-<li>我们经常在Github上看到一些关于CollectionView的cell切换的炫酷效果，下面我们来分析一下Github上的这个<a href="https://github.com/CYXiang/RGCardViewLayout" target="_blank" rel="external">卡片切换带3D动画Demo(RGCardViewLayout)&lt;地址请点&gt;</a></li>
-<li>下面是效果图<br><img src="http://upload-images.jianshu.io/upload_images/620754-a32f934dbba68fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Github上的自定义布局Demo效果图"></li>
-<li><strong>目录结构分析</strong>：目录结构一目了然，关键在于有一个自动布局类（如图所示），这个类继承自UICollectionViewFlowLayout（我们可以猜到他使用的是默认的流水布局），并重写了<code>- (void)prepareLayout</code>、<code>- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect</code>等方法。我们试着把这个类里面的重载方法都注释掉，得到的效果跟普通用法的效果一样（这里就不截图了）。由此可见，作者肯定在这些方法内做了个性化的设置。<br><img src="http://upload-images.jianshu.io/upload_images/620754-630d83f12dc5c5fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="目录"></li>
-<li><p><strong>关键源码分析：</strong></p>
-<ul>
-<li>首先我们看到，作者在<code>- (void)prepareLayout</code>方法内做了对collectionView的初始化布局操作。因此我们可以断定重写此方法是用做初始化的（读者可以尝试修改，改变效果）。</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)prepareLayout</div><div class="line">&#123;</div><div class="line">   [<span class="keyword">super</span> prepareLayout];</div><div class="line">   [<span class="keyword">self</span> setupLayout]; <span class="comment">// 初始化布局</span></div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)setupLayout</div><div class="line">&#123;</div><div class="line">    <span class="built_in">CGFloat</span> inset  = <span class="keyword">self</span>.collectionView.bounds.size.width * (<span class="number">6</span>/<span class="number">64.0</span>f);</div><div class="line">    inset = floor(inset);</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.itemSize = <span class="built_in">CGSizeMake</span>(<span class="keyword">self</span>.collectionView.bounds.size.width - (<span class="number">2</span> *inset), <span class="keyword">self</span>.collectionView.bounds.size.height * <span class="number">3</span>/<span class="number">4</span>);</div><div class="line">    <span class="keyword">self</span>.sectionInset = <span class="built_in">UIEdgeInsetsMake</span>(<span class="number">0</span>,inset, <span class="number">0</span>,inset);</div><div class="line">    <span class="keyword">self</span>.scrollDirection = <span class="built_in">UICollectionViewScrollDirectionHorizontal</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>接着这个<code>- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect</code>方法应该是最重要的了，同理，我们先注释掉里面个性化的设置，只留<code>[super layoutAttributesForElementsInRect:rect]</code>，我们发现炫酷的3D效果没有了。因此可以断定此方法是给每个Cell做个性化设置的。<blockquote>
-<p>方法解析：<br>这个方法的返回值是一个数组（数组里面存放着rect范围内所有元素的布局属性）<br>这个方法的返回值决定了rect范围内所有元素的排布方式（frame）<br>UICollectionViewLayoutAttributes *attrs;</p>
-<ul>
-<li>1.一个cell对应一个UICollectionViewLayoutAttributes对象</li>
-<li>2.UICollectionViewLayoutAttributes对象决定了cell的frame</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 获取父类(流水布局)已经计算好的布局，在这个基础上做个性化修改</span></div><div class="line">    <span class="built_in">NSArray</span> *attributes = [<span class="keyword">super</span> layoutAttributesForElementsInRect:rect];</div><div class="line">    </div><div class="line">    <span class="built_in">NSArray</span> *cellIndices = [<span class="keyword">self</span>.collectionView indexPathsForVisibleItems];</div><div class="line">    <span class="keyword">if</span>(cellIndices.count == <span class="number">0</span> )</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> attributes;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cellIndices.count == <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        mainIndexPath = cellIndices.firstObject;</div><div class="line">        movingInIndexPath = <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(cellIndices.count &gt; <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">NSIndexPath</span> *firstIndexPath = cellIndices.firstObject;</div><div class="line">        <span class="keyword">if</span>(firstIndexPath == mainIndexPath)</div><div class="line">        &#123;</div><div class="line">            movingInIndexPath = cellIndices[<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            movingInIndexPath = cellIndices.firstObject;</div><div class="line">            mainIndexPath = cellIndices[<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    difference =  <span class="keyword">self</span>.collectionView.contentOffset.x - previousOffset;</div><div class="line">    </div><div class="line">    previousOffset = <span class="keyword">self</span>.collectionView.contentOffset.x;</div><div class="line">    <span class="comment">// 关键代码：取每一个Cell的布局属性，并添加3D效果</span></div><div class="line">    <span class="keyword">for</span> (<span class="built_in">UICollectionViewLayoutAttributes</span> *attribute <span class="keyword">in</span> attributes)</div><div class="line">    &#123;</div><div class="line">        [<span class="keyword">self</span> applyTransformToLayoutAttributes:attribute];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>  attributes;</div><div class="line">&#125;</div><div class="line">``` </div><div class="line">  </div><div class="line">- 上面关键方法都已经实现了，但是运行发现并没有我们想要的效果，CollectionViewCell并没有实时发生形变。y因此我们还需要调用以下方法。</div><div class="line">&gt;方法解析：</div><div class="line">只要滚动屏幕 就会调用  方法  `-(<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect`</div><div class="line"> 只要布局页面的属性发生改变 就会重新调用  `-(<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect`  这个方法</div><div class="line"></div><div class="line"></div><div class="line">```objc</div><div class="line"><span class="comment">// indicate that we want to redraw as we scroll</span></div><div class="line">- (<span class="built_in">BOOL</span>)shouldInvalidateLayoutForBoundsChange:(<span class="built_in">CGRect</span>)newBounds &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="（2）仿写Demo"><a href="#（2）仿写Demo" class="headerlink" title="（2）仿写Demo"></a>（2）仿写Demo</h5><ul>
-<li><p>经过上面对代码的分析，我们可以简单了解到自定义layout布局的基本实现，下面就可以仿写一个简单的Demo了，效果图如下。<br><img src="http://upload-images.jianshu.io/upload_images/620754-1fcf87c65b9e5faa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"></p>
-</li>
-<li><p>参考代码如下（详细见Github）</p>
-</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">BOOL</span>)shouldInvalidateLayoutForBoundsChange:(<span class="built_in">CGRect</span>)newBounds</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)prepareLayout&#123;</div><div class="line">    </div><div class="line">    [<span class="keyword">super</span> prepareLayout];</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.scrollDirection = <span class="built_in">UICollectionViewScrollDirectionHorizontal</span>;</div><div class="line">    <span class="comment">// 设置内边距</span></div><div class="line">    <span class="built_in">CGFloat</span> inset = (<span class="keyword">self</span>.collectionView.frame.size.width - <span class="keyword">self</span>.itemSize.width) * <span class="number">0.5</span>;</div><div class="line">    <span class="keyword">self</span>.sectionInset = <span class="built_in">UIEdgeInsetsMake</span>(<span class="number">0</span>, inset, <span class="number">0</span>, inset);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 获得super已经计算好的布局属性</span></div><div class="line">    <span class="built_in">NSArray</span> *attributes = [<span class="keyword">super</span> layoutAttributesForElementsInRect:rect];</div><div class="line">    </div><div class="line">    <span class="comment">// 计算collectionView最中心点的x值</span></div><div class="line">    <span class="built_in">CGFloat</span> centerX = <span class="keyword">self</span>.collectionView.contentOffset.x + <span class="keyword">self</span>.collectionView.frame.size.width * <span class="number">0.5</span>;</div><div class="line">    </div><div class="line"></div><div class="line">    <span class="comment">// 在原有布局属性的基础上，进行微调</span></div><div class="line">    <span class="keyword">for</span> (<span class="built_in">UICollectionViewLayoutAttributes</span> *attrs <span class="keyword">in</span> attributes) &#123;</div><div class="line">        <span class="comment">// cell的中心点x 和 collectionView最中心点的x值 的间距</span></div><div class="line">        <span class="built_in">CGFloat</span> delta = ABS(attrs.center.x - centerX);</div><div class="line">        <span class="comment">// 根据间距值 计算 cell的缩放比例</span></div><div class="line">        <span class="built_in">CGFloat</span> scale = <span class="number">1.2</span> - delta / <span class="keyword">self</span>.collectionView.frame.size.width;</div><div class="line">    </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%f,%f"</span>,delta,scale);</div><div class="line">        <span class="comment">// 设置缩放比例</span></div><div class="line">        attrs.transform = <span class="built_in">CGAffineTransformMakeScale</span>(scale, scale);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span>  attributes;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="5-瀑布流布局（自定义布局-下）"><a href="#5-瀑布流布局（自定义布局-下）" class="headerlink" title="5.瀑布流布局（自定义布局/下）"></a>5.瀑布流布局（自定义布局/下）</h3><ul>
-<li>瀑布流布局在很多应用中非常常见，效果图如下：</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/620754-b0bdb4c33a944b8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"></p>
-<h5 id="实现思路（简化）"><a href="#实现思路（简化）" class="headerlink" title="实现思路（简化）"></a>实现思路（简化）</h5><ul>
-<li>（1）继承自<code>UICollectionViewLayout</code>；</li>
-<li><strong>（2）几个需要重载的方法：</strong></li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"> * 初始化</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)prepareLayout;</div><div class="line"><span class="comment">/*</span></div><div class="line"> * 返回rect中的所有的元素的布局属性</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect;</div><div class="line"><span class="comment">/*</span></div><div class="line"> * 返回对应于indexPath的位置的cell的布局属性</div><div class="line"> */</div><div class="line">- (<span class="built_in">UICollectionViewLayoutAttributes</span> *)layoutAttributesForItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath；</div><div class="line"><span class="comment">/*</span></div><div class="line"> * 返回collectionView的内容的尺寸</div><div class="line"> */</div><div class="line">- (<span class="built_in">CGSize</span>)collectionViewContentSize;</div></pre></td></tr></table></figure>
-<h4 id="关键计算代码如下（详细见Github）"><a href="#关键计算代码如下（详细见Github）" class="headerlink" title="关键计算代码如下（详细见Github）"></a>关键计算代码如下（详细见Github）</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 返回indexPath位置cell对应的布局属性</div><div class="line"> */</div><div class="line">- (<span class="built_in">UICollectionViewLayoutAttributes</span> *)layoutAttributesForItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 创建布局属性</span></div><div class="line">    <span class="built_in">UICollectionViewLayoutAttributes</span> *attrs = [<span class="built_in">UICollectionViewLayoutAttributes</span> layoutAttributesForCellWithIndexPath:indexPath];</div><div class="line">    </div><div class="line">    <span class="comment">// collectionView的宽度</span></div><div class="line">    <span class="built_in">CGFloat</span> collectionViewW = <span class="keyword">self</span>.collectionView.frame.size.width;</div><div class="line">    </div><div class="line">    <span class="comment">// 设置布局属性的frame</span></div><div class="line">    <span class="built_in">CGFloat</span> w = (collectionViewW - <span class="keyword">self</span>.edgeInsets.left - <span class="keyword">self</span>.edgeInsets.right - (<span class="keyword">self</span>.columnCount - <span class="number">1</span>) * <span class="keyword">self</span>.columnMargin) / <span class="keyword">self</span>.columnCount;</div><div class="line">    <span class="built_in">CGFloat</span> h = [<span class="keyword">self</span>.delegate waterflowLayout:<span class="keyword">self</span> heightForItemAtIndex:indexPath.item itemWidth:w];</div><div class="line">    </div><div class="line">    <span class="comment">// 找出高度最短的那一列</span></div><div class="line">    <span class="built_in">NSInteger</span> destColumn = <span class="number">0</span>;</div><div class="line">    <span class="built_in">CGFloat</span> minColumnHeight = [<span class="keyword">self</span>.columnHeights[<span class="number">0</span>] doubleValue];</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">NSInteger</span> i = <span class="number">1</span>; i &lt; <span class="keyword">self</span>.columnCount; i++) &#123;</div><div class="line">        <span class="comment">// 取得第i列的高度</span></div><div class="line">        <span class="built_in">CGFloat</span> columnHeight = [<span class="keyword">self</span>.columnHeights[i] doubleValue];</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (minColumnHeight &gt; columnHeight) &#123;</div><div class="line">            minColumnHeight = columnHeight;</div><div class="line">            destColumn = i;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">CGFloat</span> x = <span class="keyword">self</span>.edgeInsets.left + destColumn * (w + <span class="keyword">self</span>.columnMargin);</div><div class="line">    <span class="built_in">CGFloat</span> y = minColumnHeight;</div><div class="line">    <span class="keyword">if</span> (y != <span class="keyword">self</span>.edgeInsets.top) &#123;</div><div class="line">        y += <span class="keyword">self</span>.rowMargin;</div><div class="line">    &#125;</div><div class="line">    attrs.frame = <span class="built_in">CGRectMake</span>(x, y, w, h);</div><div class="line">    </div><div class="line">    <span class="comment">// 更新最短那列的高度</span></div><div class="line">    <span class="keyword">self</span>.columnHeights[destColumn] = @(<span class="built_in">CGRectGetMaxY</span>(attrs.frame));</div><div class="line">    </div><div class="line">    <span class="comment">// 记录内容的高度</span></div><div class="line">    <span class="built_in">CGFloat</span> columnHeight = [<span class="keyword">self</span>.columnHeights[destColumn] doubleValue];</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.contentHeight &lt; columnHeight) &#123;</div><div class="line">        <span class="keyword">self</span>.contentHeight = columnHeight;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> attrs;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="6-布局切换"><a href="#6-布局切换" class="headerlink" title="6. 布局切换"></a>6. 布局切换</h3><ul>
-<li>苹果已经为我们想好了布局切换的快捷方式，只需要通过以下方法，即可实现。</li>
-</ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setCollectionViewLayout:(<span class="built_in">UICollectionViewLayout</span> *)layout animated:(<span class="built_in">BOOL</span>)animated; <span class="comment">// transition from one layout to another</span></div><div class="line">- (<span class="keyword">void</span>)setCollectionViewLayout:(<span class="built_in">UICollectionViewLayout</span> *)layout animated:(<span class="built_in">BOOL</span>)animated completion:(<span class="keyword">void</span> (^ __<span class="keyword">nullable</span>)(<span class="built_in">BOOL</span> finished))completion <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">7</span>_0);</div></pre></td></tr></table></figure>
-<hr>
-<h4 id="附："><a href="#附：" class="headerlink" title="附："></a>附：</h4><ul>
-<li><a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">源码github地址</a></li>
-</ul>
+          概述
+UICollectionView是从iOS6开始引入使用的，目前应用非常广泛，很牛逼！老外的博客也是这么说的(传送门)
 
-          
+
+与UITableView的初步比较
+
+UITableView应该是大家最熟悉的控件了，UICollectionView的使用与之类似，但又有所区别，如下介绍。相同点:
+
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/28/UICollectionView基本使用详解/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -527,9 +426,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T02:34:41+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-27T02:34:41+08:00">
                 2017-02-27
               </time>
             
@@ -577,108 +476,21 @@
       
         
           
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>在<a href="http://www.jianshu.com/p/6eb7eabda386" target="_blank" rel="external">十分钟搭建主流框架_简单的网络部分(OC)
-</a>中，我们使用AFN框架顺利的发送网络请求并返回了有用数据，但对AFN框架的依赖十分严重，下面我们重构一下。</p>
-<h6 id="源码github地址"><a href="#源码github地址" class="headerlink" title="源码github地址"></a><a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">源码github地址</a></h6></blockquote>
-<hr>
-<h2 id="初步"><a href="#初步" class="headerlink" title="初步"></a>初步</h2><ul>
-<li>很多时候，我们涉及到网络请求这块，都离不开几个第三方框架，<code>AFNetworking</code>，<code>MJExtention</code>, <code>MBProgressHUD（SV）</code>。</li>
-<li><p>初学的时候，都会把它们写到Controller里面，如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[[AFHTTPSessionManager manager] GET:CYXRequestURL parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) &#123;</div><div class="line">    NSLog(@&quot;请求成功&quot;);</div><div class="line"></div><div class="line">    // 利用MJExtension框架进行字典转模型</div><div class="line">    weakSelf.menus = [CYXMenu objectArrayWithKeyValuesArray:responseObject[@&quot;result&quot;]];</div><div class="line"></div><div class="line">    // 刷新数据（若不刷新数据会显示不出）</div><div class="line">    [weakSelf.tableView reloadData];</div><div class="line"></div><div class="line">&#125; failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) &#123;</div><div class="line">    NSLog(@&quot;请求失败 原因：%@&quot;,error);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-</li>
-<li><p>这样会造成耦合性过高的问题，灵活性也非常不好，因此，AFN的作者也推荐我们不要直接使用，新建一个网络请求类来继承AFN的使用方式更好。</p>
-</li>
-<li><p>因此，继承的方式，如下：</p>
-<ul>
-<li><p>CYXHTTPSessionManager.h文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#import &lt;AFHTTPSessionManager.h&gt;</div><div class="line">@interface CYXHTTPSessionManager : AFHTTPSessionManager</div><div class="line">@end</div></pre></td></tr></table></figure>
-</li>
-<li><p>CYXHTTPSessionManager.m文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">    #import &quot;CYXHTTPSessionManager.h&quot;</div><div class="line">    @implementation CYXHTTPSessionManager</div><div class="line">    + (instancetype)manager&#123;</div><div class="line">        CYXHTTPSessionManager *mgr = [super manager];</div><div class="line">//    这里可以做一些统一的配置</div><div class="line">//    mgr.responseSerializer = ;</div><div class="line">//    mgr.requestSerializer = ;</div><div class="line">        return mgr;</div><div class="line">    &#125;</div><div class="line">    @end</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>调用方式：</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/** 请求管理者 */</div><div class="line">@property (nonatomic,weak) CYXHTTPSessionManager * manager;</div><div class="line"></div><div class="line">    // 发送请求</div><div class="line">    [self.manager GET:CYXRequestURL parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) &#123;</div><div class="line">        // 存储 maxtime</div><div class="line">        weakSelf.maxtime = responseObject[@&quot;info&quot;][@&quot;maxtime&quot;];</div><div class="line">        </div><div class="line">        weakSelf.topics =  [CYXTopic objectArrayWithKeyValuesArray:responseObject[@&quot;list&quot;]];</div><div class="line">        CYXLog(@&quot;%@&quot;,responseObject[@&quot;list&quot;]);</div><div class="line">        [weakSelf.tableView reloadData];</div><div class="line">        </div><div class="line">        // 结束刷新</div><div class="line">        [weakSelf.tableView.header endRefreshing];</div><div class="line">        </div><div class="line">    &#125; failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) &#123;</div><div class="line">        [weakSelf.tableView.header endRefreshing];</div><div class="line">    &#125;];</div></pre></td></tr></table></figure>
-<ul>
-<li>这样，已经降低了一点耦合度，也不需要在每个需要发送网络请求的Controller中引入AFN框架了。但对于MJExtension框架的依赖还是没有改善。</li>
-</ul>
-<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><ul>
-<li><p>通过观察，我们发现其实大部分的GET和POST请求的前几步基本使用步骤是大致相同的，相同的步骤如下：</p>
-<ul>
-<li>1.通过AFN请求回来JSON数据</li>
-<li>2.通过JSON数据，取出需要使用的字典数组/字典</li>
-<li>3.使用字典转模型框架（MJExtension）把字典数组转化为模型数组/字典转化为模型</li>
-</ul>
-</li>
-<li><p>因此，我们思考能不能把这些相同的步骤封装起来，以后就不需要重复写这些代码了，我们都知道一条经典的编程法则：“Don’t repeat youself”。这就是我们封装与重构的理由！</p>
-</li>
-</ul>
-<hr>
-<h3 id="1-基层请求的封装"><a href="#1-基层请求的封装" class="headerlink" title="1.基层请求的封装"></a>1.基层请求的封装</h3><ul>
-<li>本文示例封装POST请求</li>
-<li>CYXHttpRequest.h文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;AFNetworking.h&quot;</div><div class="line"></div><div class="line">@interface CYXHttpRequest : NSObject</div><div class="line"></div><div class="line">/**</div><div class="line"> *  发送一个POST请求</div><div class="line"> *</div><div class="line"> *  @param url     请求路径</div><div class="line"> *  @param params  请求参数</div><div class="line"> *  @param success 请求成功后的回调</div><div class="line"> *  @param failure 请求失败后的回调</div><div class="line"> */</div><div class="line">+ (void)post:(NSString *)url params:(NSDictionary *)params success:(void (^)(id responseObj))success failure:(void (^)(NSError *error))failure;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<ul>
-<li>CYXHttpRequest.m文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#import &quot;CYXHttpRequest.h&quot;</div><div class="line">@implementation CYXHttpRequest</div><div class="line">+ (void)post:(NSString *)url params:(NSDictionary *)params success:(void (^)(id))success failure:(void (^)(NSError *))failure</div><div class="line">&#123;</div><div class="line">    // 1.获得请求管理者</div><div class="line">    AFHTTPSessionManager *mgr = [AFHTTPSessionManager manager];</div><div class="line">    // 2.申明返回的结果是text/html类型</div><div class="line">    mgr.responseSerializer = [AFHTTPResponseSerializer serializer];</div><div class="line">    // 3.设置超时时间为10s</div><div class="line">    mgr.requestSerializer.timeoutInterval = 10;</div><div class="line">    // 4.发送POST请求</div><div class="line">    [mgr POST:url parameters:params progress:^(NSProgress * _Nonnull uploadProgress) &#123;</div><div class="line">        </div><div class="line">    &#125; success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) &#123;</div><div class="line">        if (success) &#123;</div><div class="line">            success(responseObject);</div><div class="line">        &#125;</div><div class="line">    &#125; failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) &#123;</div><div class="line">        if (failure) &#123;</div><div class="line">            failure(error);</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<ul>
-<li>现在已经可以把网络数据请求回来了，轮到第二个步骤了：观察请求回来的JSON数据，取出需要使用的字典数组/字典。在这里再作一层封装。举个简单的例子,假如返回的JSON数据结构如下:</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;error_code&quot;: 0,</div><div class="line">    &quot;reason&quot;: &quot;Success&quot;,</div><div class="line">    &quot;result&quot;: [&#123;</div><div class="line">        &quot;id&quot;: 370622,</div><div class="line">        &quot;title&quot;: &quot;西红柿蒜薹炒鸡蛋&quot;,</div><div class="line">        &quot;tags&quot;: &quot;厨房用具;厨具;加工工艺;基本工艺;菜品;菜肴;家常菜;炒;炒锅;热菜;防辐射;开胃;蔬菜类;果实类;蒜薹;西红柿;禽蛋类;蛋;鸡蛋;&quot;,</div><div class="line">        &quot;intro&quot;: &quot;我这的蒜薹鸡蛋都爱加西红柿、辣椒一起炒的，这是习惯所致，爱吃西红柿，爱吃辣椒，还爱把菜搭配的颜色亮丽，当然味道也不差。&quot;,</div><div class="line">        &quot;ingredients&quot;: &quot;西红柿:1个;蒜薹:200g;鸡蛋:2个;&quot;,</div><div class="line">        &quot;burden&quot;: &quot;油:适量;盐:适量;青辣椒:1个;红辣椒:1个;&quot;,</div><div class="line">        &quot;albums&quot;: &quot;http://imgs.haoservice.com/CaiPu/pic/recipe/l/be/a7/370622_86e12b.jpg&quot;,</div><div class="line">        &#125;</div><div class="line">       &#123;</div><div class="line">        &quot;id&quot;: 433079,</div><div class="line">        &quot;title&quot;: &quot;西红柿酸奶&quot;,</div><div class="line">        &quot;tags&quot;: &quot;促进食欲;减肥;懒人食谱;消暑食谱;美容养颜;&quot;,</div><div class="line">        &quot;intro&quot;: &quot;新疆人爱吃西红柿那是有目共睹的，菜里面加西红柿的数不胜数，就连舌尖2在吐鲁番拍的葡萄干抓饭里面都加西红柿。&quot;,</div><div class="line">        &quot;ingredients&quot;: &quot;酸奶:400g;西红柿:200g;&quot;,</div><div class="line">        &quot;burden&quot;: &quot;白糖:20g;&quot;,</div><div class="line">        &quot;albums&quot;: &quot;http://imgs.haoservice.com/CaiPu/pic/recipe/l/b7/9b/433079_377373.jpg&quot;,</div><div class="line">       &#125;</div><div class="line">       &#123;···&#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="2-简单业务逻辑封装"><a href="#2-简单业务逻辑封装" class="headerlink" title="2.简单业务逻辑封装"></a>2.简单业务逻辑封装</h3><ul>
-<li>现在只需要使用到<code>result</code>数据（并对应<code>CYXMenu</code>模型），在公司中，接口一般会有比较好的规范，即每个接口的模型属性一般都有统一的命名。</li>
-<li>我们使用时，通常会把<code>result</code>字典数组转化成<code>CYXMenu</code>模型数组。因此，可以进一步的封装出<code>CYXBaseRequest</code>对象。</li>
-<li><code>CYXBaseRequest</code>类实现思路如下：<ul>
-<li>1.使用<code>CYXHttpRequest</code>发起网络请求，返回数据中取到<code>result</code></li>
-<li>2.使用<code>MJExtension</code>将<code>result</code>字典数组转化成<code>CYXMenu</code>模型数组，并返回模型数组</li>
-<li>3.外界只需要传递进来一个<code>resultClass</code>即可。</li>
-</ul>
-</li>
-<li>CYXBaseRequest实现代码如下：</li>
-<li>CYXBaseRequest.h文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface CYXBaseRequest : NSObject</div><div class="line"></div><div class="line">/**</div><div class="line"> *  返回result 数据模型</div><div class="line"> *</div><div class="line"> *  @param url          请求地址</div><div class="line"> *  @param param        请求参数</div><div class="line"> *  @param resultClass  需要转换返回的数据模型</div><div class="line"> *  @param success      请求成功后的回调</div><div class="line"> *  @param warn         请求失败后警告提示语</div><div class="line"> *  @param failure      请求失败后的回调</div><div class="line"> *  @param tokenInvalid token过期后的回调</div><div class="line"> */</div><div class="line">+ (void)postResultWithUrl:(NSString *)url param:(id)param</div><div class="line">              resultClass:(Class)resultClass</div><div class="line">                  success:(void (^)(id result))success</div><div class="line">                     warn:(void (^)(NSString *warnMsg))warn</div><div class="line">                  failure:(void (^)(NSError *error))failure</div><div class="line">             tokenInvalid:(void (^)())tokenInvalid;</div><div class="line"></div><div class="line">/**</div><div class="line"> *  返回result 数据模型（带HUD）</div><div class="line"> *</div><div class="line"> *  @param url          请求地址</div><div class="line"> *  @param param        请求参数</div><div class="line"> *  @param resultClass  需要转换返回的数据模型</div><div class="line"> *  @param success      请求成功后的回调</div><div class="line"> *  @param warn         请求失败后警告提示语</div><div class="line"> *  @param failure      请求失败后的回调</div><div class="line"> *  @param tokenInvalid token过期后的回调</div><div class="line"> */</div><div class="line">+ (void)postResultHUDWithUrl:(NSString *)url param:(id)param</div><div class="line">                 resultClass:(Class)resultClass</div><div class="line">                     success:(void (^)(id result))success</div><div class="line">                        warn:(void (^)(NSString *warnMsg))warn</div><div class="line">                     failure:(void (^)(NSError *error))failure</div><div class="line">                tokenInvalid:(void (^)())tokenInvalid;</div><div class="line"></div><div class="line">/**</div><div class="line"> *  组合请求参数</div><div class="line"> *</div><div class="line"> *  @param dict 外部参数字典</div><div class="line"> *</div><div class="line"> *  @return 返回组合参数</div><div class="line"> */</div><div class="line">+ (NSMutableDictionary *)requestParams:(NSDictionary *)dict;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<ul>
-<li>CYXBaseRequest.m文件</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div></pre></td><td class="code"><pre><div class="line">#import &quot;CYXBaseRequest.h&quot;</div><div class="line">#import &quot;CYXHttpRequest.h&quot;</div><div class="line">#import &quot;ExceptionMsgTips.h&quot;</div><div class="line">#import &quot;MJExtension.h&quot;</div><div class="line"></div><div class="line">@implementation BSBaseRequest</div><div class="line"></div><div class="line">/**</div><div class="line"> *  返回result 数据模型（HUD）</div><div class="line"> */</div><div class="line">+ (void)postResultHUDWithUrl:(NSString *)url param:(id)param</div><div class="line">                 resultClass:(Class)resultClass</div><div class="line">                     success:(void (^)(id result))success</div><div class="line">                        warn:(void (^)(NSString *warnMsg))warn</div><div class="line">                     failure:(void (^)(NSError *error))failure</div><div class="line">                tokenInvalid:(void (^)())tokenInvalid</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    [self postBaseHUDWithUrl:url param:param resultClass:resultClass</div><div class="line">                     success:^(id responseObj) &#123;</div><div class="line">                         if (!resultClass) &#123;</div><div class="line">                             success(nil);</div><div class="line">                             return;</div><div class="line">                         &#125;</div><div class="line">                         success([resultClass mj_objectArrayWithKeyValuesArray:responseObj[@&quot;result&quot;]]);</div><div class="line">                     &#125;</div><div class="line">                        warn:warn</div><div class="line">                     failure:failure</div><div class="line">                tokenInvalid:tokenInvalid];</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> *  返回result 数据模型</div><div class="line"> */</div><div class="line">+ (void)postResultWithUrl:(NSString *)url param:(id)param</div><div class="line">              resultClass:(Class)resultClass</div><div class="line">                  success:(void (^)(id result))success</div><div class="line">                     warn:(void (^)(NSString *warnMsg))warn</div><div class="line">                  failure:(void (^)(NSError *error))failure</div><div class="line">             tokenInvalid:(void (^)())tokenInvalid</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    [self postBaseWithUrl:url param:param resultClass:resultClass</div><div class="line">                  success:^(id responseObj) &#123;</div><div class="line">                      if (!resultClass) &#123;</div><div class="line">                          success(nil);</div><div class="line">                          return;</div><div class="line">                      &#125;</div><div class="line">                      success([resultClass mj_objectArrayWithKeyValuesArray:responseObj[@&quot;result&quot;]]);</div><div class="line">                  &#125;</div><div class="line">                     warn:warn</div><div class="line">                  failure:failure</div><div class="line">             tokenInvalid:tokenInvalid];</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> *  数据模型基类方法</div><div class="line"> */</div><div class="line">+ (void)postBaseWithUrl:(NSString *)url param:(id)param</div><div class="line">            resultClass:(Class)resultClass</div><div class="line">                success:(void (^)(id result))success</div><div class="line">                   warn:(void (^)(NSString *warnMsg))warn</div><div class="line">                failure:(void (^)(NSError *error))failure</div><div class="line">           tokenInvalid:(void (^)())tokenInvalid</div><div class="line">&#123;</div><div class="line">//    url = [NSString stringWithFormat:@&quot;%@%@&quot;,Host,url];</div><div class="line">    CYXLog(@&quot;\\n请求链接地址---&gt; %@&quot;,url);</div><div class="line">    //状态栏菊花</div><div class="line">    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;</div><div class="line">    [CYXHttpRequest post:url params:param success:^(id responseObj) &#123;</div><div class="line">        if (success) &#123;</div><div class="line">            NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:responseObj options:kNilOptions error:nil];</div><div class="line">            CYXLog(@&quot;请求成功，返回数据 : %@&quot;,dictData);</div><div class="line">            success(dictData);</div><div class="line">        &#125;</div><div class="line">        //状态栏菊花</div><div class="line">        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;</div><div class="line">    &#125; failure:^(NSError *error) &#123;</div><div class="line">        if (failure) &#123;</div><div class="line">            failure(error);</div><div class="line">            CYXLog(@&quot;请求失败：%@&quot;,error);</div><div class="line">        &#125;</div><div class="line">        //状态栏菊花</div><div class="line">        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line">/**</div><div class="line"> *  数据模型基类(带HUD)</div><div class="line"> */</div><div class="line">+ (void)postBaseHUDWithUrl:(NSString *)url param:(id)param</div><div class="line">               resultClass:(Class)resultClass</div><div class="line">                   success:(void (^)(id result))success</div><div class="line">                      warn:(void (^)(NSString *warnMsg))warn</div><div class="line">                   failure:(void (^)(NSError *error))failure</div><div class="line">              tokenInvalid:(void (^)())tokenInvalid</div><div class="line">&#123;</div><div class="line">    [SVProgressHUD showWithStatus:@&quot;&quot;];</div><div class="line">    [self postBaseWithUrl:url param:param resultClass:resultClass success:^(id responseObj) &#123;</div><div class="line">        [SVProgressHUD dismiss];    //隐藏loading</div><div class="line">        success(responseObj);</div><div class="line">    &#125; warn:^(NSString *warnMsg) &#123;</div><div class="line">        [SVProgressHUD dismiss];</div><div class="line">        warn(warnMsg);</div><div class="line">    &#125; failure:^(NSError *fail) &#123;</div><div class="line">        [SVProgressHUD dismiss];</div><div class="line">        failure(fail);</div><div class="line">    &#125; tokenInvalid:^&#123;</div><div class="line">        [SVProgressHUD dismiss];</div><div class="line">        tokenInvalid();</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<ul>
-<li>到这里，轻量级的封装介绍已经全部介绍完了，更多的功能封装有待读者自己去研究了。既然封装好了，下面我们来介绍一下如何使用，其实非常简单。</li>
-</ul>
-<h3 id="使用介绍"><a href="#使用介绍" class="headerlink" title="使用介绍"></a>使用介绍</h3><ul>
-<li>1.把上述两个类的.h  .m 文化拖到您项目中，最好新建一个<request>文件夹。</request></li>
-<li>2.在需要发送请求的Controller中<code>#import &quot;CYXBaseRequest.h&quot;</code></li>
-<li>3.发送请求方法中的代码如下：<ul>
-<li>（使用CYXBaseRequest）：</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#pragma mark - 请求数据方法</div><div class="line">- (void)loadData&#123;</div><div class="line">    self.pn = 1;</div><div class="line">    // 请求参数（根据接口文档编写）</div><div class="line">    NSMutableDictionary *params = [NSMutableDictionary dictionary];</div><div class="line">    params[@&quot;menu&quot;] = @&quot;西红柿&quot;;</div><div class="line">    params[@&quot;pn&quot;] = @(self.pn);</div><div class="line">    params[@&quot;rn&quot;] = @&quot;10&quot;;</div><div class="line">    params[@&quot;key&quot;] = @&quot;fcfdb87c50c1485e9e7fa9f839c4b1a8&quot;;</div><div class="line">    [CYXBaseRequest postResultWithUrl:CYXRequestURL param:params resultClass:[CYXMenu class] success:^(id result) &#123;</div><div class="line">        CYXLog(@&quot;请求成功，返回数据 : %@&quot;,result);</div><div class="line">        self.menus = result;</div><div class="line">        self.pn ++;</div><div class="line">        // 刷新数据（若不刷新数据会显示不出）</div><div class="line">        [self.tableView reloadData];</div><div class="line">        [self.tableView.mj_header endRefreshing];</div><div class="line">    &#125; warn:^(NSString *warnMsg) &#123;</div><div class="line">        </div><div class="line">    &#125; failure:^(NSError *error) &#123;</div><div class="line">        CYXLog(@&quot;请求失败 原因：%@&quot;,error);</div><div class="line">        [self.tableView.mj_header endRefreshing];</div><div class="line">    &#125; tokenInvalid:^&#123;</div><div class="line">        // 有登录操作的业务，这里返回登录状态</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>在这里对比一下不使用CYXBaseRequest的发送请求方法代码：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">#pragma mark - 请求数据方法</div><div class="line">- (void)loadData&#123;</div><div class="line">    self.pn = 1;</div><div class="line">    // 请求参数（根据接口文档编写）</div><div class="line">    NSMutableDictionary *params = [NSMutableDictionary dictionary];</div><div class="line">    params[@&quot;menu&quot;] = @&quot;西红柿&quot;;</div><div class="line">    params[@&quot;pn&quot;] = @(self.pn);</div><div class="line">    params[@&quot;rn&quot;] = @&quot;10&quot;;</div><div class="line">    params[@&quot;key&quot;] = @&quot;fcfdb87c50c1485e9e7fa9f839c4b1a8&quot;;    </div><div class="line">    [self.manager.tasks makeObjectsPerformSelector:@selector(cancel)];</div><div class="line">    [self.manager.responseSerializer setAcceptableContentTypes:[NSSet setWithObject:@&quot;text/html&quot;]];</div><div class="line">    [self.manager POST:CYXRequestURL parameters:params progress:^(NSProgress * _Nonnull downloadProgress) &#123;</div><div class="line"></div><div class="line">    &#125; success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) &#123;</div><div class="line">        CYXLog(@&quot;请求成功，返回数据 : %@&quot;,responseObject);</div><div class="line">        // 利用MJExtension框架进行字典转模型</div><div class="line">        weakSelf.menus = [CYXMenu  mj_objectArrayWithKeyValuesArray:responseObject[@&quot;result&quot;]];</div><div class="line">        weakSelf.pn ++;</div><div class="line">        // 刷新数据（若不刷新数据会显示不出）</div><div class="line">        [weakSelf.tableView reloadData];</div><div class="line">        [weakSelf.tableView.mj_header endRefreshing];</div><div class="line">    &#125; failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) &#123;</div><div class="line">        CYXLog(@&quot;请求失败 原因：%@&quot;,error);</div><div class="line">        [weakSelf.tableView.mj_header endRefreshing];</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>虽然从代码看似两种使用差别不太大（只是少了几行代码），但相比之下，前者确实降低了对AFN等框架的依赖，并省去了每次都手动转一下模型的烦恼，现在你只需要把<code>resultClass</code>传过去，返回的数据便是已经转化好的模型，并在<code>CYXBaseRequest</code>内打印出<code>请求链接地址</code>，<code>返回数据</code>等有用信息，方便调试，接口设计也类似AFN，使用简便。</li>
-</ul>
-<hr>
-<ul>
-<li>TIPS:建议使用者可以在每个模块都建立Request文件（继承CYXBaseRequest），统一进行网络请求，这样更方便管理。</li>
-</ul>
-<h4 id="注："><a href="#注：" class="headerlink" title="注："></a>注：</h4><ul>
-<li>本封装实践只对网络请求进行初步的简单封装，仅适用于中小型的项目，并不涉及缓存、校验等高级功能，如果有高级需求，建议研究下猿题库的YTKNetwork网络库。</li>
-</ul>
-<ul>
-<li>附：<a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">源码github地址</a></li>
-</ul>
+          前言
+在十分钟搭建主流框架_简单的网络部分(OC)
+中，我们使用AFN框架顺利的发送网络请求并返回了有用数据，但对AFN框架的依赖十分严重，下面我们重构一下。
+源码github地址
 
-          
+初步
+很多时候，我们涉及到网络请求这块，都离不开几个第三方框架，AFNetworking，MJExtention, 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/27/iOS重构-轻量级的网络请求封装实践/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -754,9 +566,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T01:24:16+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-27T01:24:16+08:00">
                 2017-02-27
               </time>
             
@@ -804,8 +616,15 @@
       
         
           
-            
           
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/27/postName/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -881,9 +700,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-27T00:46:37+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-27T00:46:37+08:00">
                 2017-02-27
               </time>
             
@@ -931,17 +750,15 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/27/hello-world/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1017,7 +834,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
@@ -1028,7 +845,7 @@
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">标签</span>
               </a>
             </div>
           
@@ -1098,11 +915,11 @@
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
 </div>
 
 <div class="theme-info">
-  Theme -
+  主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
