@@ -116,7 +116,7 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-a32f934dbba68fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-630d83f12dc5c5fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-b0bdb4c33a944b8d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-02-27T17:14:24.000Z">
+<meta property="og:updated_time" content="2017-02-27T17:15:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UICollectionView基本使用详解">
 <meta name="twitter:description" content="概述
@@ -142,7 +142,7 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
     motion: true,
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: 'Penulis'
     },
     algolia: {
       applicationID: '',
@@ -228,7 +228,7 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Beranda
           </a>
         </li>
       
@@ -238,7 +238,7 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Arsip
           </a>
         </li>
       
@@ -315,7 +315,7 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Diposting di</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T01:04:38+08:00">
                 2017-02-28
@@ -451,9 +451,9 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
 </blockquote>
 </li>
 </ul>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">  - (<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 获取父类(流水布局)已经计算好的布局，在这个基础上做个性化修改</span></div><div class="line">    <span class="built_in">NSArray</span> *attributes = [<span class="keyword">super</span> layoutAttributesForElementsInRect:rect];</div><div class="line">    </div><div class="line">    <span class="built_in">NSArray</span> *cellIndices = [<span class="keyword">self</span>.collectionView indexPathsForVisibleItems];</div><div class="line">    <span class="keyword">if</span>(cellIndices.count == <span class="number">0</span> )</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> attributes;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cellIndices.count == <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        mainIndexPath = cellIndices.firstObject;</div><div class="line">        movingInIndexPath = <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(cellIndices.count &gt; <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">NSIndexPath</span> *firstIndexPath = cellIndices.firstObject;</div><div class="line">        <span class="keyword">if</span>(firstIndexPath == mainIndexPath)</div><div class="line">        &#123;</div><div class="line">            movingInIndexPath = cellIndices[<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            movingInIndexPath = cellIndices.firstObject;</div><div class="line">            mainIndexPath = cellIndices[<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    difference =  <span class="keyword">self</span>.collectionView.contentOffset.x - previousOffset;</div><div class="line">    </div><div class="line">    previousOffset = <span class="keyword">self</span>.collectionView.contentOffset.x;</div><div class="line">    <span class="comment">// 关键代码：取每一个Cell的布局属性，并添加3D效果</span></div><div class="line">    <span class="keyword">for</span> (<span class="built_in">UICollectionViewLayoutAttributes</span> *attribute <span class="keyword">in</span> attributes)</div><div class="line">    &#123;</div><div class="line">        [<span class="keyword">self</span> applyTransformToLayoutAttributes:attribute];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>  attributes;</div><div class="line">&#125;</div><div class="line">  ``` </div><div class="line">  </div><div class="line">- 上面关键方法都已经实现了，但是运行发现并没有我们想要的效果，CollectionViewCell并没有实时发生形变。y因此我们还需要调用以下方法。</div><div class="line">&gt;方法解析：</div><div class="line">只要滚动屏幕 就会调用  方法  `-(<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect`</div><div class="line"> 只要布局页面的属性发生改变 就会重新调用  `-(<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect`  这个方法</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">  - (<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 获取父类(流水布局)已经计算好的布局，在这个基础上做个性化修改</span></div><div class="line">    <span class="built_in">NSArray</span> *attributes = [<span class="keyword">super</span> layoutAttributesForElementsInRect:rect];</div><div class="line">    </div><div class="line">    <span class="built_in">NSArray</span> *cellIndices = [<span class="keyword">self</span>.collectionView indexPathsForVisibleItems];</div><div class="line">    <span class="keyword">if</span>(cellIndices.count == <span class="number">0</span> )</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> attributes;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cellIndices.count == <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        mainIndexPath = cellIndices.firstObject;</div><div class="line">        movingInIndexPath = <span class="literal">nil</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(cellIndices.count &gt; <span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">NSIndexPath</span> *firstIndexPath = cellIndices.firstObject;</div><div class="line">        <span class="keyword">if</span>(firstIndexPath == mainIndexPath)</div><div class="line">        &#123;</div><div class="line">            movingInIndexPath = cellIndices[<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">        &#123;</div><div class="line">            movingInIndexPath = cellIndices.firstObject;</div><div class="line">            mainIndexPath = cellIndices[<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    difference =  <span class="keyword">self</span>.collectionView.contentOffset.x - previousOffset;</div><div class="line">    </div><div class="line">    previousOffset = <span class="keyword">self</span>.collectionView.contentOffset.x;</div><div class="line">    <span class="comment">// 关键代码：取每一个Cell的布局属性，并添加3D效果</span></div><div class="line">    <span class="keyword">for</span> (<span class="built_in">UICollectionViewLayoutAttributes</span> *attribute <span class="keyword">in</span> attributes)</div><div class="line">    &#123;</div><div class="line">        [<span class="keyword">self</span> applyTransformToLayoutAttributes:attribute];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>  attributes;</div><div class="line">&#125;</div><div class="line">``` </div><div class="line">  </div><div class="line">- 上面关键方法都已经实现了，但是运行发现并没有我们想要的效果，CollectionViewCell并没有实时发生形变。y因此我们还需要调用以下方法。</div><div class="line">&gt;方法解析：</div><div class="line">只要滚动屏幕 就会调用  方法  `-(<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect`</div><div class="line"> 只要布局页面的属性发生改变 就会重新调用  `-(<span class="built_in">NSArray</span> *)layoutAttributesForElementsInRect:(<span class="built_in">CGRect</span>)rect`  这个方法</div></pre></td></tr></table></figure>
 <p>// indicate that we want to redraw as we scroll</p>
 <ul>
 <li>(BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {<br>return YES;<br>}<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">##### （2）仿写Demo</div><div class="line">   - 经过上面对代码的分析，我们可以简单了解到自定义layout布局的基本实现，下面就可以仿写一个简单的Demo了，效果图如下。</div><div class="line">![效果图](http://upload-images.jianshu.io/upload_images/620754-1fcf87c65b9e5faa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line">- 参考代码如下（详细见Github）</div><div class="line"></div><div class="line">```objc</div><div class="line">- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds</div><div class="line">&#123;</div><div class="line">    return YES;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)prepareLayout&#123;</div><div class="line">    </div><div class="line">    [super prepareLayout];</div><div class="line">    </div><div class="line">    self.scrollDirection = UICollectionViewScrollDirectionHorizontal;</div><div class="line">    // 设置内边距</div><div class="line">    CGFloat inset = (self.collectionView.frame.size.width - self.itemSize.width) * 0.5;</div><div class="line">    self.sectionInset = UIEdgeInsetsMake(0, inset, 0, inset);</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect</div><div class="line">&#123;</div><div class="line">    // 获得super已经计算好的布局属性</div><div class="line">    NSArray *attributes = [super layoutAttributesForElementsInRect:rect];</div><div class="line">    </div><div class="line">    // 计算collectionView最中心点的x值</div><div class="line">    CGFloat centerX = self.collectionView.contentOffset.x + self.collectionView.frame.size.width * 0.5;</div><div class="line">    </div><div class="line"></div><div class="line">    // 在原有布局属性的基础上，进行微调</div><div class="line">    for (UICollectionViewLayoutAttributes *attrs in attributes) &#123;</div><div class="line">        // cell的中心点x 和 collectionView最中心点的x值 的间距</div><div class="line">        CGFloat delta = ABS(attrs.center.x - centerX);</div><div class="line">        // 根据间距值 计算 cell的缩放比例</div><div class="line">        CGFloat scale = 1.2 - delta / self.collectionView.frame.size.width;</div><div class="line">    </div><div class="line">        NSLog(@&quot;%f,%f&quot;,delta,scale);</div><div class="line">        // 设置缩放比例</div><div class="line">        attrs.transform = CGAffineTransformMakeScale(scale, scale);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return  attributes;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -574,10 +574,10 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Daftar Isi
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ikhtisar
           </li>
         </ul>
       
@@ -598,7 +598,7 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-name">posting</span>
               </a>
             </div>
           
@@ -609,7 +609,7 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
             <div class="site-state-item site-state-tags">
               <a href="/tags">
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-name">tags</span>
               </a>
             </div>
           
@@ -695,11 +695,11 @@ UITableView应该是大家最熟悉的控件了，UICollectionView的使用与�
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  Theme -
+  Tema -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Mist
   </a>
