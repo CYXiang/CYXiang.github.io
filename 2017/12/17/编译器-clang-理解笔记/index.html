@@ -1,0 +1,1067 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="编译器 clang 理解笔记Xcode: GCC =&amp;gt;  GCC（前端） + LLVM(后端)  =&amp;gt; clang + LLVM (4.2)
+GDB=&amp;gt;lldb
+Three-Phase 编译架构 三段式source =&amp;gt; Fontend Optimizer Backend =&amp;gt; machine code源代码     前端      优化器    后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译器 clang 理解笔记">
+<meta property="og:url" content="http://yoursite.com/2017/12/17/编译器-clang-理解笔记/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="编译器 clang 理解笔记Xcode: GCC =&amp;gt;  GCC（前端） + LLVM(后端)  =&amp;gt; clang + LLVM (4.2)
+GDB=&amp;gt;lldb
+Three-Phase 编译架构 三段式source =&amp;gt; Fontend Optimizer Backend =&amp;gt; machine code源代码     前端      优化器    后端">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-96b16a44c73c1399.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-b23b150198366a0b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-20e668475f2b388d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-266499313beacc1a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-2750b5c19f5a8085.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-d79e6cc9e32133c3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-228333161b5a20bf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-73016588ea8e652c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-4ebcca67d0e0bec3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-1feed66152e2880d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-4bf6bcd101c4edb2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-4f1b7c6be8cdc731.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-ce4988fdb4ae29ad.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-0a9edd6837de5c8a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-c7148a33629f2301.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-d24e1fe5827ed497.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-311e3151b25eae0f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-44c15ff35139c0fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-52f3305552a99239.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-f509b3ebf6dc7a16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-700bc096631fa223.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-16T23:48:32.570Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编译器 clang 理解笔记">
+<meta name="twitter:description" content="编译器 clang 理解笔记Xcode: GCC =&amp;gt;  GCC（前端） + LLVM(后端)  =&amp;gt; clang + LLVM (4.2)
+GDB=&amp;gt;lldb
+Three-Phase 编译架构 三段式source =&amp;gt; Fontend Optimizer Backend =&amp;gt; machine code源代码     前端      优化器    后端">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-96b16a44c73c1399.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/17/编译器-clang-理解笔记/"/>
+
+
+
+
+
+  <title> 编译器 clang 理解笔记 | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/17/编译器-clang-理解笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                编译器 clang 理解笔记
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T07:47:38+08:00">
+                2017-12-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/17/编译器-clang-理解笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/17/编译器-clang-理解笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="编译器-clang-理解笔记"><a href="#编译器-clang-理解笔记" class="headerlink" title="编译器 clang 理解笔记"></a>编译器 clang 理解笔记</h1><p>Xcode: GCC =&gt;  GCC（前端） + LLVM(后端)  =&gt; clang + LLVM (4.2)</p>
+<p>GDB=&gt;lldb</p>
+<h2 id="Three-Phase-编译架构-三段式"><a href="#Three-Phase-编译架构-三段式" class="headerlink" title="Three-Phase 编译架构 三段式"></a>Three-Phase 编译架构 三段式</h2><p>source =&gt; Fontend Optimizer Backend =&gt; machine code<br>源代码     前端      优化器    后端        机器码 </p>
+<p>问题： M(Language)              <em>   N(Target     = M</em>N Compilers<br>   N个语言的前端（C/C++/OC/Swift/..）   多个架构（模拟器/X86_64/RAM64/..）  </p>
+<p>有部分共享（优化器）<br><img src="http://upload-images.jianshu.io/upload_images/620754-96b16a44c73c1399.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134488349811.jpg"></p>
+<p>比如新增一种语言  只需要实现Swift Fontent就可以了，后面不需要动，就可以把Swift编译到各个架构</p>
+<p>Clang + LLVM 代码规模</p>
+<ul>
+<li>Total 400W</li>
+<li>C++   235W</li>
+</ul>
+<p>Swift 代码规模</p>
+<ul>
+<li>C++   43W</li>
+</ul>
+<h2 id="Apple-编译器-Clang-LLVM架构初识"><a href="#Apple-编译器-Clang-LLVM架构初识" class="headerlink" title="Apple 编译器 Clang-LLVM架构初识"></a>Apple 编译器 Clang-LLVM架构初识</h2><ul>
+<li>你的源码是如何一步步成为可执行文件的？</li>
+<li>我们能用Clang做什么有意思的事情？</li>
+<li>点running以后做了什么？（跑脚本）<br><img src="http://upload-images.jianshu.io/upload_images/620754-b23b150198366a0b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134491264314.jpg"></li>
+</ul>
+<p>源文件的编译过程：<br>1.在命令行中run一下以下脚本<br><img src="http://upload-images.jianshu.io/upload_images/620754-20e668475f2b388d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134492673840.jpg"></p>
+<p>这些参数是我们选的参数拼接  clang 后面拼接参数（-fobjic-arc/…） </p>
+<h2 id="Clang-命令"><a href="#Clang-命令" class="headerlink" title="Clang 命令"></a>Clang 命令</h2><ul>
+<li>Clang 在概念上是编译器前端，同时，在命令行中也作为一个 “黑盒” 的Driver</li>
+<li>封装了编译管线、前端命令、LLVM命令、Toolchain命令等，一个Clang走天下</li>
+<li>方便总GCC迁移过来</li>
+</ul>
+<h2 id="拆解过程-编译-main-m-过程"><a href="#拆解过程-编译-main-m-过程" class="headerlink" title="拆解过程  编译 main.m 过程"></a>拆解过程  编译 main.m 过程</h2><ul>
+<li><ol>
+<li><p>Preprocess - 预处理  </p>
+<p>   <code>$clang -E main.m</code></p>
+<ul>
+<li>import 头文件  （文本级别替换）</li>
+<li>macro 展开  （宏展开替换）</li>
+<li><p>处理‘#’打头的预处理指令，如#if</p>
+<p> <code>$clang -E fmodules main.m</code></p>
+</li>
+<li><p><code>#import Foundatin =&gt; @import Foundatin</code></p>
+</li>
+<li><p>由于fmodules的出现，Xcode新建工程就不会默认创建.PCH 文件了</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><ol>
+<li><p>Lexical Analysis - 词法分析</p>
+<p>   <code>$clang -fmodules -fsyntax-only -Xclang -dump-tokens main.m</code><br><img src="http://upload-images.jianshu.io/upload_images/620754-266499313beacc1a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134503834804.jpg"></p>
+<ul>
+<li>词法分析，也作Lex或者Tokenization</li>
+<li>将预处理过的代码文本转化为Token流</li>
+<li>不校验语义</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p>3.Semantic Analysis - 语法分析</p>
+<pre><code>` $clang -fmodules -fsyntax-only -Xclang -ast-dump main.m`
+</code></pre><p>  <img src="http://upload-images.jianshu.io/upload_images/620754-2750b5c19f5a8085.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134506401545.jpg"></p>
+<ul>
+<li>语法分析，在Clang中由Parser和Sema两个模块配合完成</li>
+<li>交验语法是否正确</li>
+<li>根据当前语言的语法，生成语意节点，并将所有节点组合成抽象语法树（AST）</li>
+<li><p>这一步跟源码等价，可以反写出源码<br><img src="http://upload-images.jianshu.io/upload_images/620754-d79e6cc9e32133c3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134507269352.jpg"></p>
+</li>
+<li><p>Static Analysis 静态分析</p>
+<ul>
+<li>通过语法树进行代码静态分析，找出非语法性错误</li>
+<li>模拟代码执行路径，分析出control-flow graph(CFG)  【MRC时代会分析出引用计数的错误】</li>
+<li>预置了常用Checker（检查器）</li>
+</ul>
+</li>
+<li><ol>
+<li><p>CodeGen - IR代码生成</p>
+<ul>
+<li>CodeGen 负责将语法树丛顶至下遍历，翻译成LLVM IR</li>
+<li>LLVM IR 是Frontend的输出，也是LLVM Backend的输入，前后端的桥接语言 （Swift也是转成这个）</li>
+<li><p>与 Objective-C Runtime 桥接</p>
+<ul>
+<li>Class/Meta Class/Protocol/Category内存结构生成，并存放在指定section中（如Class：_DATA, _objc_classrefs）</li>
+<li>Method/lvar/Property内存结构生成</li>
+<li>组成method_list/ivar_list/property_list并填入Class</li>
+<li>Non-Fragile ABI:为每个Ivar合成OBJC<em>IVAR</em>$_偏移值常量</li>
+<li>存取Ivar的语句（_ivar = 123; int a = ivar;）转写成base + OBJC<em>IVAR</em>$_的形式</li>
+<li>将语法树中的ObjcMessageExpr翻译成相应版本的objc_msgSend，对super关键字的调用翻译成objc_msgSendSuper</li>
+<li>根据修饰符strong/weak/copy/atomic合成@property 自动实现的 setter/getter</li>
+<li>处理@synthesize</li>
+<li>生成block_layout的数据结构</li>
+<li>变量的capture(<strong>block/</strong>weak)</li>
+<li>生成_block_invoke函数</li>
+<li>ARC：分析对象引用关系，将objc_storeStrong/objc_storeWeak等ARC代码插入</li>
+<li>将ObjCAutoreleasePoolStmt转译成objc_autoreleasePoolPush/Pop</li>
+<li>实现自动调用[super dealloc]</li>
+<li><p>为每个拥有ivar的Class合成.cxx_destructor方法来自动释放类的成员变量，代替MRC时代的“self.xxx = nil”</p>
+<pre><code>![15134626439514.jpg](http://upload-images.jianshu.io/upload_images/620754-6ccde89af4339c9b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- Optimize - 优化IR
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/620754-228333161b5a20bf.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134628420936.jpg"></p>
+<pre><code>    递归优化成伪递归
+
+- LLVM Bitcode - 生成字节码
+</code></pre><p>   <img src="http://upload-images.jianshu.io/upload_images/620754-73016588ea8e652c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134629770485.jpg"></p>
+<pre><code>- Assemble - 生成Target相关汇编
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/620754-4ebcca67d0e0bec3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134630956711.jpg"></p>
+<ul>
+<li>Assemble - 生成Target相关Object(Mach-O)<br><img src="http://upload-images.jianshu.io/upload_images/620754-1feed66152e2880d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134631863814.jpg"></li>
+</ul>
+<ul>
+<li>Link生成Executable<br><img src="http://upload-images.jianshu.io/upload_images/620754-4bf6bcd101c4edb2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134632700633.jpg"></li>
+</ul>
+<h2 id="总结：Clang-LLVM下，一个源文件的编译过程"><a href="#总结：Clang-LLVM下，一个源文件的编译过程" class="headerlink" title="总结：Clang-LLVM下，一个源文件的编译过程"></a>总结：Clang-LLVM下，一个源文件的编译过程</h2><p><img src="http://upload-images.jianshu.io/upload_images/620754-4f1b7c6be8cdc731.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134633230684.jpg"></p>
+<h1 id="我们能用Clang做什么有意思的事情？"><a href="#我们能用Clang做什么有意思的事情？" class="headerlink" title="我们能用Clang做什么有意思的事情？"></a>我们能用Clang做什么有意思的事情？</h1><h2 id="LibClang"><a href="#LibClang" class="headerlink" title="LibClang"></a>LibClang</h2><ul>
+<li>C API来访问Clang的上层能力，如获取Tokens、遍历语法树、代码补全、获取诊断信息</li>
+<li>API稳定，不受Clang源码更新影响</li>
+<li>只有上层语法树访问，不能获取全部信息</li>
+</ul>
+<ul>
+<li>如何使用<ul>
+<li>使用原始C API</li>
+<li>脚本语言：使用官方提供的python binding或开源的node-js/ruby binding</li>
+<li>Objective-C: 开源库ClangKit</li>
+</ul>
+</li>
+<li>LibClang - Demo<ul>
+<li>制作代码检查器<br><img src="http://upload-images.jianshu.io/upload_images/620754-ce4988fdb4ae29ad.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134649879275.jpg"></li>
+</ul>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-0a9edd6837de5c8a.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134650030966.jpg"></p>
+<h2 id="LibTooling"><a href="#LibTooling" class="headerlink" title="LibTooling"></a>LibTooling</h2><pre><code>- 对语法树有完全的控制权
+- 可作为一个standalone 命令单独的使用，如clang-format
+- 需要使用C++且对Clang源码熟悉
+- Demo 自动OC转Swift
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/620754-c7148a33629f2301.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134651744955.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-d24e1fe5827ed497.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134652145866.jpg"></p>
+<h2 id="ClangPlugin"><a href="#ClangPlugin" class="headerlink" title="ClangPlugin"></a>ClangPlugin</h2><ul>
+<li>对语法树有完全的控制权</li>
+<li>作为插件注入到编译流程中，可以影响build和决定编译过程</li>
+<li>需要使用C++且对Clang源码熟悉</li>
+<li>Demo （报警告，整顿代码风格）<br><img src="http://upload-images.jianshu.io/upload_images/620754-311e3151b25eae0f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134653816117.jpg"></li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-44c15ff35139c0fb.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134654089934.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-52f3305552a99239.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134655178973.jpg"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-f509b3ebf6dc7a16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134655553192.jpg"></p>
+<h1 id="Clang-LLVM-相关资料"><a href="#Clang-LLVM-相关资料" class="headerlink" title="Clang-LLVM 相关资料"></a>Clang-LLVM 相关资料</h1><p><img src="http://upload-images.jianshu.io/upload_images/620754-700bc096631fa223.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="15134656189534.jpg"></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/04/搭建高效的Mac开发环境/" rel="next" title="搭建高效的Mac开发环境">
+                <i class="fa fa-chevron-left"></i> 搭建高效的Mac开发环境
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/12/17/编译器-clang-理解笔记/"
+           data-title="编译器 clang 理解笔记" data-url="http://yoursite.com/2017/12/17/编译器-clang-理解笔记/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编译器-clang-理解笔记"><span class="nav-number">1.</span> <span class="nav-text">编译器 clang 理解笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Three-Phase-编译架构-三段式"><span class="nav-number">1.1.</span> <span class="nav-text">Three-Phase 编译架构 三段式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apple-编译器-Clang-LLVM架构初识"><span class="nav-number">1.2.</span> <span class="nav-text">Apple 编译器 Clang-LLVM架构初识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clang-命令"><span class="nav-number">1.3.</span> <span class="nav-text">Clang 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拆解过程-编译-main-m-过程"><span class="nav-number">1.4.</span> <span class="nav-text">拆解过程  编译 main.m 过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结：Clang-LLVM下，一个源文件的编译过程"><span class="nav-number">1.5.</span> <span class="nav-text">总结：Clang-LLVM下，一个源文件的编译过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#我们能用Clang做什么有意思的事情？"><span class="nav-number">2.</span> <span class="nav-text">我们能用Clang做什么有意思的事情？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LibClang"><span class="nav-number">2.1.</span> <span class="nav-text">LibClang</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LibTooling"><span class="nav-number">2.2.</span> <span class="nav-text">LibTooling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ClangPlugin"><span class="nav-number">2.3.</span> <span class="nav-text">ClangPlugin</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Clang-LLVM-相关资料"><span class="nav-number">3.</span> <span class="nav-text">Clang-LLVM 相关资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>
