@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS底层探索," />
+  <meta name="keywords" content="iOS笔记," />
 
 
 
@@ -87,41 +87,46 @@
 
 
 
-<meta name="description" content="写在前面：
-本系列为 『iOS底层探索系列』第一篇，本文源自本人的学习记录整理与理解，其中参考阅读了部分优秀的博客和书籍，尽量以通俗简单的语句转述。引用到的地方如有遗漏或未能一一列举原文出处还望见谅与指出，另，文章内容如有不妥之处还望指教。十分感谢。
+<meta name="description" content="UITabBarController使用
+UITabBarController的使用步骤
+
+初始化UITabBarController
+设置UIWindow的rootViewController为UITabBarController
+根据具体情况，通过addChildViewController方法添加对应个数的子控制器
 
 
-入门起步从编译器说起
-为什么需要编译？
+UITabBarController添加控制器的两种方式
 
-大家都知道，我们的计算机CPU只能读懂机器码（machine code，也就是由一堆0和1组成的编码）">
+1.添加单个">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS底层探索(一) - 从零开始认识Clang与LLVM">
-<meta property="og:url" content="http://yoursite.com/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/index.html">
+<meta property="og:title" content="iOS笔记-一些零散的知识点(中)">
+<meta property="og:url" content="http://yoursite.com/2015/03/02/iOS笔记-一些零散的知识点(中)/index.html">
 <meta property="og:site_name" content="Coder_CYX's Blog">
-<meta property="og:description" content="写在前面：
-本系列为 『iOS底层探索系列』第一篇，本文源自本人的学习记录整理与理解，其中参考阅读了部分优秀的博客和书籍，尽量以通俗简单的语句转述。引用到的地方如有遗漏或未能一一列举原文出处还望见谅与指出，另，文章内容如有不妥之处还望指教。十分感谢。
+<meta property="og:description" content="UITabBarController使用
+UITabBarController的使用步骤
+
+初始化UITabBarController
+设置UIWindow的rootViewController为UITabBarController
+根据具体情况，通过addChildViewController方法添加对应个数的子控制器
 
 
-入门起步从编译器说起
-为什么需要编译？
+UITabBarController添加控制器的两种方式
 
-大家都知道，我们的计算机CPU只能读懂机器码（machine code，也就是由一堆0和1组成的编码）">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-569f4a629dfcb71e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-5b01af04f7db7596.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-fa67e2861a77eccd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-12-21T05:19:30.820Z">
+1.添加单个">
+<meta property="og:updated_time" content="2017-12-21T14:35:42.304Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS底层探索(一) - 从零开始认识Clang与LLVM">
-<meta name="twitter:description" content="写在前面：
-本系列为 『iOS底层探索系列』第一篇，本文源自本人的学习记录整理与理解，其中参考阅读了部分优秀的博客和书籍，尽量以通俗简单的语句转述。引用到的地方如有遗漏或未能一一列举原文出处还望见谅与指出，另，文章内容如有不妥之处还望指教。十分感谢。
+<meta name="twitter:title" content="iOS笔记-一些零散的知识点(中)">
+<meta name="twitter:description" content="UITabBarController使用
+UITabBarController的使用步骤
+
+初始化UITabBarController
+设置UIWindow的rootViewController为UITabBarController
+根据具体情况，通过addChildViewController方法添加对应个数的子控制器
 
 
-入门起步从编译器说起
-为什么需要编译？
+UITabBarController添加控制器的两种方式
 
-大家都知道，我们的计算机CPU只能读懂机器码（machine code，也就是由一堆0和1组成的编码）">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-569f4a629dfcb71e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+1.添加单个">
 
 
 
@@ -149,13 +154,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/"/>
+  <link rel="canonical" href="http://yoursite.com/2015/03/02/iOS笔记-一些零散的知识点(中)/"/>
 
 
 
 
 
-  <title> iOS底层探索(一) - 从零开始认识Clang与LLVM | Coder_CYX's Blog </title>
+  <title> iOS笔记-一些零散的知识点(中) | Coder_CYX's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -326,7 +331,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/03/02/iOS笔记-一些零散的知识点(中)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="_燕翔">
@@ -347,7 +352,7 @@
             
             
               
-                iOS底层探索(一) - 从零开始认识Clang与LLVM
+                iOS笔记-一些零散的知识点(中)
               
             
           </h2>
@@ -362,8 +367,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T13:18:34+08:00">
-                2017-12-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-03-02T13:18:34+08:00">
+                2015-03-02
               </time>
             
 
@@ -381,8 +386,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/" itemprop="commentCount"></span>
+                <a href="/2015/03/02/iOS笔记-一些零散的知识点(中)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/02/iOS笔记-一些零散的知识点(中)/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -408,85 +413,100 @@
       
 
       
-        <h4 id="写在前面："><a href="#写在前面：" class="headerlink" title="写在前面："></a>写在前面：</h4><blockquote>
-<p>本系列为 『iOS底层探索系列』第一篇，本文源自本人的学习记录整理与理解，其中参考阅读了部分优秀的博客和书籍，尽量以通俗简单的语句转述。引用到的地方如有遗漏或未能一一列举原文出处还望见谅与指出，另，文章内容如有不妥之处还望指教。十分感谢。</p>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/620754-569f4a629dfcb71e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="随机配图"></p>
-<h1 id="入门起步"><a href="#入门起步" class="headerlink" title="入门起步"></a>入门起步</h1><h3 id="从编译器说起"><a href="#从编译器说起" class="headerlink" title="从编译器说起"></a>从编译器说起</h3><ul>
-<li><p>为什么需要编译？</p>
+        <h3 id="UITabBarController使用"><a href="#UITabBarController使用" class="headerlink" title="UITabBarController使用"></a>UITabBarController使用</h3><ul>
+<li><p>UITabBarController的使用步骤</p>
 <ul>
-<li>大家都知道，我们的计算机CPU只能读懂机器码（machine code，也就是由一堆0和1组成的编码）；</li>
-<li>但我们现在编写的代码并不是机器码，而是高级编程语言（Objective-C、Swift、Java、…），最终也可以被计算机所执行，</li>
-<li>这就需要编译了，在编译的过程中，编译器的作用便是把我们的高级编程语言通过一系列的操作转化成可被计算机执行的机器语言。<br>ps：<code>[更详细的解析可以自行百度]</code></li>
+<li>初始化UITabBarController</li>
+<li>设置UIWindow的rootViewController为UITabBarController</li>
+<li>根据具体情况，通过addChildViewController方法添加对应个数的子控制器</li>
 </ul>
 </li>
-<li><p>编译器是如何设计的？</p>
+<li><p>UITabBarController添加控制器的两种方式</p>
 <ul>
-<li><p>经典的<strong>三段式</strong>设计（three phase design）:<br><strong>前端(Frontend)–优化器(Optimizer)–后端(Backend)</strong><br>（见下图）<br><img src="http://upload-images.jianshu.io/upload_images/620754-5b01af04f7db7596.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图来自http://www.aosabook.org"></p>
+<li><p>1.添加单个子控制器</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)addChildViewController:(<span class="built_in">UIViewController</span> *)childController;</div></pre></td></tr></table></figure>
+</li>
+<li><p>2.设置子控制器数组<br><code>@property(nonatomic,copy) NSArray *viewControllers;</code></p>
+</li>
+</ul>
+</li>
+<li><p>UITabBarButton里面显示什么内容，由对应子控制器的tabBarItem属性决定</p>
+</li>
+<li><p>UITabBarItem有以下属性影响着UITabBarButton的内容</p>
 <ul>
-<li>其中前端负责分析源代码，可以检查语法级错误，并构建针对该语言的抽象语法树（AST）<ul>
-<li>抽象语法树可以进一步转换为优化，最终转为新的表示方式， 然后再交给让优化器和后端处理</li>
-<li>最终由后端生成可执行的机器码</li>
-</ul>
+<li><p>标题文字<br><code>@property(nonatomic,copy) NSString *title;</code></p>
+</li>
+<li><p>图标<br><code>@property(nonatomic,retain) UIImage *image;</code></p>
+</li>
+<li><p>选中时的图标<br><code>@property(nonatomic,retain) UIImage *selectedImage;</code></p>
+</li>
+<li><p>提醒数字<br><code>@property(nonatomic,copy) NSString *badgeValue;</code></p>
 </li>
 </ul>
 </li>
-<li><p>为什么要使用三段式设计？优势在哪？</p>
+<li><p>示例代码：</p>
 <ul>
-<li>首先解决了一个很大的问题：假如有N种语言（C、OC、C++、Swift…）的前端，同时也有M个架构（模拟器、arm64、x86…）的Target，是否就需要 N × M 个编译器？</li>
-<li>三段式架构的价值就体现出来了，通过共享优化器的中转，很好的解决了这个问题。</li>
-<li>假如你需要增加一种语言，只需要增加一种前端；假如你需要增加一种处理器架构，也只需要增加一种后端，而其他的地方都不需要改动。这复用思想很牛逼吧。(如下图)<br><img src="http://upload-images.jianshu.io/upload_images/620754-fa67e2861a77eccd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图来自http://www.aosabook.org"></li>
+<li>手动在AppDelegate.m文件下手动创建</li>
 </ul>
 </li>
 </ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 程序启动完成的时候就会调用</span></div><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions &#123;</div><div class="line"></div><div class="line">    <span class="comment">// 1.创建窗口</span></div><div class="line">    <span class="keyword">self</span>.window = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[<span class="built_in">UIScreen</span> mainScreen].bounds];</div><div class="line"></div><div class="line">    <span class="comment">// 2.设置窗口的根控制器</span></div><div class="line">    <span class="comment">// 2.1 创建UITabBarController</span></div><div class="line">    <span class="built_in">UITabBarController</span> *tabBarVc = [[<span class="built_in">UITabBarController</span> alloc] init];</div><div class="line">    <span class="comment">// 2.2 设置tabBarVc为窗口根控制器</span></div><div class="line">    <span class="keyword">self</span>.window.rootViewController = tabBarVc;</div><div class="line"></div><div class="line">    <span class="comment">// 3.添加子控制器</span></div><div class="line">    <span class="comment">// 3.1创建子控制器</span></div><div class="line">    <span class="built_in">UIViewController</span> *vc = [[<span class="built_in">UIViewController</span> alloc] init];</div><div class="line">    vc.view.backgroundColor = [<span class="built_in">UIColor</span> redColor];</div><div class="line"></div><div class="line">    <span class="comment">// 3.2设置UITabBarButton内容</span></div><div class="line">    <span class="comment">// 标题</span></div><div class="line">    vc.tabBarItem.title = <span class="string">@"消息"</span>;</div><div class="line">    vc.tabBarItem.image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"tab_recent_nor"</span>];</div><div class="line"></div><div class="line">    <span class="comment">// 4.添加子控制器到tabBarVc</span></div><div class="line">    [tabBarVc addChildViewController:vc];</div><div class="line"><span class="comment">//========================================================</span></div><div class="line">    <span class="built_in">UIViewController</span> *vc1 = [[<span class="built_in">UIViewController</span> alloc] init];</div><div class="line">    vc1.view.backgroundColor = [<span class="built_in">UIColor</span> greenColor];</div><div class="line"></div><div class="line">    vc1.tabBarItem.title = <span class="string">@"联系人"</span>;</div><div class="line">    vc1.tabBarItem.image = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"tab_buddy_nor"</span>];</div><div class="line">    vc1.tabBarItem.badgeValue = <span class="string">@"99+"</span>;</div><div class="line"></div><div class="line">    [tabBarVc addChildViewController:vc1];</div><div class="line"></div><div class="line">    <span class="built_in">UIViewController</span> *vc2 = [[<span class="built_in">UIViewController</span> alloc] init];</div><div class="line">    vc2.view.backgroundColor = [<span class="built_in">UIColor</span> yellowColor];</div><div class="line">    [tabBarVc addChildViewController:vc2];</div><div class="line">    vc2.tabBarItem.badgeValue = <span class="string">@"10"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 在iOS7之后才会默认渲染</span></div><div class="line">    <span class="comment">// 默认UITabBar上的按钮如果被选中了,图片会被渲染成蓝色</span></div><div class="line">    <span class="comment">// tabBarVC默认显示第0个控制器的view</span></div><div class="line"></div><div class="line">    <span class="comment">// 3.显示窗口</span></div><div class="line">    [<span class="keyword">self</span>.window makeKeyAndVisible];</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Modal的使用"><a href="#Modal的使用" class="headerlink" title="Modal的使用"></a>Modal的使用</h3><ul>
+<li>除了push之外，还有另外一种控制器的切换方式，那就是Modal</li>
+<li>任何控制器都能通过Modal的形式展示出来</li>
+<li><p>Modal的默认效果：新控制器从屏幕的最底部往上钻，直到盖住之前的控制器为止</p>
 </li>
-</ul>
+<li><p>以Modal的形式展示控制器方法：<br><code>- (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion</code></p>
+</li>
+<li><p>关闭当初Modal出来的控制器方法：<br><code>- (void)dismissViewControllerAnimated: (BOOL)flag completion: (void (^)(void))completion;</code></p>
+</li>
+<li><p>Modal原理解剖：</p>
 <ul>
-<li>编译源文件有哪些主要步骤？<ul>
-<li>先列举一些整个编译过程的主要步骤，后面再详细介绍每个步骤都做了哪些事情。</li>
-<li>主要编译步骤如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1. 源代码（source code） -&gt;  </div><div class="line">2. 预处理器（preprocessor） -&gt;   </div><div class="line">3. 编译器（compiler） -&gt;  </div><div class="line">4. 汇编程序（assembler） -&gt;  </div><div class="line">5. 目标代码（object code） -&gt;   </div><div class="line">6. 链接器（Linker） -&gt;  </div><div class="line">7. 可执行文件（executables）</div></pre></td></tr></table></figure>
-</li>
+<li>手写Modal</li>
 </ul>
 </li>
 </ul>
-<h1 id="Xcode编译器发展简史"><a href="#Xcode编译器发展简史" class="headerlink" title="Xcode编译器发展简史"></a>Xcode编译器发展简史</h1><blockquote>
-<p>Xcode3 以前：  GCC；<br>Xcode3：             增加LLVM，GCC(前端) + LLVM(后端)；<br>Xcode4.2：           出现Clang - LLVM 3.0成为默认编译器；<br>Xcode4.6：         LLVM 升级到4.2版本；<br>Xcode5：         GCC被废弃，新的编译器是LLVM 5.0，从GCC过渡到Clang-LLVM的时代正式完成</p>
-</blockquote>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 谁modal谁就强引用modal出来的控制器</span></div><div class="line"><span class="comment">// oneVc被ViewController的presentedViewController强引用</span></div><div class="line"></div><div class="line"><span class="comment">// 自己需要Modal出OneViewController的view</span></div><div class="line"><span class="comment">// 1.把OneViewController的view添加到窗口上,移除之前窗口上的view</span></div><div class="line"></div><div class="line"><span class="built_in">UIWindow</span> *keyWindow = [<span class="built_in">UIApplication</span> sharedApplication].keyWindow;</div><div class="line">[keyWindow addSubview:oneVc.view];</div><div class="line"><span class="comment">// 2.慢慢往上钻的动画</span></div><div class="line"><span class="comment">// 先设置形变</span></div><div class="line">  oneVc.view.transform = <span class="built_in">CGAffineTransformMakeTranslation</span>(<span class="number">0</span>, keyWindow.bounds.size.height);</div><div class="line"></div><div class="line">[<span class="built_in">UIView</span> animateWithDuration:<span class="number">0.5</span> animations:^&#123;</div><div class="line">    <span class="comment">// 还原形变</span></div><div class="line">    oneVc.view.transform = <span class="built_in">CGAffineTransformIdentity</span>;</div><div class="line">&#125; completion:^(<span class="built_in">BOOL</span> finished) &#123;</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.view removeFromSuperview];</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
 <ul>
-<li>为什么苹果的Xcode会使用Clang+LLVM取代GCC？<ul>
-<li>这里面有些历史原因。毕竟GCC是第三方开源的，不属于苹果维护也不能完全掌控其开发进程，Apple为Objective-C增加许多新特性，但GCC开发者对这些支持却不友好；Apple需要做模块化，GCC开发者却拖着迟迟不实现。这能忍？<ul>
-<li>随着Apple对其IDE(也就是Xcode)性能的要求越来越高，最终还是从零开发了一个Clang前端加LLVM后端的编译器，这个编译器的作者是大名鼎鼎的Swift之父Chris Lattner。</li>
+<li>Modal与push的区别：</li>
 </ul>
-</li>
-</ul>
-</li>
-<li>Clang比GCC优秀在哪些方面？<ul>
-<li>传说新的Clang编译器编译Objective-C代码速度比GCC快3倍</li>
-<li>并且提供了友好的代码提示</li>
-</ul>
-</li>
-</ul>
-<h1 id="Clang-的简介"><a href="#Clang-的简介" class="headerlink" title="Clang 的简介"></a>Clang 的简介</h1><blockquote>
-<p>“Clang:  a C language family frontend for LLVM”<br>        LLVM的C语言家族（C、C++、OC）前端。—- Clang</p>
-</blockquote>
+<h3 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h3><ul>
+<li><p>iOS中的事件可以分为3大类型</p>
 <ul>
-<li>上面是官网对于Clang的一句话介绍，其实 <strong>Clang</strong> 就是上文所提到的<strong>编译器前端</strong></li>
-<li><strong>用途</strong>：输出代码对应的<strong>抽象语法树（Abstract Syntax Tree, AST）</strong>，并将代码编译成<strong>LLVM  Bitcode</strong>。接着在后端（back-end）使用LLVM编译成平台相关的机器语言。</li>
+<li>1.触摸事件（重点掌握）</li>
+<li>2.加速器事件</li>
+<li>3.远程控制事件</li>
 </ul>
-<h1 id="LLVM-的简介"><a href="#LLVM-的简介" class="headerlink" title="LLVM 的简介"></a>LLVM 的简介</h1><ul>
-<li><p><strong>LLVM</strong> ：顾名思义是（Low Level Virtual Machine）底层虚拟机？注意了，已经不是了！</p>
 </li>
-<li><p>官网都说了：LLVM就是这个项目的全称，包含LLVM中介码（LLVM IR）、LLVM除错工具、LLVM C++标准库等一套工具，和传统底层虚拟机并没什么关系。</p>
+<li><p>响应者对象（UIResponder）</p>
+<ul>
+<li>在iOS中不是任何对象都能处理事件，只有继承了UIResponder的对象才能接收并处理事件。我们称之为“响应者对象”</li>
+<li>UIApplication、UIViewController、UIView都继承自UIResponder，因此它们都是响应者对象，都能够接收并处理事件</li>
+</ul>
+</li>
+<li><p>UIResponder内部提供了以下方法来处理事件</p>
+</li>
+<li><p>1.触摸事件<br>  <code>- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;</code><br>  <code>- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;</code><br>  <code>- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;</code><br>  <code>- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;</code></p>
+</li>
+<li><p>2.加速计事件<br>  <code>- (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event;</code><br>  <code>- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event;</code><br>  <code>- (void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event;</code></p>
+</li>
+<li><p>3.远程控制事件<br>  <code>- (void)remoteControlReceivedWithEvent:(UIEvent *)event;</code></p>
 </li>
 </ul>
-<h5 id="PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。"><a href="#PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。" class="headerlink" title="PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。"></a>PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。</h5><ul>
-<li>附：<a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">我的github地址</a></li>
+<h4 id="UIView的触摸事件处理"><a href="#UIView的触摸事件处理" class="headerlink" title="UIView的触摸事件处理"></a>UIView的触摸事件处理</h4><ul>
+<li><p>UIView是UIResponder的子类，可以覆盖下列4个方法处理不同的触摸事件</p>
+<ul>
+<li><p>一根或者多根手指开始触摸view，系统会自动调用view的下面方法<br><code>- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event</code></p>
+</li>
+<li><p>一根或者多根手指在view上移动，系统会自动调用view的下面方法（随着手指的移动，会持续调用该方法）<br><code>- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event</code></p>
+</li>
+<li><p>一根或者多根手指离开view，系统会自动调用view的下面方法<br><code>- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event</code></p>
+</li>
+<li><p>触摸结束前，某个系统事件(例如电话呼入)会打断触摸过程，系统会自动调用view的下面方法<br><code>- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event</code><br><strong>提示：touches中存放的都是UITouch对象</strong></p>
+</li>
 </ul>
-<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://clang.llvm.org/" target="_blank" rel="external">http://clang.llvm.org/</a></p>
-<p><a href="http://www.aosabook.org/en/llvm.html" target="_blank" rel="external">http://www.aosabook.org/en/llvm.html</a></p>
-<p><a href="http://history.programmer.com.cn/9436/" target="_blank" rel="external">http://history.programmer.com.cn/9436/</a></p>
-<p><a href="https://zh.wikipedia.org/wiki/Clang" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Clang</a></p>
-<p><a href="https://zh.wikipedia.org/wiki/LLVM" target="_blank" rel="external">https://zh.wikipedia.org/wiki/LLVM</a></p>
+</li>
+</ul>
 
       
     </div>
@@ -510,7 +530,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS底层探索/" rel="tag"># iOS底层探索</a>
+            <a href="/tags/iOS笔记/" rel="tag"># iOS笔记</a>
           
         </div>
       
@@ -523,8 +543,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/28/UICollectionView基本使用详解/" rel="next" title="UICollectionView基本使用详解">
-                <i class="fa fa-chevron-left"></i> UICollectionView基本使用详解
+              <a href="/2015/02/27/iOS笔记-导航控制器(Nav)的10条经验/" rel="next" title="iOS笔记-导航控制器(Nav)的10条经验">
+                <i class="fa fa-chevron-left"></i> iOS笔记-导航控制器(Nav)的10条经验
               </a>
             
           </div>
@@ -532,6 +552,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/10/iOS笔记-UIImagePickerController使用小结/" rel="prev" title="iOS笔记-UIImagePickerController使用小结">
+                iOS笔记-UIImagePickerController使用小结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -557,8 +581,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/"
-           data-title="iOS底层探索(一) - 从零开始认识Clang与LLVM" data-url="http://yoursite.com/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/">
+      <div class="ds-thread" data-thread-key="2015/03/02/iOS笔记-一些零散的知识点(中)/"
+           data-title="iOS笔记-一些零散的知识点(中)" data-url="http://yoursite.com/2015/03/02/iOS笔记-一些零散的知识点(中)/">
       </div>
     
   </div>
@@ -673,7 +697,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面："><span class="nav-number">1.</span> <span class="nav-text">写在前面：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入门起步"><span class="nav-number"></span> <span class="nav-text">入门起步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从编译器说起"><span class="nav-number"></span> <span class="nav-text">从编译器说起</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Xcode编译器发展简史"><span class="nav-number"></span> <span class="nav-text">Xcode编译器发展简史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Clang-的简介"><span class="nav-number"></span> <span class="nav-text">Clang 的简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LLVM-的简介"><span class="nav-number"></span> <span class="nav-text">LLVM 的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。"><span class="nav-number">0.1.</span> <span class="nav-text">PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number"></span> <span class="nav-text">参考文档</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UITabBarController使用"><span class="nav-number">1.</span> <span class="nav-text">UITabBarController使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modal的使用"><span class="nav-number">2.</span> <span class="nav-text">Modal的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件处理"><span class="nav-number">3.</span> <span class="nav-text">事件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UIView的触摸事件处理"><span class="nav-number">3.1.</span> <span class="nav-text">UIView的触摸事件处理</span></a></li></ol></li></ol></div>
             
 
           </div>

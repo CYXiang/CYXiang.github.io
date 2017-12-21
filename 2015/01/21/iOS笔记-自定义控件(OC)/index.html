@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS底层探索," />
+  <meta name="keywords" content="iOS笔记," />
 
 
 
@@ -87,41 +87,30 @@
 
 
 
-<meta name="description" content="写在前面：
-本系列为 『iOS底层探索系列』第一篇，本文源自本人的学习记录整理与理解，其中参考阅读了部分优秀的博客和书籍，尽量以通俗简单的语句转述。引用到的地方如有遗漏或未能一一列举原文出处还望见谅与指出，另，文章内容如有不妥之处还望指教。十分感谢。
+<meta name="description" content="导读：
+iOS开发中，很多时候系统提供的控件并不能很好的满足我们的需求，因此，自定义控件便成为搭建UI界面中必不可少的一部分。本篇博文以笔记的形式，总结了自定义控件的两种方式以及每种方式的实现步骤，虽简略却不简单，因此希望留给读者更多的思考空间。作为入门的编程学习者，独立思考能力和动手编程能力都是至关重要的。在此，希望大家学习愉快，共同进步。
 
-
-入门起步从编译器说起
-为什么需要编译？
-
-大家都知道，我们的计算机CPU只能读懂机器码（machine code，也就是由一堆0和1组成的编码）">
+自定义控件之xib方式
+xib与storyboar">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS底层探索(一) - 从零开始认识Clang与LLVM">
-<meta property="og:url" content="http://yoursite.com/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/index.html">
+<meta property="og:title" content="iOS笔记-自定义控件(OC)">
+<meta property="og:url" content="http://yoursite.com/2015/01/21/iOS笔记-自定义控件(OC)/index.html">
 <meta property="og:site_name" content="Coder_CYX's Blog">
-<meta property="og:description" content="写在前面：
-本系列为 『iOS底层探索系列』第一篇，本文源自本人的学习记录整理与理解，其中参考阅读了部分优秀的博客和书籍，尽量以通俗简单的语句转述。引用到的地方如有遗漏或未能一一列举原文出处还望见谅与指出，另，文章内容如有不妥之处还望指教。十分感谢。
+<meta property="og:description" content="导读：
+iOS开发中，很多时候系统提供的控件并不能很好的满足我们的需求，因此，自定义控件便成为搭建UI界面中必不可少的一部分。本篇博文以笔记的形式，总结了自定义控件的两种方式以及每种方式的实现步骤，虽简略却不简单，因此希望留给读者更多的思考空间。作为入门的编程学习者，独立思考能力和动手编程能力都是至关重要的。在此，希望大家学习愉快，共同进步。
 
-
-入门起步从编译器说起
-为什么需要编译？
-
-大家都知道，我们的计算机CPU只能读懂机器码（machine code，也就是由一堆0和1组成的编码）">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-569f4a629dfcb71e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-5b01af04f7db7596.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-fa67e2861a77eccd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-12-21T05:19:30.820Z">
+自定义控件之xib方式
+xib与storyboar">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-e2c81a7a2e940859.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-21T14:37:01.333Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS底层探索(一) - 从零开始认识Clang与LLVM">
-<meta name="twitter:description" content="写在前面：
-本系列为 『iOS底层探索系列』第一篇，本文源自本人的学习记录整理与理解，其中参考阅读了部分优秀的博客和书籍，尽量以通俗简单的语句转述。引用到的地方如有遗漏或未能一一列举原文出处还望见谅与指出，另，文章内容如有不妥之处还望指教。十分感谢。
+<meta name="twitter:title" content="iOS笔记-自定义控件(OC)">
+<meta name="twitter:description" content="导读：
+iOS开发中，很多时候系统提供的控件并不能很好的满足我们的需求，因此，自定义控件便成为搭建UI界面中必不可少的一部分。本篇博文以笔记的形式，总结了自定义控件的两种方式以及每种方式的实现步骤，虽简略却不简单，因此希望留给读者更多的思考空间。作为入门的编程学习者，独立思考能力和动手编程能力都是至关重要的。在此，希望大家学习愉快，共同进步。
 
-
-入门起步从编译器说起
-为什么需要编译？
-
-大家都知道，我们的计算机CPU只能读懂机器码（machine code，也就是由一堆0和1组成的编码）">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-569f4a629dfcb71e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+自定义控件之xib方式
+xib与storyboar">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-e2c81a7a2e940859.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -149,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/"/>
+  <link rel="canonical" href="http://yoursite.com/2015/01/21/iOS笔记-自定义控件(OC)/"/>
 
 
 
 
 
-  <title> iOS底层探索(一) - 从零开始认识Clang与LLVM | Coder_CYX's Blog </title>
+  <title> iOS笔记-自定义控件(OC) | Coder_CYX's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -326,7 +315,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/01/21/iOS笔记-自定义控件(OC)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="_燕翔">
@@ -347,7 +336,7 @@
             
             
               
-                iOS底层探索(一) - 从零开始认识Clang与LLVM
+                iOS笔记-自定义控件(OC)
               
             
           </h2>
@@ -362,8 +351,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T13:18:34+08:00">
-                2017-12-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-21T11:13:24+08:00">
+                2015-01-21
               </time>
             
 
@@ -381,8 +370,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/" itemprop="commentCount"></span>
+                <a href="/2015/01/21/iOS笔记-自定义控件(OC)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/21/iOS笔记-自定义控件(OC)/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -408,85 +397,135 @@
       
 
       
-        <h4 id="写在前面："><a href="#写在前面：" class="headerlink" title="写在前面："></a>写在前面：</h4><blockquote>
-<p>本系列为 『iOS底层探索系列』第一篇，本文源自本人的学习记录整理与理解，其中参考阅读了部分优秀的博客和书籍，尽量以通俗简单的语句转述。引用到的地方如有遗漏或未能一一列举原文出处还望见谅与指出，另，文章内容如有不妥之处还望指教。十分感谢。</p>
+        <p><img src="http://upload-images.jianshu.io/upload_images/620754-e2c81a7a2e940859.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="随机配图"></p>
+<h4 id="导读："><a href="#导读：" class="headerlink" title="导读："></a>导读：</h4><blockquote>
+<p>iOS开发中，很多时候系统提供的控件并不能很好的满足我们的需求，因此，自定义控件便成为搭建UI界面中必不可少的一部分。本篇博文以笔记的形式，总结了自定义控件的两种方式以及每种方式的实现步骤，虽简略却不简单，因此希望留给读者更多的思考空间。作为入门的编程学习者，独立思考能力和动手编程能力都是至关重要的。在此，希望大家学习愉快，共同进步。</p>
 </blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/620754-569f4a629dfcb71e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="随机配图"></p>
-<h1 id="入门起步"><a href="#入门起步" class="headerlink" title="入门起步"></a>入门起步</h1><h3 id="从编译器说起"><a href="#从编译器说起" class="headerlink" title="从编译器说起"></a>从编译器说起</h3><ul>
-<li><p>为什么需要编译？</p>
+<h3 id="自定义控件之xib方式"><a href="#自定义控件之xib方式" class="headerlink" title="自定义控件之xib方式"></a>自定义控件之xib方式</h3><ul>
+<li><p><strong>xib与storyboard</strong></p>
 <ul>
-<li>大家都知道，我们的计算机CPU只能读懂机器码（machine code，也就是由一堆0和1组成的编码）；</li>
-<li>但我们现在编写的代码并不是机器码，而是高级编程语言（Objective-C、Swift、Java、…），最终也可以被计算机所执行，</li>
-<li>这就需要编译了，在编译的过程中，编译器的作用便是把我们的高级编程语言通过一系列的操作转化成可被计算机执行的机器语言。<br>ps：<code>[更详细的解析可以自行百度]</code></li>
+<li>共同点：<ul>
+<li>都用来描述软件界面</li>
+<li>都用Interface Builder工具来编辑</li>
+<li>本质都是转换成代码去创建控件</li>
 </ul>
 </li>
-<li><p>编译器是如何设计的？</p>
+<li>不同点：<ul>
+<li>Xib是轻量级的，用来描述局部的UI界面</li>
+<li>Storyboard是重量级的，用来描述整个软件的多个界面，并且能展示多个界面之间的跳转关系</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Xib的加载方式</strong></p>
 <ul>
-<li><p>经典的<strong>三段式</strong>设计（three phase design）:<br><strong>前端(Frontend)–优化器(Optimizer)–后端(Backend)</strong><br>（见下图）<br><img src="http://upload-images.jianshu.io/upload_images/620754-5b01af04f7db7596.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图来自http://www.aosabook.org"></p>
+<li><p>方式一：通过<code>mainBundel</code> <code>loadNibNamed:</code>加载</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSArray</span> *views = [[<span class="built_in">NSBundle</span> mainBundle] loadNibNamed:<span class="string">@"xib文件名"</span> owner:<span class="literal">nil</span> options:<span class="literal">nil</span>]`</div></pre></td></tr></table></figure>
+</li>
+<li><p>方式二：通过<code>UINib</code>    <code>nibWithNibName</code>加载</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">UINib</span> *nib = [<span class="built_in">UINib</span> nibWithNibName:<span class="string">@"xib文件名"</span> bundle:<span class="literal">nil</span>];</div><div class="line"><span class="built_in">NSArray</span> *views = [nib instantiateWithOwner:<span class="literal">nil</span> options:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><strong>通过xib创建自定义控件步骤：</strong></p>
 <ul>
-<li>其中前端负责分析源代码，可以检查语法级错误，并构建针对该语言的抽象语法树（AST）<ul>
-<li>抽象语法树可以进一步转换为优化，最终转为新的表示方式， 然后再交给让优化器和后端处理</li>
-<li>最终由后端生成可执行的机器码</li>
+<li>新建一个继承<code>UIView</code>的类</li>
+<li>新建一个xib文件（xib的文件名最好跟控件类名一样）<ul>
+<li>添加子控件、设置子控件属性</li>
+<li>修改最外面那个控件的class为控件类名</li>
+<li>将子控件进行连线</li>
+</ul>
+</li>
+<li>提供模型属性，重写模型的set方法<ul>
+<li>在set方法中给子控件设置数据</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>为什么要使用三段式设计？优势在哪？</p>
+<li><p><strong>示例代码：</strong></p>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    <span class="comment">//1.通过mainbundel获取xib文件，返回组件数组</span></div><div class="line">    <span class="built_in">NSArray</span> * viewArr = [[<span class="built_in">NSBundle</span> mainBundle] loadNibNamed:<span class="string">@"CYXView"</span> owner:<span class="literal">nil</span> options:<span class="literal">nil</span>];</div><div class="line">    <span class="comment">//2.取出数组中需要的控件</span></div><div class="line">    CYXView * myView = (CYXView *)[viewArr lastObject];</div><div class="line">    <span class="comment">//3.设置控件的Frame</span></div><div class="line">    myView.frame = <span class="built_in">CGRectMake</span>(<span class="number">100</span>, <span class="number">100</span>, <span class="number">10</span>, <span class="number">200</span>);</div><div class="line">    <span class="comment">//4.控件添加到self.View中</span></div><div class="line">    [<span class="keyword">self</span>.view addSubview:myView];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ul>
-<li>首先解决了一个很大的问题：假如有N种语言（C、OC、C++、Swift…）的前端，同时也有M个架构（模拟器、arm64、x86…）的Target，是否就需要 N × M 个编译器？</li>
-<li>三段式架构的价值就体现出来了，通过共享优化器的中转，很好的解决了这个问题。</li>
-<li>假如你需要增加一种语言，只需要增加一种前端；假如你需要增加一种处理器架构，也只需要增加一种后端，而其他的地方都不需要改动。这复用思想很牛逼吧。(如下图)<br><img src="http://upload-images.jianshu.io/upload_images/620754-fa67e2861a77eccd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图来自http://www.aosabook.org"></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<li><p><strong>补充：</strong></p>
 <ul>
-<li>编译源文件有哪些主要步骤？<ul>
-<li>先列举一些整个编译过程的主要步骤，后面再详细介绍每个步骤都做了哪些事情。</li>
-<li>主要编译步骤如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1. 源代码（source code） -&gt;  </div><div class="line">2. 预处理器（preprocessor） -&gt;   </div><div class="line">3. 编译器（compiler） -&gt;  </div><div class="line">4. 汇编程序（assembler） -&gt;  </div><div class="line">5. 目标代码（object code） -&gt;   </div><div class="line">6. 链接器（Linker） -&gt;  </div><div class="line">7. 可执行文件（executables）</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h1 id="Xcode编译器发展简史"><a href="#Xcode编译器发展简史" class="headerlink" title="Xcode编译器发展简史"></a>Xcode编译器发展简史</h1><blockquote>
-<p>Xcode3 以前：  GCC；<br>Xcode3：             增加LLVM，GCC(前端) + LLVM(后端)；<br>Xcode4.2：           出现Clang - LLVM 3.0成为默认编译器；<br>Xcode4.6：         LLVM 升级到4.2版本；<br>Xcode5：         GCC被废弃，新的编译器是LLVM 5.0，从GCC过渡到Clang-LLVM的时代正式完成</p>
-</blockquote>
+<li><p><code>initWithcoder</code></p>
 <ul>
-<li>为什么苹果的Xcode会使用Clang+LLVM取代GCC？<ul>
-<li>这里面有些历史原因。毕竟GCC是第三方开源的，不属于苹果维护也不能完全掌控其开发进程，Apple为Objective-C增加许多新特性，但GCC开发者对这些支持却不友好；Apple需要做模块化，GCC开发者却拖着迟迟不实现。这能忍？<ul>
-<li>随着Apple对其IDE(也就是Xcode)性能的要求越来越高，最终还是从零开发了一个Clang前端加LLVM后端的编译器，这个编译器的作者是大名鼎鼎的Swift之父Chris Lattner。</li>
+<li>只要是从storyboard/xib中加载就会调用这个方法；<br>这个方法一般是初始化的操作</li>
 </ul>
 </li>
-</ul>
-</li>
-<li>Clang比GCC优秀在哪些方面？<ul>
-<li>传说新的Clang编译器编译Objective-C代码速度比GCC快3倍</li>
-<li>并且提供了友好的代码提示</li>
-</ul>
-</li>
-</ul>
-<h1 id="Clang-的简介"><a href="#Clang-的简介" class="headerlink" title="Clang 的简介"></a>Clang 的简介</h1><blockquote>
-<p>“Clang:  a C language family frontend for LLVM”<br>        LLVM的C语言家族（C、C++、OC）前端。—- Clang</p>
-</blockquote>
+<li><p><code>awakeFromNib</code></p>
 <ul>
-<li>上面是官网对于Clang的一句话介绍，其实 <strong>Clang</strong> 就是上文所提到的<strong>编译器前端</strong></li>
-<li><strong>用途</strong>：输出代码对应的<strong>抽象语法树（Abstract Syntax Tree, AST）</strong>，并将代码编译成<strong>LLVM  Bitcode</strong>。接着在后端（back-end）使用LLVM编译成平台相关的机器语言。</li>
+<li><code>storyboard/xib</code>中加载完毕的时候调用，想做一些在xib加载完毕的操作，就在这个方法中操作（建议在这个方法中写初始化代码）</li>
 </ul>
-<h1 id="LLVM-的简介"><a href="#LLVM-的简介" class="headerlink" title="LLVM 的简介"></a>LLVM 的简介</h1><ul>
-<li><p><strong>LLVM</strong> ：顾名思义是（Low Level Virtual Machine）底层虚拟机？注意了，已经不是了！</p>
-</li>
-<li><p>官网都说了：LLVM就是这个项目的全称，包含LLVM中介码（LLVM IR）、LLVM除错工具、LLVM C++标准库等一套工具，和传统底层虚拟机并没什么关系。</p>
 </li>
 </ul>
-<h5 id="PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。"><a href="#PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。" class="headerlink" title="PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。"></a>PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。</h5><ul>
-<li>附：<a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">我的github地址</a></li>
+</li>
 </ul>
-<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://clang.llvm.org/" target="_blank" rel="external">http://clang.llvm.org/</a></p>
-<p><a href="http://www.aosabook.org/en/llvm.html" target="_blank" rel="external">http://www.aosabook.org/en/llvm.html</a></p>
-<p><a href="http://history.programmer.com.cn/9436/" target="_blank" rel="external">http://history.programmer.com.cn/9436/</a></p>
-<p><a href="https://zh.wikipedia.org/wiki/Clang" target="_blank" rel="external">https://zh.wikipedia.org/wiki/Clang</a></p>
-<p><a href="https://zh.wikipedia.org/wiki/LLVM" target="_blank" rel="external">https://zh.wikipedia.org/wiki/LLVM</a></p>
+<h3 id="自定义控件之纯代码方式"><a href="#自定义控件之纯代码方式" class="headerlink" title="自定义控件之纯代码方式"></a>自定义控件之纯代码方式</h3><ul>
+<li>何为自定义控件？<ul>
+<li>继承自系统自带的控件，写一个属于自己的控件</li>
+</ul>
+</li>
+<li><p>目的：封装控件内部的细节</p>
+</li>
+<li><p>为什么要封装？</p>
+<ul>
+<li>封装的话，下次直接将封装好的类，直接拿去使用<br>封装以后，没有重复代码</li>
+</ul>
+</li>
+<li>自定义控件封装步骤：<ul>
+<li>创建一个自定义控件，建议直接继承自UIView，也可以继承自其他组件</li>
+</ul>
+</li>
+<li><p>封装的用途</p>
+<ul>
+<li>以后需要封装一些框架给外界使用的时候<br>对于项目扩展性大大提高</li>
+</ul>
+</li>
+<li><p>示例代码思路：</p>
+<ul>
+<li><p>在新建的<code>CYXShopView</code>视图类(View)中代码思路如下</p>
+<ul>
+<li>1.定义子控件。在<code>init</code>方法内只管控件内部的创建，但不管<code>frame</code>的初始化，因为外界调用的init方法不一定马上给<code>frame</code>赋值，所以第一次<code>init</code>是<code>frame</code>的值可能为<code>nil</code></li>
+<li>2.定义位置尺寸（Frame）。重写系统的<code>-(void)layoutSubviews</code>方法,这个方法方法专门用来布局子控件，一般在这里设置子控件的<code>frame</code>，当控件本身的尺寸发生改变的时候，系统会自动调用这个方法。重写此方法内一定要调用<code>[super layoutSubviews]</code></li>
+<li>3.设置数据。提供一个模型属性，重写模型属性的set方法，在set方法中取出模型属性，给对应的子控件赋值</li>
+</ul>
+</li>
+<li><p>在自定义控件内还可以添加其他更方便的初始化方法，可以参照apple官方的<code>UIView</code>等主要控件，还可以更高层次的封装，这个等以后再谈及。</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//重写-(instancetype)initWithFrame:(CGRect)frame方法</span></div><div class="line"><span class="comment">//init方法内部会自动调用-(instancetype)initWithFrame:(CGRect)frame  方法，因此建议写这个方法，用于替代-(instancetype)init 方法</span></div><div class="line"></div><div class="line">-(<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> init]) &#123;</div><div class="line"></div><div class="line">        <span class="comment">//添加图片</span></div><div class="line">        <span class="built_in">UIImageView</span> * iconView = [[<span class="built_in">UIImageView</span> alloc]init];</div><div class="line">        iconView.backgroundColor = [<span class="built_in">UIColor</span> grayColor];</div><div class="line">        [<span class="keyword">self</span> addSubview:iconView];</div><div class="line"></div><div class="line">        <span class="comment">//添加文字</span></div><div class="line">        <span class="built_in">UILabel</span> * name = [[<span class="built_in">UILabel</span> alloc]init];</div><div class="line">        name.backgroundColor = [<span class="built_in">UIColor</span> greenColor];</div><div class="line">        name.font = [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">15</span>];</div><div class="line">        name.textAlignment = <span class="built_in">NSTextAlignmentCenter</span>;</div><div class="line"></div><div class="line">        [<span class="keyword">self</span> addSubview:name];</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 这个方法专门用来布局子控件，一般在这里设置子控件的frame</div><div class="line"> * 当控件本身的尺寸发生改变的时候，系统会自动调用这个方</div><div class="line"> */</div><div class="line">-(<span class="keyword">void</span>)layoutSubviews&#123;</div><div class="line">    <span class="comment">// 一定要调用super方法</span></div><div class="line">    [<span class="keyword">super</span> layoutSubviews];</div><div class="line"></div><div class="line">    <span class="built_in">CGFloat</span> shopW = <span class="keyword">self</span>.frame.size.width;</div><div class="line">    <span class="built_in">CGFloat</span> shopH = <span class="keyword">self</span>.frame.size.height;</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.iconView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, shopW, shopW);</div><div class="line">    <span class="keyword">self</span>.name.frame  = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, shopW, shopW, shopH-shopW);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)setShop:(CYXShop *)shop&#123;</div><div class="line">    <span class="comment">//赋值</span></div><div class="line">    _shop = shop;</div><div class="line">    <span class="keyword">self</span>.name.text = <span class="keyword">self</span>.shop.name;</div><div class="line">    <span class="keyword">self</span>.iconView.image = [<span class="built_in">UIImage</span> imageNamed:<span class="keyword">self</span>.shop.icon];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>补充：<ul>
+<li><code>init</code>和<code>initWithFrame</code>（一般在使用代码创建的时候调用<ul>
+<li>在调用<code>init</code>的时候，系统会默认调用一次<code>initWithFrame</code>；但在调用<code>initWithFrame</code>不会调用<code>init</code>；所以一般初始化自己的子控件一般都是放在<code>initWithFrame</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>###给封装View设置数据的几种方式</p>
+<ul>
+<li><p>（1）直接将属性暴漏在.h文件中：不好，影响封装性，不应该将自己的子控件暴漏在头文件中</p>
+</li>
+<li><p>（2）提供一个初始化方法</p>
+</li>
+<li><p>（3）根据tag设置子控件数据</p>
+<ul>
+<li>因为子控件较少，所以设置比较方便。</li>
+<li>控制器做的的太多了</li>
+</ul>
+</li>
+<li><p>（4）提供一个设置模型的方法，将模型传递过去（直接传递一个模型对象给View自己设置值）</p>
+</li>
+<li><p>（5）提供一个属性，直接使用点语法赋值（最终采取的方法）</p>
+</li>
+</ul>
 
       
     </div>
@@ -510,7 +549,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS底层探索/" rel="tag"># iOS底层探索</a>
+            <a href="/tags/iOS笔记/" rel="tag"># iOS笔记</a>
           
         </div>
       
@@ -523,15 +562,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/28/UICollectionView基本使用详解/" rel="next" title="UICollectionView基本使用详解">
-                <i class="fa fa-chevron-left"></i> UICollectionView基本使用详解
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/22/iOS笔记-多线程相关(pthread 、NSThread 、GCD、NSOperation)/" rel="prev" title="iOS笔记-多线程相关(pthread 、NSThread 、GCD、NSOperation)">
+                iOS笔记-多线程相关(pthread 、NSThread 、GCD、NSOperation) <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -557,8 +596,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/"
-           data-title="iOS底层探索(一) - 从零开始认识Clang与LLVM" data-url="http://yoursite.com/2017/12/21/iOS底层探索-一-从零开始认识Clang与LLVM/">
+      <div class="ds-thread" data-thread-key="2015/01/21/iOS笔记-自定义控件(OC)/"
+           data-title="iOS笔记-自定义控件(OC)" data-url="http://yoursite.com/2015/01/21/iOS笔记-自定义控件(OC)/">
       </div>
     
   </div>
@@ -673,7 +712,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#写在前面："><span class="nav-number">1.</span> <span class="nav-text">写在前面：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入门起步"><span class="nav-number"></span> <span class="nav-text">入门起步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从编译器说起"><span class="nav-number"></span> <span class="nav-text">从编译器说起</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Xcode编译器发展简史"><span class="nav-number"></span> <span class="nav-text">Xcode编译器发展简史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Clang-的简介"><span class="nav-number"></span> <span class="nav-text">Clang 的简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LLVM-的简介"><span class="nav-number"></span> <span class="nav-text">LLVM 的简介</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。"><span class="nav-number">0.1.</span> <span class="nav-text">PS：下一篇将介绍Clang与LLVM的详细编译过程，欢迎关注。</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number"></span> <span class="nav-text">参考文档</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#导读："><span class="nav-number">1.</span> <span class="nav-text">导读：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义控件之xib方式"><span class="nav-number"></span> <span class="nav-text">自定义控件之xib方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义控件之纯代码方式"><span class="nav-number"></span> <span class="nav-text">自定义控件之纯代码方式</span></a></div>
             
 
           </div>

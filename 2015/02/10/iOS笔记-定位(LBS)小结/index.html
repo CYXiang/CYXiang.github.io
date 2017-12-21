@@ -1,0 +1,981 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="iOS8.0之前的定位前台定位
+导入CoreLocation框架和对应的主头文件#import &amp;lt;CoreLocation/CoreLocation.h&amp;gt; 
+
+创建CLLcationManager对象,并设置代理_locationM = [[CLLocationManager alloc] init];_locationM.delegate = self;
+
+调用CLLcationMa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS笔记-定位(LBS)小结">
+<meta property="og:url" content="http://yoursite.com/2015/02/10/iOS笔记-定位(LBS)小结/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="iOS8.0之前的定位前台定位
+导入CoreLocation框架和对应的主头文件#import &amp;lt;CoreLocation/CoreLocation.h&amp;gt; 
+
+创建CLLcationManager对象,并设置代理_locationM = [[CLLocationManager alloc] init];_locationM.delegate = self;
+
+调用CLLcationMa">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-5f8f115771169e3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-07fa229aeea166b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-263b504f4990942d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-21T14:33:11.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS笔记-定位(LBS)小结">
+<meta name="twitter:description" content="iOS8.0之前的定位前台定位
+导入CoreLocation框架和对应的主头文件#import &amp;lt;CoreLocation/CoreLocation.h&amp;gt; 
+
+创建CLLcationManager对象,并设置代理_locationM = [[CLLocationManager alloc] init];_locationM.delegate = self;
+
+调用CLLcationMa">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-5f8f115771169e3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/02/10/iOS笔记-定位(LBS)小结/"/>
+
+
+
+
+
+  <title> iOS笔记-定位(LBS)小结 | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/02/10/iOS笔记-定位(LBS)小结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS笔记-定位(LBS)小结
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-10T11:13:24+08:00">
+                2015-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/02/10/iOS笔记-定位(LBS)小结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/10/iOS笔记-定位(LBS)小结/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="iOS8-0之前的定位"><a href="#iOS8-0之前的定位" class="headerlink" title="iOS8.0之前的定位"></a>iOS8.0之前的定位</h2><h4 id="前台定位"><a href="#前台定位" class="headerlink" title="前台定位"></a>前台定位</h4><ul>
+<li><p>导入CoreLocation框架和对应的主头文件<br><code>#import &lt;CoreLocation/CoreLocation.h&gt;</code> </p>
+</li>
+<li><p>创建CLLcationManager对象,并设置代理<br><code>_locationM = [[CLLocationManager alloc] init];</code><br><code>_locationM.delegate = self;</code></p>
+</li>
+<li><p>调用CLLcationManager对象的startUpdatingLocation方法进行更新用户位置<br><code>[_locationM startUpdatingLocation];</code></p>
+</li>
+<li><p>实现代理方法,接收位置参数<br><code>-(void)locationManager:(nonnull CLLocationManager *)manager didUpdateLocations:(nonnull NSArray&lt;CLLocation *&gt; *)locations</code></p>
+</li>
+</ul>
+<h4 id="后台定位"><a href="#后台定位" class="headerlink" title="后台定位"></a>后台定位</h4><ul>
+<li>在前台定位基础上,勾选后台模式update locations(如下图)</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-5f8f115771169e3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加后台运行模式"></p>
+<h2 id="iOS8-0-至-iOS9-0之间的定位"><a href="#iOS8-0-至-iOS9-0之间的定位" class="headerlink" title="iOS8.0+ 至 iOS9.0之间的定位"></a>iOS8.0+ 至 iOS9.0之间的定位</h2><h4 id="前台定位-1"><a href="#前台定位-1" class="headerlink" title="前台定位"></a>前台定位</h4><ul>
+<li>导入CoreLocation框架和对应的主头文件<br><code>#import &lt;CoreLocation/CoreLocation.h&gt;</code></li>
+<li>创建CLLcationManager对象,并设置代理 请求前台定位授权,并配置KEY<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">_locationM = [[<span class="built_in">CLLocationManager</span> alloc] init];</div><div class="line">_locationM.delegate = <span class="keyword">self</span>;</div><div class="line"><span class="keyword">if</span> ([[<span class="built_in">UIDevice</span> currentDevice].systemVersion floatValue] &gt;= <span class="number">8.0</span>) </div><div class="line">&#123;</div><div class="line">[_locationM requestWhenInUseAuthorization];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-07fa229aeea166b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li><p>调用<code>CLLcationManager</code>对象的<code>startUpdatingLocation</code>方法进行更新用户位置<br><code>[_locationM startUpdatingLocation];</code></p>
+</li>
+<li><p>实现代理方法,接收位置参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-(void)locationManager:(nonnull CLLocationManager *)manager didUpdateLocations:(nonnull NSArray&lt;CLLocation *&gt; *)locations</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="后台定位-1"><a href="#后台定位-1" class="headerlink" title="后台定位"></a>后台定位</h4><ul>
+<li>方案一:在APP处于前台定位授权场景下,勾选后台运行模式update locations (如下图)<br>添加后台运行模式<br><em>注意</em>:如果APP处于后台,则会出现蓝条</li>
+<li><p>方案二:请求前后台定位授权,并配置KEY<br><code>[_locationM requestAlwaysAuthorization];</code><br><img src="http://upload-images.jianshu.io/upload_images/620754-263b504f4990942d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="">        </p>
+</li>
+<li><p>各种授权状态讲解</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> (status) &#123;</div><div class="line">            <span class="comment">// 用户还未决定</span></div><div class="line">        <span class="keyword">case</span> kCLAuthorizationStatusNotDetermined:</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"用户还未决定"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">            <span class="comment">// 问受限</span></div><div class="line">        <span class="keyword">case</span> kCLAuthorizationStatusRestricted:</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"访问受限"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">            <span class="comment">// 定位关闭时和对此APP授权为never时调用</span></div><div class="line">        <span class="keyword">case</span> kCLAuthorizationStatusDenied:</div><div class="line">        &#123;</div><div class="line">            <span class="comment">// 定位是否可用（是否支持定位或者定位是否开启）</span></div><div class="line">            <span class="keyword">if</span>([<span class="built_in">CLLocationManager</span> locationServicesEnabled])</div><div class="line">            &#123;</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"定位开启，但被拒"</span>);</div><div class="line">            &#125;<span class="keyword">else</span></div><div class="line">            &#123;</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"定位关闭，不可用"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">            <span class="comment">// 获取前后台定位授权</span></div><div class="line">        <span class="keyword">case</span> kCLAuthorizationStatusAuthorizedAlways:</div><div class="line"><span class="comment">//        case kCLAuthorizationStatusAuthorized: // 失效，不建议使用</span></div><div class="line">        &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"获取前后台定位授权"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">            <span class="comment">// 获得前台定位授权</span></div><div class="line">        <span class="keyword">case</span> kCLAuthorizationStatusAuthorizedWhenInUse:</div><div class="line">        &#123;</div><div class="line">            <span class="built_in">NSLog</span>(<span class="string">@"获得前台定位授权"</span>);</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">default</span>:</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="iOS9-0-定位补充"><a href="#iOS9-0-定位补充" class="headerlink" title="iOS9.0 定位补充"></a>iOS9.0 定位补充</h2><h4 id="前台定位-2"><a href="#前台定位-2" class="headerlink" title="前台定位"></a>前台定位</h4><ul>
+<li><p>1.导入CoreLocation框架和对应的主头文件<br><code>#import &lt;CoreLocation/CoreLocation.h&gt;</code></p>
+</li>
+<li><p>2.创建CLLcationManager对象,并设置代理 请求前台定位授权,并配置KEY</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">    _locationM = [[<span class="built_in">CLLocationManager</span> alloc] init];</div><div class="line">    _locationM.delegate = <span class="keyword">self</span>;</div><div class="line">    <span class="keyword">if</span> ([[<span class="built_in">UIDevice</span> currentDevice].systemVersion floatValue] &gt;= <span class="number">8.0</span>) </div><div class="line">    &#123;</div><div class="line">	  [_locationM requestWhenInUseAuthorization];</div><div class="line">    &#125;</div><div class="line">```		</div><div class="line"></div><div class="line">- <span class="number">3.</span>调用<span class="built_in">CLLcationManager</span>对象的startUpdatingLocation方法进行更新用户位置</div><div class="line">`[_locationM startUpdatingLocation];`</div><div class="line">		</div><div class="line">- <span class="number">4.</span>实现代理方法,接收位置参数</div><div class="line">`-(<span class="keyword">void</span>)locationManager:(<span class="keyword">nonnull</span> <span class="built_in">CLLocationManager</span> *)manager didUpdateLocations:(<span class="keyword">nonnull</span> <span class="built_in">NSArray</span>&lt;<span class="built_in">CLLocation</span> *&gt; *)locations`</div><div class="line">		</div><div class="line"><span class="meta">#### 后台定位</span></div><div class="line"></div><div class="line">- 方案一:在APP处于前台定位授权场景下,勾选后台运行模式update locations (如下图) 并且,调用以下方法,设置允许后台定位</div><div class="line">```objc</div><div class="line"><span class="keyword">if</span> ([[<span class="built_in">UIDevice</span> currentDevice].systemVersion floatValue] &gt;= <span class="number">9.0</span>) &#123;</div><div class="line">		_locationM.allowsBackgroundLocationUpdates = <span class="literal">YES</span>;</div><div class="line">&#125;</div><div class="line">```		</div><div class="line">添加后台运行模式</div><div class="line">注意:如果APP处于后台,则会出现蓝条</div><div class="line"></div><div class="line">- 方案二:请求前后台定位授权,并配置KEY</div><div class="line">`[_locationM requestAlwaysAuthorization];`</div><div class="line">		</div><div class="line"></div><div class="line"><span class="meta">## 补充</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>// 作用：按照定位精确度从低到高进行排序，逐个进行定位。如果获取到的位置不是精确度最高的那个，也会在定位超时后，通过代理告诉外界<br>// 注意：一个要实现代理的定位失败方法； 二：不能与startUpdatingLocation同时使用<br>[_locationM requestLocation];<br>CLLocation对象详解</p>
+<p>  //coordinate    （当前位置所在的经纬度）<br>  //altitude    （海拔）<br>  //speed    （当前速度）<br>  //-distanceFromLocation: （获取两个位置之间的直线物理距离）<br>指南针<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- 导入CoreLocation框架和对应的主头文件</div><div class="line">`#import &lt;CoreLocation/CoreLocation.h&gt; `</div><div class="line">		</div><div class="line">- 创建CLLcationManager对象,并设置代理</div></pre></td></tr></table></figure></p>
+<p>_locationM = [[CLLocationManager alloc] init];<br>_locationM.delegate = self;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- 调用`CLLcationManager`对象的`startUpdatingHeading`方法进行更新设备朝向</div><div class="line">`[_locationM startUpdatingHeading];`</div><div class="line">		</div><div class="line">- 实现代理方法,获取方向参数,根据方向参数旋转图片</div></pre></td></tr></table></figure></p>
+<p>-(void)locationManager:(nonnull CLLocationManager <em>)manager didUpdateHeading:(nonnull CLHeading </em>)newHeading<br>        {<br>            // 获取当前设备朝向(磁北方向)<br>            CGFloat angle = newHeading.magneticHeading;</p>
+<pre><code>    // 转换成为弧度
+    CGFloat radian = angle / 180.0 * M_PI;
+
+    // 反向旋转指南针
+    [UIView animateWithDuration:0.5 animations:^{
+        self.compassView.transform = CGAffineTransformMakeRotation(-radian);
+    }];
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">*注意*: 获取用户的设备朝向,不需要用户进行定位授权</div><div class="line"></div><div class="line">## 区域监听</div><div class="line"></div><div class="line">- 导入CoreLocation框架和对应的主头文件</div><div class="line">`#import &lt;CoreLocation/CoreLocation.h&gt;`</div><div class="line">		</div><div class="line">- 创建CLLcationManager对象,并设置代理,请求授权(iOS8.0之后才需要) 请求前后台定位授权,并配置KEY</div></pre></td></tr></table></figure>
+<p>_locationM = [[CLLocationManager alloc] init];<br>_locationM.delegate = self;<br>if ([[UIDevice currentDevice].systemVersion floatValue] &gt;= 8.0)<br>{<br>   [_locationM requestAlwaysAuthorization];<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- 调用CLLcationManager对象的startMonitoringForRegion:方法进行监听指定区域</div></pre></td></tr></table></figure></p>
+<p>// 创建区域中心<br>CLLocationCoordinate2D center = CLLocationCoordinate2DMake(29.12345, 131.23456);<br>// 创建区域（指定区域中心，和区域半径）<br> CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:center radius:1000 identifier:@”广州”];<br>// 开始监听指定区域<br>[self.locationM startMonitoringForRegion:region];<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">		</div><div class="line">- 实现代理方法,获取区域进入或者离开状态</div></pre></td></tr></table></figure></p>
+<p>// 进去监听区域后调用（调用一次）<br>-(void)locationManager:(nonnull CLLocationManager <em>)manager didEnterRegion:(nonnull CLRegion </em>)region<br>{<br>      NSLog(@”进入区域—%@”, region.identifier);<br>      [manager stopMonitoringForRegion:region];<br>}<br>// 离开监听区域后调用（调用一次）<br>-(void)locationManager:(nonnull CLLocationManager <em>)manager didExitRegion:(nonnull CLRegion </em>)region<br>{<br>      NSLog(@”离开区域—%@”, region.identifier);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## (反)地理编码</div><div class="line"></div><div class="line">- 导入CoreLocation框架和对应的主头文件</div><div class="line">`#import &lt;CoreLocation/CoreLocation.h&gt;`</div><div class="line">		</div><div class="line">- 创建CLGeocoder对象</div><div class="line">`_geoC = [[CLGeocoder alloc] init];`</div><div class="line">		</div><div class="line">## 地理编码</div><div class="line">- 方案1:</div></pre></td></tr></table></figure></p>
+<p>// 地理编码方案一：直接根据地址进行地理编码（返回结果可能有多个，因为一个地点有重名）<br>            [self.geoC geocodeAddressString:@”盛达商务园” completionHandler:^(NSArray<clplacemark *=""> <em> __nullable placemarks, NSError </em> __nullable error) {<br>                // 包含区，街道等信息的地标对象<br>                CLPlacemark <em>placemark = [placemarks firstObject];<br>                // 城市名称<br>        //        NSString </em>city = placemark.locality;<br>                // 街道名称<br>        //        NSString <em>street = placemark.thoroughfare;<br>                // 全称<br>                NSString </em>name = placemark.name;<br>                self.addressDetailTV.text = [NSString stringWithFormat:@”%@”, name];<br>                self.latitudeTF.text = [NSString stringWithFormat:@”%f”, placemark.location.coordinate.latitude];<br>                self.longtitudeTF.text = [NSString stringWithFormat:@”%f”, placemark.location.coordinate.longitude];<br>            }];<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- 方案2:</div></pre></td></tr></table></figure></clplacemark></p>
+<p>// 地理编码方案二：根据地址和指定区域两个条件进行地理编码（更加精确）<br>[self.geoC geocodeAddressString:@”广州” inRegion:nil completionHandler:^(NSArray<clplacemark *=""> <em> __nullable placemarks, NSError </em> __nullable error) {<br>        // 包含区，街道等信息的地标对象<br>        CLPlacemark *placemark = [placemarks firstObject];<br>        self.addressDetailTV.text = placemark.description;<br>        self.latitudeTF.text = [NSString stringWithFormat:@”%f”, placemark.location.coordinate.latitude];<br>        self.longtitudeTF.text = [NSString stringWithFormat:@”%f”, placemark.location.coordinate.longitude];<br>}];<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 反地理编码</div></pre></td></tr></table></figure></clplacemark></p>
+<p>// 创建CLLocation对象<br>CLLocation <em>location = [[CLLocation alloc] initWithLatitude:23.132931 longitude:113.375924;<br>// 根据CLLocation对象进行反地理编码<br>[self.geoC reverseGeocodeLocation:location completionHandler:^(NSArray&lt;CLPlacemark </em>&gt; <em> __nullable placemarks, NSError </em> __nullable error) {<br>    // 包含区，街道等信息的地标对象<br>    CLPlacemark <em>placemark = [placemarks firstObject];<br>    // 城市名称<br>    // NSString </em>city = placemark.locality;<br>    // 街道名称<br>    // NSString <em>street = placemark.thoroughfare;<br>    // 全称<br>    NSString </em>name = placemark.name;<br>    self.addressDetailTV.text = [NSString stringWithFormat:@”%@”, name];<br>}];<br>```    </p>
+<h2 id="定位的第三方框架"><a href="#定位的第三方框架" class="headerlink" title="定位的第三方框架"></a>定位的第三方框架</h2><ul>
+<li>下载框架（locationManager框架）</li>
+<li>locationManager框架 <a href="https://github.com/intuit/LocationManager" target="_blank" rel="external">下载地址</a></li>
+<li>导入框架(直接拖入项目)</li>
+<li>框架功能说明</li>
+<li>可以使用block进行获取用户位置</li>
+<li>可以设置超时时长</li>
+<li>可以取消和强制终止定位</li>
+<li>按照github中,该框架的readme参照使用</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS笔记/" rel="tag"># iOS笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/02/05/iOS笔记-控制器传值总结(OC)/" rel="next" title="iOS笔记-控制器传值总结(OC)">
+                <i class="fa fa-chevron-left"></i> iOS笔记-控制器传值总结(OC)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/10/iOS笔记-地图的基本使用/" rel="prev" title="iOS笔记-地图的基本使用">
+                iOS笔记-地图的基本使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/02/10/iOS笔记-定位(LBS)小结/"
+           data-title="iOS笔记-定位(LBS)小结" data-url="http://yoursite.com/2015/02/10/iOS笔记-定位(LBS)小结/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS8-0之前的定位"><span class="nav-number">1.</span> <span class="nav-text">iOS8.0之前的定位</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前台定位"><span class="nav-number">1.0.1.</span> <span class="nav-text">前台定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后台定位"><span class="nav-number">1.0.2.</span> <span class="nav-text">后台定位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS8-0-至-iOS9-0之间的定位"><span class="nav-number">2.</span> <span class="nav-text">iOS8.0+ 至 iOS9.0之间的定位</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前台定位-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">前台定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后台定位-1"><span class="nav-number">2.0.2.</span> <span class="nav-text">后台定位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS9-0-定位补充"><span class="nav-number">3.</span> <span class="nav-text">iOS9.0 定位补充</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前台定位-2"><span class="nav-number">3.0.1.</span> <span class="nav-text">前台定位</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定位的第三方框架"><span class="nav-number">4.</span> <span class="nav-text">定位的第三方框架</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>

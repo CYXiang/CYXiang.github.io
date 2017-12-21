@@ -1,0 +1,1015 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="数据存储将数据保存到手机里面，保存到应用沙盒（app安装到手机上的文件夹）常见方式有以下几种：1.XML属性列表（plist）归档2.Preference(偏好设置)3.NSKeyedArchiver归档(NSCoding)4.SQLite35.Core Data
+
+应用沙盒
+每个iOS应用都有自己的应用沙盒(应用沙盒就是文件系统目录)，与其他文件系统隔离。应用必须待在自己的沙盒里，其他应用不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS笔记-数据存储科普篇">
+<meta property="og:url" content="http://yoursite.com/2015/02/21/iOS笔记-数据存储科普篇/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="数据存储将数据保存到手机里面，保存到应用沙盒（app安装到手机上的文件夹）常见方式有以下几种：1.XML属性列表（plist）归档2.Preference(偏好设置)3.NSKeyedArchiver归档(NSCoding)4.SQLite35.Core Data
+
+应用沙盒
+每个iOS应用都有自己的应用沙盒(应用沙盒就是文件系统目录)，与其他文件系统隔离。应用必须待在自己的沙盒里，其他应用不">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-20f184625f4fafa3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-21T14:35:01.259Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS笔记-数据存储科普篇">
+<meta name="twitter:description" content="数据存储将数据保存到手机里面，保存到应用沙盒（app安装到手机上的文件夹）常见方式有以下几种：1.XML属性列表（plist）归档2.Preference(偏好设置)3.NSKeyedArchiver归档(NSCoding)4.SQLite35.Core Data
+
+应用沙盒
+每个iOS应用都有自己的应用沙盒(应用沙盒就是文件系统目录)，与其他文件系统隔离。应用必须待在自己的沙盒里，其他应用不">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-20f184625f4fafa3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/02/21/iOS笔记-数据存储科普篇/"/>
+
+
+
+
+
+  <title> iOS笔记-数据存储科普篇 | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/02/21/iOS笔记-数据存储科普篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS笔记-数据存储科普篇
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-21T11:13:24+08:00">
+                2015-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/02/21/iOS笔记-数据存储科普篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/21/iOS笔记-数据存储科普篇/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/620754-20f184625f4fafa3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="任我的诗歌顺着你的波涛奔向远方"></p>
+<blockquote>
+<h3 id="数据存储"><a href="#数据存储" class="headerlink" title="数据存储"></a>数据存储</h3><p>将数据保存到手机里面，保存到应用沙盒（app安装到手机上的文件夹）<br><strong>常见方式有以下几种：</strong><br>1.XML属性列表（plist）归档<br>2.Preference(偏好设置)<br>3.NSKeyedArchiver归档(NSCoding)<br>4.SQLite3<br>5.Core Data</p>
+</blockquote>
+<h4 id="应用沙盒"><a href="#应用沙盒" class="headerlink" title="应用沙盒"></a>应用沙盒</h4><ul>
+<li>每个iOS应用都有自己的应用沙盒(应用沙盒就是文件系统目录)，与其他文件系统隔离。应用必须待在自己的沙盒里，其他应用不能访问该沙盒</li>
+<li><p>应用沙盒结构分析（文件夹分析）：</p>
+<ul>
+<li><p><code>Documents</code>：保存应用运行时生成的需要持久化的数据，iTunes同步设备时会备份该目录。例如，游戏应用可将游戏存档保存在该目录</p>
+</li>
+<li><p><code>tmp</code>：保存应用运行时所需的临时数据，使用完毕后再将相应的文件从该目录删除。应用没有运行时，系统也可能会清除该目录下的文件。iTunes同步设备时不会备份该目录</p>
+</li>
+<li><p><code>Library/Caches</code>：保存应用运行时生成的需要持久化的数据，iTunes同步设备时不会备份该目录。一般存储体积大、不需要备份的非重要数据</p>
+</li>
+<li><p><code>Library/Preference</code>：保存应用的所有偏好设置，iOS的Settings(设置)应用会在该目录中查找应用的设置信息。iTunes同步设备时会备份该目录</p>
+</li>
+</ul>
+</li>
+<li><p>应用沙盒目录的常见获取方式</p>
+<ul>
+<li><strong>沙盒根目录</strong>：<ul>
+<li><code>NSString * home = NSHomeDirectory();</code></li>
+</ul>
+</li>
+<li><p><strong>Documents:(两种方式)</strong></p>
+<ul>
+<li>1.利用沙盒根目录拼接<code>“Documents”</code>字符串(不建议使用)</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 不建议采用，因为新版本的操作系统可能会修改目录名</span></div><div class="line"><span class="built_in">NSString</span> *home = <span class="built_in">NSHomeDirectory</span>();</div><div class="line"><span class="built_in">NSString</span> *documents = [home stringByAppendingPathComponent:<span class="string">@"Documents"</span>];</div></pre></td></tr></table></figure>
+<ul>
+<li>2.利用<code>NSSearchPathForDirectoriesInDomains</code>函数</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// NSUserDomainMask 代表从用户文件夹下找</span></div><div class="line"><span class="comment">// YES 代表展开路径中的波浪字符“~”</span></div><div class="line"><span class="built_in">NSArray</span> *array =  <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">NO</span>);</div><div class="line"><span class="comment">// 在iOS中，只有一个目录跟传入的参数匹配，所以这个集合里面只有一个元素</span></div><div class="line"><span class="built_in">NSString</span> *documents = [array objectAtIndex:<span class="number">0</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>tmp:</strong></p>
+<ul>
+<li><code>NSString *tmp = NSTemporaryDirectory();</code></li>
+</ul>
+</li>
+<li><strong>Library/Caches：(跟Documents类似的2种方法)</strong><ul>
+<li>1.利用沙盒根目录拼接<code>”Caches”</code>字符串</li>
+<li>2.利用<code>NSSearchPathForDirectoriesInDomains</code>函数(将函数的第2个参数改为：<code>NSCachesDirectory</code>即可)</li>
+</ul>
+</li>
+<li><strong>Library/Preference</strong>：<ul>
+<li>通过<code>NSUserDefaults</code>类存取该目录下的设置信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-plist存储（属性列表）"><a href="#1-plist存储（属性列表）" class="headerlink" title="1.plist存储（属性列表）"></a>1.plist存储（属性列表）</h4><ul>
+<li>属性列表是一种XML格式的文件，拓展名为plist</li>
+<li>如果对象是NSString、NSDictionary、NSArray、NSData、NSNumber等类型，就可以使用writeToFile:atomically:方法直接将对象写到属性列表文件中</li>
+</ul>
+<h5 id="存数据"><a href="#存数据" class="headerlink" title="存数据"></a>存数据</h5><ul>
+<li>Plist存储，就是把某些对象写成plist文件，主要描述数组，字典</li>
+<li>plist文件一般用来存储数组和字典</li>
+<li>plist存储是苹果特有的，只有苹果才能生成plist</li>
+<li>plist存储不能存储自定义对象</li>
+<li><p>具体用法：</p>
+<ul>
+<li>1.定义一个字典<br><code>NSDictionary *dict = @{@&quot;age&quot;:@&quot;18&quot;,@&quot;name&quot;:@&quot;xmg&quot;};</code></li>
+<li><p>2.搜索文件夹路径</p>
+<ul>
+<li><strong>Caches文件夹</strong><ul>
+<li>在某个范围内容搜索文件夹的路径</li>
+<li><code>directory</code>:获取哪个文件夹</li>
+<li><code>domainMask</code>:在哪个范围下获取</li>
+<li><code>NSUserDomainMask</code>:在用户的范围内搜索</li>
+<li><code>expandTilde</code>是否展开全路径,YES:展开</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//NSArray *NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde);</span></div><div class="line"><span class="built_in">NSString</span> *cachePath = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>,</div><div class="line"><span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)[<span class="number">0</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p>3.拼接文件全路径</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *filePath = [cachePath stringByAppendingPathComponent:<span class="string">@"dict.plist"</span>];`</div></pre></td></tr></table></figure>
+</li>
+<li><p>4.写入文件</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// File:文件全路径 =&gt; 所有文件夹路径 + 文件路径</span></div><div class="line">[dict writeToFile:filePath atomically:<span class="literal">YES</span>];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="读数据"><a href="#读数据" class="headerlink" title="读数据"></a>读数据</h5><ul>
+<li><p>具体使用：</p>
+<ul>
+<li><p>1.获取Caches文件夹路径</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *cachePath = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>)[<span class="number">0</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p>2.拼接文件全路径</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *filePath = [cachePath stringByAppendingPathComponent:<span class="string">@"dict.plist"</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p>3.读取文件数据（存的时候用什么对象存，读取的时候也用什么对象读取）</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSDictionary</span> *dict = [<span class="built_in">NSDictionary</span> dictionaryWithContentsOfFile:filePath];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-Preference-偏好设置"><a href="#2-Preference-偏好设置" class="headerlink" title="2.Preference(偏好设置)"></a>2.Preference(偏好设置)</h4><ul>
+<li>很多iOS应用都支持偏好设置，比如保存用户名、密码、字体大小等设置，iOS提供了一套标准的解决方案来为应用加入偏好设置功能</li>
+<li>每个应用都有个NSUserDefaults实例，通过它来存取偏好设置</li>
+<li>比如，保存用户名、字体大小、是否自动登录</li>
+</ul>
+<h5 id="存数据-1"><a href="#存数据-1" class="headerlink" title="存数据"></a>存数据</h5><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 偏好设置NSUserDefaults</span></div><div class="line"><span class="comment">// 底层就是封装了一个字典,利用字典的方式生成plist</span></div><div class="line"><span class="comment">// 好处:不需要关心文件名,快速进行键值对存储</span></div><div class="line"><span class="comment">// name cyx</span></div><div class="line">[[<span class="built_in">NSUserDefaults</span> standardUserDefaults] setObject:<span class="string">@"cyx"</span> forKey:<span class="string">@"name"</span>];</div><div class="line"><span class="comment">// age 22</span></div><div class="line">[[<span class="built_in">NSUserDefaults</span> standardUserDefaults] setInteger:<span class="number">22</span> forKey:<span class="string">@"age"</span>];</div><div class="line">[[<span class="built_in">NSUserDefaults</span> standardUserDefaults] setBool:<span class="literal">YES</span> forKey:<span class="string">@"isOn"</span>];</div></pre></td></tr></table></figure>
+<ul>
+<li>注意：UserDefaults设置数据时，不是立即写入，而是根据时间戳定时地把缓存中的数据写入本地磁盘。所以调用了set方法之后数据有可能还没有写入磁盘应用程序就终止了。出现以上问题，可以通过调用synchornize方法强制写入</li>
+</ul>
+<h5 id="读数据-1"><a href="#读数据-1" class="headerlink" title="读数据"></a>读数据</h5><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> <span class="built_in">NSString</span> *name = [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] objectForKey:<span class="string">@"name"</span>];</div><div class="line"><span class="built_in">BOOL</span> ison =  [[<span class="built_in">NSUserDefaults</span> standardUserDefaults] boolForKey:<span class="string">@"isOn"</span>];</div></pre></td></tr></table></figure>
+<h4 id="3-NSKeyedArchiver归档（NSCoding）"><a href="#3-NSKeyedArchiver归档（NSCoding）" class="headerlink" title="3.NSKeyedArchiver归档（NSCoding）"></a>3.NSKeyedArchiver归档（NSCoding）</h4><h5 id="写数据"><a href="#写数据" class="headerlink" title="写数据"></a>写数据</h5><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 归档:自定义对象一般使用归档,为什么自定义对象需要归档,plist存储不能存储自定义对象</span></div><div class="line"></div><div class="line">Person *person = [[Person alloc] init];</div><div class="line">person.age = <span class="number">22</span>;</div><div class="line">person.name = <span class="string">@"cyx"</span>;</div><div class="line"></div><div class="line"><span class="comment">// temp</span></div><div class="line"><span class="built_in">NSString</span> *tempPath = <span class="built_in">NSTemporaryDirectory</span>();</div><div class="line"></div><div class="line"><span class="comment">// 拼接文件名</span></div><div class="line"><span class="built_in">NSString</span> *filePath = [tempPath stringByAppendingPathComponent:<span class="string">@"person.data"</span>];</div><div class="line"></div><div class="line"><span class="comment">// 归档</span></div><div class="line">[<span class="built_in">NSKeyedArchiver</span> archiveRootObject:person toFile:filePath];</div><div class="line"><span class="comment">//  -[Person encodeWithCoder:]</span></div></pre></td></tr></table></figure>
+<h5 id="读数据-2"><a href="#读数据-2" class="headerlink" title="读数据"></a>读数据</h5><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">// 什么对象存,读取出来就是什么对象</span></div><div class="line"></div><div class="line"> <span class="comment">// temp</span></div><div class="line"> <span class="built_in">NSString</span> *tempPath = <span class="built_in">NSTemporaryDirectory</span>();</div><div class="line"></div><div class="line"> <span class="comment">// 拼接文件名</span></div><div class="line"> <span class="built_in">NSString</span> *filePath = [tempPath stringByAppendingPathComponent:<span class="string">@"person.data"</span>];</div><div class="line"></div><div class="line"> <span class="comment">// 解挡</span></div><div class="line">Person *p = [<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithFile:filePath];</div><div class="line"> <span class="comment">// -[Person initWithCoder:]</span></div><div class="line"> <span class="built_in">NSLog</span>(<span class="string">@"%@ %d"</span>,p.name,p.age);</div></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS笔记/" rel="tag"># iOS笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/02/10/iOS笔记-地图的基本使用/" rel="next" title="iOS笔记-地图的基本使用">
+                <i class="fa fa-chevron-left"></i> iOS笔记-地图的基本使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/27/iOS笔记-导航控制器(Nav)的10条经验/" rel="prev" title="iOS笔记-导航控制器(Nav)的10条经验">
+                iOS笔记-导航控制器(Nav)的10条经验 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/02/21/iOS笔记-数据存储科普篇/"
+           data-title="iOS笔记-数据存储科普篇" data-url="http://yoursite.com/2015/02/21/iOS笔记-数据存储科普篇/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据存储"><span class="nav-number">1.</span> <span class="nav-text">数据存储</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#应用沙盒"><span class="nav-number">1.1.</span> <span class="nav-text">应用沙盒</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-plist存储（属性列表）"><span class="nav-number">1.2.</span> <span class="nav-text">1.plist存储（属性列表）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#存数据"><span class="nav-number">1.2.1.</span> <span class="nav-text">存数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读数据"><span class="nav-number">1.2.2.</span> <span class="nav-text">读数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Preference-偏好设置"><span class="nav-number">1.3.</span> <span class="nav-text">2.Preference(偏好设置)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#存数据-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">存数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读数据-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">读数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-NSKeyedArchiver归档（NSCoding）"><span class="nav-number">1.4.</span> <span class="nav-text">3.NSKeyedArchiver归档（NSCoding）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#写数据"><span class="nav-number">1.4.1.</span> <span class="nav-text">写数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#读数据-2"><span class="nav-number">1.4.2.</span> <span class="nav-text">读数据</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>

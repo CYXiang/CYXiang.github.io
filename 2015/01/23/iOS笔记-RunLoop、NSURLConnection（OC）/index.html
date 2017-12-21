@@ -1,0 +1,1046 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="附：我的github地址
+
+什么是RunLoop
+
+运行循环
+一个线程对应一个RunLoop，主线程的RunLoop默认已经启动，子线程的RunLoop得手动启动（调用run方法）
+RunLoop只能选择一个Mode启动，如果当前Mode中没有任何Source(Sources0、Sources1)、Timer，那么就直接退出RunLoop
+
+
+
+
+RunLoop作用
+
+保持程序的持续运行
+处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS笔记-RunLoop、NSURLConnection（OC）">
+<meta property="og:url" content="http://yoursite.com/2015/01/23/iOS笔记-RunLoop、NSURLConnection（OC）/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="附：我的github地址
+
+什么是RunLoop
+
+运行循环
+一个线程对应一个RunLoop，主线程的RunLoop默认已经启动，子线程的RunLoop得手动启动（调用run方法）
+RunLoop只能选择一个Mode启动，如果当前Mode中没有任何Source(Sources0、Sources1)、Timer，那么就直接退出RunLoop
+
+
+
+
+RunLoop作用
+
+保持程序的持续运行
+处理">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-a0ca65ba411295d3.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-21T14:37:20.135Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS笔记-RunLoop、NSURLConnection（OC）">
+<meta name="twitter:description" content="附：我的github地址
+
+什么是RunLoop
+
+运行循环
+一个线程对应一个RunLoop，主线程的RunLoop默认已经启动，子线程的RunLoop得手动启动（调用run方法）
+RunLoop只能选择一个Mode启动，如果当前Mode中没有任何Source(Sources0、Sources1)、Timer，那么就直接退出RunLoop
+
+
+
+
+RunLoop作用
+
+保持程序的持续运行
+处理">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-a0ca65ba411295d3.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/01/23/iOS笔记-RunLoop、NSURLConnection（OC）/"/>
+
+
+
+
+
+  <title> iOS笔记-RunLoop、NSURLConnection（OC） | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/01/23/iOS笔记-RunLoop、NSURLConnection（OC）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS笔记-RunLoop、NSURLConnection（OC）
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-23T11:13:24+08:00">
+                2015-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/01/23/iOS笔记-RunLoop、NSURLConnection（OC）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/iOS笔记-RunLoop、NSURLConnection（OC）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/620754-a0ca65ba411295d3.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="随机配图（图文无关）"></p>
+<ul>
+<li><p>附：<a href="https://github.com/CYXiang" target="_blank" rel="external">我的github地址</a></p>
+</li>
+<li><p>什么是RunLoop</p>
+<ul>
+<li>运行循环</li>
+<li>一个线程对应一个RunLoop，主线程的RunLoop默认已经启动，子线程的RunLoop得手动启动（调用run方法）</li>
+<li>RunLoop只能选择一个Mode启动，如果当前Mode中没有任何Source(Sources0、Sources1)、Timer，那么就直接退出RunLoop</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>RunLoop作用</p>
+<ul>
+<li>保持程序的持续运行</li>
+<li>处理App中的各种事件（比如触摸事件、定时器事件、Selector事件）</li>
+<li>节省CPU资源，提高程序性能：该做事时做事，该休息时休息<br>……</li>
+</ul>
+</li>
+<li><p>模拟RunLoop内部实现</p>
+<ul>
+<li>其实它内部就是do-while循环，在这个循环内部不断地处理各种任务（比如Source、Timer、Observer）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> message(<span class="keyword">int</span> num)</div><div class="line">&#123;</div><div class="line">    printf(<span class="string">"执行第%i个任务"</span>, num);</div><div class="line">&#125;</div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[]) &#123;</div><div class="line">    <span class="keyword">do</span> &#123;</div><div class="line">        printf(<span class="string">"有事做吗? 没事做我休眠了"</span>);</div><div class="line">        <span class="keyword">int</span> number;</div><div class="line">        scanf(<span class="string">"%i"</span>, &amp;number);</div><div class="line">        message(number);</div><div class="line">    &#125; <span class="keyword">while</span> (<span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>获得RunLoop对象</p>
+<ul>
+<li>RunLoop对象<ul>
+<li>NSRunLoop</li>
+<li>CFRunLoopRef</li>
+</ul>
+</li>
+<li><p>Foundation</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[<span class="built_in">NSRunLoop</span> currentRunLoop]; <span class="comment">// 获得当前线程的RunLoop对象</span></div><div class="line">[<span class="built_in">NSRunLoop</span> mainRunLoop]; <span class="comment">// 获得主线程的RunLoop对象</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>Core Foundation</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CFRunLoopGetCurrent</span>(); <span class="comment">// 获得当前线程的RunLoop对象</span></div><div class="line"><span class="built_in">CFRunLoopGetMain</span>(); <span class="comment">// 获得主线程的RunLoop对象</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>RunLoop结构</p>
+<ul>
+<li>CFRunLoopRef对应RunLoop对象<ul>
+<li>CFRunLoopModeRef代表RunLoop的运行模式, 系统默认注册了5个Mode<ul>
+<li>NSDefaultRunLoopMode：App的默认Mode，通常主线程是在这个Mode下运行</li>
+<li>UITrackingRunLoopMode：界面跟踪 Mode，用于 ScrollView 追踪触摸滑动，保证界面滑动时不受其他 Mode 影响</li>
+<li>NSRunLoopCommonModes: 这是一个占位用的Mode，不是一种真正的Mode</li>
+</ul>
+</li>
+<li>CFRunLoopTimerRef是基于时间的触发器<ul>
+<li>CFRunLoopTimerRef基本上说的就是NSTimer，它受RunLoop的Mode影响</li>
+</ul>
+</li>
+<li>CFRunLoopSourceRef是事件源（输入源）</li>
+<li>CFRunLoopObserverRef是观察者，能够监听RunLoop的状态改变</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建Observer</span></div><div class="line">    <span class="comment">// 第一个参数:用于分配该observer对象的内存</span></div><div class="line">    <span class="comment">// 第二个参数:用以设置该observer所要关注的的事件</span></div><div class="line">    <span class="comment">// 第三个参数:用于标识该observer是在第一次进入run loop时执行, 还是每次进入run loop处理时均执行</span></div><div class="line">    <span class="comment">// 第四个参数:用于设置该observer的优先级</span></div><div class="line">    <span class="comment">// 第五个参数: observer监听到事件时的回调block</span></div><div class="line">    <span class="built_in">CFRunLoopObserverRef</span> observer = <span class="built_in">CFRunLoopObserverCreateWithHandler</span>(<span class="built_in">CFAllocatorGetDefault</span>(), kCFRunLoopAllActivities, <span class="literal">YES</span>, <span class="number">0</span>, ^(<span class="built_in">CFRunLoopObserverRef</span> observer, <span class="built_in">CFRunLoopActivity</span> activity) &#123;</div><div class="line">        <span class="keyword">switch</span>(activity)</div><div class="line">        &#123;</div><div class="line">            <span class="keyword">case</span> kCFRunLoopEntry:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"即将进入loop"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> kCFRunLoopBeforeTimers:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"即将处理timers"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> kCFRunLoopBeforeSources:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"即将处理sources"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> kCFRunLoopBeforeWaiting:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"即将进入休眠"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> kCFRunLoopAfterWaiting:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"刚从休眠中唤醒"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> kCFRunLoopExit:</div><div class="line">                <span class="built_in">NSLog</span>(<span class="string">@"即将退出loop"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="comment">// 2.添加监听</span></div><div class="line">    <span class="comment">/*</span></div><div class="line">     第一个参数: 给哪个RunLoop添加监听</div><div class="line">     第二个参数: 需要添加的Observer对象</div><div class="line">     第三个参数: 在哪种模式下监听</div><div class="line">     */</div><div class="line">    <span class="built_in">CFRunLoopAddObserver</span>(<span class="built_in">CFRunLoopGetMain</span>(), observer, kCFRunLoopDefaultMode);</div><div class="line"></div><div class="line">    <span class="comment">// 3,释放observer</span></div><div class="line">    <span class="built_in">CFRelease</span>(observer);</div></pre></td></tr></table></figure>
+<ul>
+<li>RunLoopRunLoop处理逻辑（略）</li>
+</ul>
+<hr>
+<ul>
+<li>RunLoopRunLoop应用</li>
+<li><p>NSTimer</p>
+<ul>
+<li>只能在指定的model下运行<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSTimer</span> *timer = [<span class="built_in">NSTimer</span> timerWithTimeInterval:<span class="number">1.0</span> target:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(test) userInfo:<span class="literal">nil</span> repeats:<span class="literal">YES</span>];</div><div class="line">    [[<span class="built_in">NSRunLoop</span> currentRunLoop] addTimer:timer forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>ImageView显示</p>
+<ul>
+<li>只能在指定的model下设置图片</li>
+</ul>
+</li>
+<li><p>PerformSelector</p>
+<ul>
+<li>只能在指定的model下调用<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span>.imageView performSelectorOnMainThread:<span class="keyword">@selector</span>(setImage:) withObject:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"lnj"</span>] waitUntilDone:<span class="literal">YES</span> modes:@[<span class="built_in">NSDefaultRunLoopMode</span>]];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>常驻线程</p>
+<ul>
+<li>必须调用run才会执行死循环</li>
+<li>NSRunLoop的model中必须有source/timer,死循环才不会退出<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSRunLoop</span> *runloop = [<span class="built_in">NSRunLoop</span> currentRunLoop];</div><div class="line">[runloop addPort:[<span class="built_in">NSMachPort</span> port] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</div><div class="line">[runloop run]</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>自动释放池</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">activities = <span class="number">0x1</span> = <span class="number">1</span></div><div class="line"><span class="number">1</span>: 即将进入RunLoop : 创建一个自动释放池</div><div class="line">activities = <span class="number">0xa0</span> = <span class="number">160</span> = <span class="number">128</span> + <span class="number">32</span></div><div class="line"><span class="number">32</span>:即将休眠 : 释放上一次的自动释放池, 创建一个新的自动释放池</div><div class="line"><span class="number">128</span>:即将退出RunLoop : 释放自动释放池</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>NSURLRequest</p>
+<ul>
+<li>用于保存请求地址/请求头/请求体</li>
+<li>默认情况下NSURLRequest会自动给我们设置好请求头</li>
+<li>request默认情况下就是GET请求</li>
+</ul>
+</li>
+<li><p>同步请求</p>
+<ul>
+<li>如果是调用NSURLConnection的同步方法, 会阻塞当前线程</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建一个URL</span></div><div class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://129.168.1.1:31812/login2?username=cyx&amp;pwd=123&amp;type=JSON"</span>];</div><div class="line"></div><div class="line"><span class="comment">// 2.根据URL创建NSURLRequest对象</span></div><div class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:url];</div><div class="line"></div><div class="line"><span class="comment">// 3.利用NSURLConnection对象发送请求</span></div><div class="line"><span class="comment">/*</span></div><div class="line"> 第一个参数: 需要请求的对象</div><div class="line"> 第二个参数: 服务返回给我们的响应头信息</div><div class="line"> 第三个参数: 错误信息</div><div class="line"> 返回值: 服务器返回给我们的响应体</div><div class="line"> */</div><div class="line"><span class="built_in">NSHTTPURLResponse</span> *response = <span class="literal">nil</span>; <span class="comment">// 真实类型</span></div><div class="line"><span class="built_in">NSData</span> *data = [<span class="built_in">NSURLConnection</span> sendSynchronousRequest:request returningResponse:&amp;response error:<span class="literal">nil</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [[<span class="built_in">NSString</span> alloc] initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>]);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"response = %@"</span>, response.allHeaderFields);</div></pre></td></tr></table></figure>
+<ul>
+<li>异步请求</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建一个URL</span></div><div class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://129.168.1.1:31812/login2?username=cyx&amp;pwd=123&amp;type=JSON"</span>];</div><div class="line"></div><div class="line"><span class="comment">// 2.根据URL创建NSURLRequest对象</span></div><div class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:url];</div><div class="line"></div><div class="line"><span class="comment">// 3.利用NSURLConnection对象发送请求</span></div><div class="line"><span class="comment">/*</span></div><div class="line"> 第一个参数: 需要请求的对象</div><div class="line"> 第二个参数: 回调block的队列, 决定了block在哪个线程中执行</div><div class="line"> 第三个参数: 回调block</div><div class="line"> */</div><div class="line"><span class="comment">// 注意点: 如果是调用NSURLConnection的同步方法, 会阻塞当前线程</span></div><div class="line">[<span class="built_in">NSURLConnection</span> sendAsynchronousRequest:request queue:[<span class="built_in">NSOperationQueue</span> mainQueue] completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *connectionError) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [[<span class="built_in">NSString</span> alloc] initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>]);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>POST方法</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建一个URL</span></div><div class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://129.168.1.1:31812/login"</span>];</div><div class="line"></div><div class="line"><span class="comment">// 2.根据URL创建NSURLRequest对象</span></div><div class="line"><span class="built_in">NSMutableURLRequest</span> *request = [<span class="built_in">NSMutableURLRequest</span> requestWithURL:url];</div><div class="line"><span class="comment">// 2.1设置请求方式</span></div><div class="line"><span class="comment">// 注意: POST一定要大写</span></div><div class="line">request.HTTPMethod = <span class="string">@"POST"</span>;</div><div class="line"><span class="comment">// 2.2设置请求体</span></div><div class="line"><span class="comment">// 注意: 如果是给POST请求传递参数: 那么不需要写?号</span></div><div class="line">request.HTTPBody = [<span class="string">@"username=cyx&amp;pwd=123&amp;type=JSON"</span> dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line"></div><div class="line"><span class="comment">// 3.利用NSURLConnection对象发送请求</span></div><div class="line">[<span class="built_in">NSURLConnection</span> sendAsynchronousRequest:request queue:[<span class="built_in">NSOperationQueue</span> mainQueue] completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *connectionError) &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, [[<span class="built_in">NSString</span> alloc] initWithData:data encoding:<span class="built_in">NSUTF8StringEncoding</span>]);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<ul>
+<li>请求服务器响应</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建URL</span></div><div class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://xxx.jpg"</span>];</div><div class="line"></div><div class="line"><span class="comment">// 2.根据URL创建NSURLRequest</span></div><div class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:url];</div><div class="line"></div><div class="line"><span class="comment">// 3.利用NSURLConnection发送请求</span></div><div class="line"><span class="comment">/*</span></div><div class="line">// 只要调用alloc/initWithRequest, 系统会自动发送请求</div><div class="line">[[NSURLConnection alloc] initWithRequest:request delegate:self];</div><div class="line">*/</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">// startImmediately: 如果传递YES, 系统会自动发送请求; 如果传递NO, 系统不会自动发送请求</div><div class="line">NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];</div><div class="line">[conn start];</div><div class="line">*/</div><div class="line"></div><div class="line">[<span class="built_in">NSURLConnection</span> connectionWithRequest:request delegate:<span class="keyword">self</span>];</div></pre></td></tr></table></figure>
+<pre><code>+ 代理方法
+</code></pre><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#pragma mark - NSURLConnectionDataDelegate</span></div><div class="line"><span class="comment">/*</span></div><div class="line"> 只要接收到服务器的响应就会调用</div><div class="line"> response:响应头</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveResponse:(<span class="built_in">NSURLResponse</span> *)response</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __func__);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">  接收到服务器返回的数据时调用(该方法可能调用一次或多次)</div><div class="line">  data: 服务器返回的数据(当前这一次传递给我们的, 并不是总数)</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveData:(<span class="built_in">NSData</span> *)data</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __func__);</div><div class="line">&#125;</div><div class="line"><span class="comment">/*</span></div><div class="line"> 接收结束时调用</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __func__);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"> 请求错误时调用(请求超时)</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didFailWithError:(<span class="built_in">NSError</span> *)error</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%s"</span>, __func__);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>中文问题</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.创建URL</span></div><div class="line">    <span class="built_in">NSString</span> *urlStr = <span class="string">@"http://129.168.1.1:31812/login2?username=cyx&amp;pwd=123&amp;type=JSON"</span>;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"转换前:%@"</span>, urlStr);</div><div class="line">    <span class="comment">// 2.对URL进行转码</span></div><div class="line">    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div></pre></td></tr></table></figure>
+<ul>
+<li>附：<a href="https://github.com/CYXiang" target="_blank" rel="external">我的github地址</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS笔记/" rel="tag"># iOS笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/22/iOS笔记-多线程相关(pthread 、NSThread 、GCD、NSOperation)/" rel="next" title="iOS笔记-多线程相关(pthread 、NSThread 、GCD、NSOperation)">
+                <i class="fa fa-chevron-left"></i> iOS笔记-多线程相关(pthread 、NSThread 、GCD、NSOperation)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/23/iOS笔记-UIScrollView/" rel="prev" title="iOS笔记-UIScrollView">
+                iOS笔记-UIScrollView <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/01/23/iOS笔记-RunLoop、NSURLConnection（OC）/"
+           data-title="iOS笔记-RunLoop、NSURLConnection（OC）" data-url="http://yoursite.com/2015/01/23/iOS笔记-RunLoop、NSURLConnection（OC）/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>

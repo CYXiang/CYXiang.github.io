@@ -1,0 +1,1131 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS笔记," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言：非常基础的学习笔记，挺久之前（大概两年前吧）刚开始学iOS时记录的，知识点是全的，拿出来回顾一下。
+
+
+如何使用UIScrollView(使用步骤)
+1.创建UIScrollView
+2.给UIScrollView添加子控件
+3.设置UIScrollView的滚动范围self.scrollView.contenSize = CGSizeMake(300,300);
+4.默认情况下只要可以滚">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS笔记-UIScrollView">
+<meta property="og:url" content="http://yoursite.com/2015/01/23/iOS笔记-UIScrollView/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="前言：非常基础的学习笔记，挺久之前（大概两年前吧）刚开始学iOS时记录的，知识点是全的，拿出来回顾一下。
+
+
+如何使用UIScrollView(使用步骤)
+1.创建UIScrollView
+2.给UIScrollView添加子控件
+3.设置UIScrollView的滚动范围self.scrollView.contenSize = CGSizeMake(300,300);
+4.默认情况下只要可以滚">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-b21f22d8860a4540.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://yoursite.com/file:///Users/Macx/Desktop/Markdown笔记存储/image/Snip20150802_4.png">
+<meta property="og:image" content="http://yoursite.com/file:///Users/Macx/Desktop/Markdown笔记存储/image/Snip20150802_1.png">
+<meta property="og:updated_time" content="2017-12-21T14:38:18.236Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS笔记-UIScrollView">
+<meta name="twitter:description" content="前言：非常基础的学习笔记，挺久之前（大概两年前吧）刚开始学iOS时记录的，知识点是全的，拿出来回顾一下。
+
+
+如何使用UIScrollView(使用步骤)
+1.创建UIScrollView
+2.给UIScrollView添加子控件
+3.设置UIScrollView的滚动范围self.scrollView.contenSize = CGSizeMake(300,300);
+4.默认情况下只要可以滚">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-b21f22d8860a4540.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/01/23/iOS笔记-UIScrollView/"/>
+
+
+
+
+
+  <title> iOS笔记-UIScrollView | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/01/23/iOS笔记-UIScrollView/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS笔记-UIScrollView
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-23T11:13:24+08:00">
+                2015-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/01/23/iOS笔记-UIScrollView/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/23/iOS笔记-UIScrollView/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>前言：非常基础的学习笔记，挺久之前（大概两年前吧）刚开始学iOS时记录的，知识点是全的，拿出来回顾一下。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-b21f22d8860a4540.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="随机配图"></p>
+<h2 id="如何使用UIScrollView-使用步骤"><a href="#如何使用UIScrollView-使用步骤" class="headerlink" title="如何使用UIScrollView(使用步骤)"></a>如何使用UIScrollView(使用步骤)</h2><ul>
+<li>1.创建<code>UIScrollView</code></li>
+<li>2.给<code>UIScrollView</code>添加子控件</li>
+<li>3.设置<code>UIScrollView</code>的滚动范围<code>self.scrollView.contenSize = CGSizeMake(300,300)</code>;</li>
+<li>4.默认情况下只要可以滚动，就有弹簧效果,<code>bounces</code>属性设置是否有回弹效果</li>
+<li>5.设置滚动条的样式和控制滚动条的显示<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.scrollview.indecatorStyle = <span class="built_in">UIScrollViewIndeicatorStyleWhite</span>;<span class="comment">//白色样式</span></div><div class="line"><span class="keyword">self</span>.scrollview.showHorizontalScrollIndicator = <span class="literal">NO</span>;<span class="comment">//不显示水平方向的滚动条</span></div><div class="line"><span class="keyword">self</span>.scrollview.shoeVericalScrollIndicator = <span class="literal">NO</span>;<span class="comment">//垂直方向的滚动条</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="iOS开发屏幕坐标系"><a href="#iOS开发屏幕坐标系" class="headerlink" title="iOS开发屏幕坐标系"></a>iOS开发屏幕坐标系</h2><ul>
+<li>x轴：越往右边越大</li>
+<li>Y轴：越往下边越大</li>
+</ul>
+<h2 id="UIScrollView常用属性"><a href="#UIScrollView常用属性" class="headerlink" title="UIScrollView常用属性"></a>UIScrollView常用属性</h2><ul>
+<li><code>@property(nonatomic) CGPoint contentOffset</code>;<ul>
+<li>这个属性用来表示<code>UIScrollView</code>滚动的位置（其实就是内容左上角与<code>scrollView</code>左上角的间距值）</li>
+<li>作用: 用于设置内容的滚动偏移位</li>
+<li>计算公式: 移动的距离 =  “控件的左上角” - “内容的左上角”<ul>
+<li>最好先理解iOS的坐标系, 然后再理解公式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>@property(nonatomic) CGSize contentSize</code>;<ul>
+<li>这个属性用来表示<code>UIScrollView</code>内容的尺寸，滚动范围（能滚多远）</li>
+</ul>
+</li>
+<li><code>@property(nonatomic) UIEdgeInsets contentInset</code>;<ul>
+<li>作用: 在<code>contentSize</code>周围添加额外的滚动区域</li>
+<li>应用场景: 避免<code>UIScrollview</code>中的内容被遮挡</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>bounces</code>: 用于设置UIScrollview是否有回弹效果</li>
+<li><code>alwaysBounceVertical</code>/<code>alwaysBounceHorizontal</code><ul>
+<li>如果<code>UIScrollview</code>已经设置<code>contentSize</code>, 那么<code>YES</code>和<code>NO</code>没有区别</li>
+<li>只有<code>UIScrollview</code>没有设置<code>contentSize</code>才有效果</li>
+<li>应用场景: 下拉刷新</li>
+</ul>
+</li>
+<li><code>indicatorStyle</code>: 设置滚动条的样式</li>
+<li><p><code>showsHorizontalScrollIndicator/showsVerticalScrollIndicator</code></p>
+<ul>
+<li><code>YES</code>显示滚动条/ <code>NO</code>隐藏滚动条</li>
+</ul>
+</li>
+<li><p>注意理解区分: <strong>contentSize/contentOffset/contentInset/frame</strong><br><img src="file:///Users/Macx/Desktop/Markdown笔记存储/image/Snip20150802_4.png" alt=""></p>
+</li>
+</ul>
+<h2 id="UIScrollView不能滚动的原因"><a href="#UIScrollView不能滚动的原因" class="headerlink" title="UIScrollView不能滚动的原因"></a>UIScrollView不能滚动的原因</h2><ul>
+<li>1.没有设置<code>contentSize</code></li>
+<li>2.<code>scrollEnabled = NO</code></li>
+<li>3.<code>userInteractionEnabled = NO</code><ul>
+<li><code>userInteractionEnabled</code>不是<code>Disabled</code>,他们两有本质的区别<ul>
+<li><code>Disabled</code>代表控件不能使用, 状态是<code>Disabled</code>状态</li>
+<li><code>userInteractionEnabled</code>代表控件是否可以交互</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="UIScrollView使用注意点"><a href="#UIScrollView使用注意点" class="headerlink" title="UIScrollView使用注意点"></a>UIScrollView使用注意点</h2><ul>
+<li>在企业开发中，不用使用<code>subviews</code>来获取<code>UIScrollView</code>中的子控件<ul>
+<li>因为<code>subviews</code>中包含了<code>UIScrollview</code>中的滚动条, 而且滚动条的顺序是不确定的</li>
+</ul>
+</li>
+</ul>
+<h2 id="何监听一个控件"><a href="#何监听一个控件" class="headerlink" title="何监听一个控件"></a>何监听一个控件</h2><ul>
+<li>首先需要查看该控件的头文件, 看它继承于哪个父类<ul>
+<li>如果继承于<code>UIControl</code>, 那么就可以通过<code>addTarget</code>来监听</li>
+<li>如果不是继承于<code>UIControl</code>, 那么就必须通过代理(<code>delegate</code>)来监听</li>
+</ul>
+</li>
+</ul>
+<h2 id="代理（UIScrollViewDelegate）"><a href="#代理（UIScrollViewDelegate）" class="headerlink" title="代理（UIScrollViewDelegate）"></a>代理（<code>UIScrollViewDelegate</code>）</h2><ul>
+<li><p>使用代理的步骤:</p>
+<ul>
+<li>1.遵守代理协议</li>
+<li>2.实现代理方法</li>
+<li>3.将遵守了协议的对象设置为代理</li>
+</ul>
+</li>
+<li><p>代理的规律:</p>
+<ul>
+<li>代理名称的规律:<ul>
+<li>协议名称以类名开头, 后面跟上<code>Delegate</code></li>
+</ul>
+</li>
+<li>代理方法名称的规律<ul>
+<li>方法名称以类名去掉前缀开头, 并且谁触发这个方法就将谁传递出去</li>
+</ul>
+</li>
+<li>代理类型一般是<code>id</code></li>
+<li>代理属性一般是<code>weak</code>, 主要是为了避免循环引用<ul>
+<li>因为一般情况下, 控件的代理都是控制器, 而控件又是添加到控制器的<code>view</code>中<br><img src="file:///Users/Macx/Desktop/Markdown笔记存储/image/Snip20150802_1.png" alt=""></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>代理的应用场景</p>
+<ul>
+<li>1.当A对象想监听B对象的变化时, 就可以使用代理, 让A成为B的代理</li>
+<li>2.当B对象想通知A对象的时候, 就可以使用代理, 让A成为B的代理</li>
+</ul>
+</li>
+</ul>
+<h2 id="如何监听UIScrollview停止滚动"><a href="#如何监听UIScrollview停止滚动" class="headerlink" title="如何监听UIScrollview停止滚动"></a>如何监听UIScrollview停止滚动</h2><ul>
+<li><code>scrollViewDidEndDragging</code><ul>
+<li>只要用户松手就会调用</li>
+<li>停止拖拽并不代表停止滚动, 也就是说UIScrollView滚动是有惯性的</li>
+</ul>
+</li>
+<li><code>scrollViewDidEndDecelerating</code><ul>
+<li>只要<code>UIScrollview</code>有惯性就会调用,如果没有惯性就不会调用</li>
+</ul>
+</li>
+<li>想要监听<code>UIScrollview</code>停止滚动必须同时实现这两个方法</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)scrollViewDidEndDragging:(<span class="built_in">UIScrollView</span> *)scrollView willDecelerate:(<span class="built_in">BOOL</span>)decelerate</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%s = %d"</span>, __func__, decelerate);</div><div class="line"></div><div class="line">    <span class="comment">// 1.判断是否有惯性, 如果没有惯性手动调用scrollViewDidEndDecelerating告知已经完全停止滚动</span></div><div class="line">    <span class="keyword">if</span> (decelerate == <span class="literal">NO</span>) &#123;</div><div class="line">        [<span class="keyword">self</span> scrollViewDidEndDecelerating:scrollView];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">- (<span class="keyword">void</span>)scrollViewDidEndDecelerating:(<span class="built_in">UIScrollView</span> *)scrollView</div><div class="line">&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"停止滚动"</span>);</div><div class="line">    <span class="keyword">self</span>.iv.alpha = <span class="number">1.0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="UIScrollview缩放"><a href="#UIScrollview缩放" class="headerlink" title="UIScrollview缩放"></a>UIScrollview缩放</h2><ul>
+<li><p>步骤:</p>
+<ul>
+<li>1.成为<code>UIScrollview</code>的代理, 通过代理方法告诉<code>UIScrollview</code>要缩放哪一个子控件</li>
+<li>2.设置子控件最大和最小的缩放比例</li>
+</ul>
+</li>
+<li><p>常用方法</p>
+<ul>
+<li><code>viewForZoomingInScrollView</code> : 返回需要缩放的子控件</li>
+<li><code>scrollViewDidZoom</code>: 只要子控件被缩放了就会调用(调用频率非常高)</li>
+<li><code>scrollViewDidEndZooming</code>: 缩放完毕时掉用</li>
+</ul>
+</li>
+</ul>
+<h2 id="如何保证被缩放的子控件永远居中"><a href="#如何保证被缩放的子控件永远居中" class="headerlink" title="如何保证被缩放的子控件永远居中"></a>如何保证被缩放的子控件永远居中</h2><ul>
+<li><p>只要子控件的<code>contentSize</code>小于<code>UIScrollview</code>的宽高时才需要缩放</p>
+</li>
+<li><p>第一种方法</p>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.判断contentSize的宽高, 是否小于UIScrollView的frame的size</span></div><div class="line">   <span class="keyword">if</span> (scrollView.contentSize.width &lt; scrollView.bounds.size.width) &#123;</div><div class="line"></div><div class="line">       <span class="keyword">self</span>.iv1.center = <span class="built_in">CGPointMake</span>(scrollView.bounds.size.width * <span class="number">0.5</span>, scrollView.bounds.size.height * <span class="number">0.5</span>);</div><div class="line"></div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">if</span> (scrollView.contentSize.height &lt; scrollView.bounds.size.height) &#123;</div><div class="line"></div><div class="line">       <span class="keyword">self</span>.iv1.center = <span class="built_in">CGPointMake</span>(scrollView.bounds.size.width * <span class="number">0.5</span>, scrollView.bounds.size.height * <span class="number">0.5</span>);</div><div class="line"></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>第二种方法</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.判断contentSize的宽高, 是否小于UIScrollView的frame的size</span></div><div class="line">   <span class="keyword">if</span> (scrollView.contentSize.width &lt; scrollView.bounds.size.width) &#123;</div><div class="line"></div><div class="line">       <span class="comment">// 计算X的值</span></div><div class="line">       <span class="built_in">CGFloat</span> x =  (scrollView.contentSize.width * <span class="number">0.5</span>) + ((scrollView.bounds.size.width - scrollView.contentSize.width) * <span class="number">0.5</span>);</div><div class="line"></div><div class="line">       <span class="comment">// 重新设置center</span></div><div class="line">       <span class="keyword">self</span>.iv1.center = <span class="built_in">CGPointMake</span>(x, <span class="keyword">self</span>.iv1.center.y);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="keyword">if</span> (scrollView.contentSize.height &lt; scrollView.bounds.size.height) &#123;</div><div class="line"></div><div class="line">       <span class="comment">// 计算Y的值</span></div><div class="line">       <span class="built_in">CGFloat</span> y =  (scrollView.contentSize.height * <span class="number">0.5</span>) + ((scrollView.bounds.size.height - scrollView.contentSize.height) * <span class="number">0.5</span>);</div><div class="line"></div><div class="line">       <span class="comment">// 重新设置center</span></div><div class="line">       <span class="keyword">self</span>.iv1.center = <span class="built_in">CGPointMake</span>(<span class="keyword">self</span>.iv1.center.x, y);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>第三种方法</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CGFloat</span> x = scrollView.contentSize.width &lt; scrollView.bounds.size.width ? (scrollView.bounds.size.width - scrollView.contentSize.width) * <span class="number">0.5</span> : <span class="number">0.0</span>;</div><div class="line">   <span class="built_in">CGFloat</span> y = scrollView.contentSize.height &lt; scrollView.bounds.size.height ? (scrollView.bounds.size.height - scrollView.contentSize.height) * <span class="number">0.5</span> : <span class="number">0.0</span>;</div><div class="line">   <span class="keyword">self</span>.iv1.center = <span class="built_in">CGPointMake</span>(scrollView.contentSize.width * <span class="number">0.5</span> + x, scrollView.contentSize.height * <span class="number">0.5</span> + y);</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="图片轮播器Demo"><a href="#图片轮播器Demo" class="headerlink" title="图片轮播器Demo"></a>图片轮播器Demo</h2><ul>
+<li>如何分页 : <code>pagingEnabled = YES</code></li>
+<li>分页的原理: 是根据UIScrollview的宽度或者高度来分页</li>
+</ul>
+<ul>
+<li><p><code>UIPageControl</code></p>
+<ul>
+<li><code>numberOfPages</code> : 设置总页码</li>
+<li><code>currentPage</code>: 设置当前页码</li>
+<li><code>pageIndicatorTintColor</code>: 设置其它页码的颜色</li>
+<li><code>currentPageIndicatorTintColor</code> : 设置当前页码的颜色</li>
+</ul>
+</li>
+<li><p>自定义页码</p>
+<ul>
+<li>利用<code>KVC</code>给<code>UIPageControl</code>设置页码图片</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[pageControl setValue:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"current"</span>] forKeyPath:<span class="string">@"_currentPageImage"</span>];</div><div class="line">[pageControl setValue:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"other"</span>] forKeyPath:<span class="string">@"_pageImage"</span>];</div></pre></td></tr></table></figure>
+<ul>
+<li>监听<code>UIPageControl</code>的点击<ul>
+<li>由于<code>UIPageControl</code>继承于<code>UIControl</code>, 所以通过<code>addTargt</code>来监听</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[pageControl addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(nextPage) forControlEvents:<span class="built_in">UIControlEventValueChanged</span>];</div></pre></td></tr></table></figure>
+<ul>
+<li>切换页码<ul>
+<li>滚动完毕之后再切换</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)scrollViewDidEndDragging:(<span class="built_in">UIScrollView</span> *)scrollView willDecelerate:(<span class="built_in">BOOL</span>)decelerate</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 判断是否有惯性, 如果没有就手动调用scrollViewDidEndDecelerating</span></div><div class="line">    <span class="keyword">if</span> (<span class="literal">NO</span> == decelerate) &#123;</div><div class="line">        [<span class="keyword">self</span> scrollViewDidEndDecelerating:scrollView];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 只有有惯性才会调用</span></div><div class="line">- (<span class="keyword">void</span>)scrollViewDidEndDecelerating:(<span class="built_in">UIScrollView</span> *)scrollView</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 1.动态计算当前的页码</span></div><div class="line">    <span class="comment">// 页码 = UIScrollView的偏移位 / UIScrollView的宽度</span></div><div class="line">    <span class="keyword">int</span> page = scrollView.contentOffset.x / scrollView.bounds.size.width;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"page = %d"</span>, page);</div><div class="line">    <span class="comment">// 2.设置当前的页码</span></div><div class="line">    <span class="keyword">self</span>.pageControl.currentPage = page;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>实时切换</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 只要滚动就会调用</span></div><div class="line">- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 1.动态计算当前的页码</span></div><div class="line">    <span class="comment">// 页码 = UIScrollView的偏移位 / UIScrollView的宽度</span></div><div class="line">    <span class="built_in">CGFloat</span> page = scrollView.contentOffset.x / scrollView.bounds.size.width;</div><div class="line"></div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"page = %f"</span>, page + <span class="number">0.5</span>);</div><div class="line">    <span class="comment">// 2.设置当前的页码</span></div><div class="line">    <span class="keyword">self</span>.pageControl.currentPage = (<span class="keyword">int</span>)(page + <span class="number">0.5</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="NSTimer"><a href="#NSTimer" class="headerlink" title="NSTimer"></a>NSTimer</h2><ul>
+<li>作用: 可以让系统每隔一段时间执行指定对象的指定方法</li>
+<li><p>注意:</p>
+<ul>
+<li>间隔时间是不准确的</li>
+<li>只要通过<code>scheduledTimerWithTimeInterval</code>创建出来的<code>Timer</code>,就会被<code>RUNLOOP</code>强引用, 所以如果通过属性保存使用weak</li>
+<li>只要调用了NSTimer的<code>invalidate</code>方法, 那么定时器就不能使用了, 想要使用必须重新创建</li>
+<li>如何主线程正在处理其它操作, 那么NSTimer不会执行<ul>
+<li>默认NSTimer是<code>NSDefaultRunLoopMode</code>模式</li>
+<li>要想在主线程处理其它操作的时候也处理NSTimer, 那么必须把NSTiemr在<code>RunLoop</code>中的模式改为<code>NSRunLoopCommonModes</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如何暂停和启动定时器</p>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 暂停定时器</span></div><div class="line"><span class="comment">// 设置timer的开始时间为 遥远的未来 4001年</span></div><div class="line">[<span class="keyword">self</span>.timer setFireDate:[<span class="built_in">NSDate</span> distantFuture]];</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 开启定时器</span></div><div class="line"><span class="comment">// 设置定时器的开始时间为过去的某一个时间, 也就意味着立刻开始</span></div><div class="line"><span class="comment">// 设置定时器从当前时间之后两秒才开始执行</span></div><div class="line">[<span class="keyword">self</span>.timer setFireDate:[<span class="built_in">NSDate</span> dateWithTimeIntervalSinceNow:<span class="number">2.0</span>]];</div></pre></td></tr></table></figure>
+<h2 id="封装思想"><a href="#封装思想" class="headerlink" title="封装思想"></a>封装思想</h2><ul>
+<li>只要发现控制器知道得太多,就要考虑重构代码</li>
+<li>只要发现一个效果很多地方都需要使用, 就要考虑封装</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS笔记/" rel="tag"># iOS笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/23/iOS笔记-RunLoop、NSURLConnection（OC）/" rel="next" title="iOS笔记-RunLoop、NSURLConnection（OC）">
+                <i class="fa fa-chevron-left"></i> iOS笔记-RunLoop、NSURLConnection（OC）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/02/iOS笔记-一些零散的知识点/" rel="prev" title="iOS笔记-一些零散的知识点">
+                iOS笔记-一些零散的知识点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/01/23/iOS笔记-UIScrollView/"
+           data-title="iOS笔记-UIScrollView" data-url="http://yoursite.com/2015/01/23/iOS笔记-UIScrollView/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用UIScrollView-使用步骤"><span class="nav-number">1.</span> <span class="nav-text">如何使用UIScrollView(使用步骤)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS开发屏幕坐标系"><span class="nav-number">2.</span> <span class="nav-text">iOS开发屏幕坐标系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UIScrollView常用属性"><span class="nav-number">3.</span> <span class="nav-text">UIScrollView常用属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UIScrollView不能滚动的原因"><span class="nav-number">4.</span> <span class="nav-text">UIScrollView不能滚动的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UIScrollView使用注意点"><span class="nav-number">5.</span> <span class="nav-text">UIScrollView使用注意点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何监听一个控件"><span class="nav-number">6.</span> <span class="nav-text">何监听一个控件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理（UIScrollViewDelegate）"><span class="nav-number">7.</span> <span class="nav-text">代理（UIScrollViewDelegate）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何监听UIScrollview停止滚动"><span class="nav-number">8.</span> <span class="nav-text">如何监听UIScrollview停止滚动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UIScrollview缩放"><span class="nav-number">9.</span> <span class="nav-text">UIScrollview缩放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证被缩放的子控件永远居中"><span class="nav-number">10.</span> <span class="nav-text">如何保证被缩放的子控件永远居中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片轮播器Demo"><span class="nav-number">11.</span> <span class="nav-text">图片轮播器Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSTimer"><span class="nav-number">12.</span> <span class="nav-text">NSTimer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#封装思想"><span class="nav-number">13.</span> <span class="nav-text">封装思想</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>
