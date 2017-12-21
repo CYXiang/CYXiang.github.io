@@ -1,0 +1,990 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="十分钟入门iOS系列," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节主题（简单的网络部分）
+源码地址在文章末尾
+达成效果
+注：本文API使用HaoService数据平台
+
+
+前言
+废话不说了，简单来说，移动网络很重要，下面让我们来实现一个简单的Demo：对网络数据的请求，并接收与展示吧。注意：是简单的！很简单的！
+
+准备工作1.文件目录结构示图（按照MVC分层）
+
+Controller: CYXOneViewController
+Model: CYXMenu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="十分钟搭建主流框架_简单的网络部分(OC)">
+<meta property="og:url" content="http://yoursite.com/2015/10/16/十分钟搭建主流框架_简单的网络部分(OC)/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="本节主题（简单的网络部分）
+源码地址在文章末尾
+达成效果
+注：本文API使用HaoService数据平台
+
+
+前言
+废话不说了，简单来说，移动网络很重要，下面让我们来实现一个简单的Demo：对网络数据的请求，并接收与展示吧。注意：是简单的！很简单的！
+
+准备工作1.文件目录结构示图（按照MVC分层）
+
+Controller: CYXOneViewController
+Model: CYXMenu">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-ef988c1eaa893eeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-ab5d7ceb968dc1aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-620a8991c6163836.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-21T14:47:34.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="十分钟搭建主流框架_简单的网络部分(OC)">
+<meta name="twitter:description" content="本节主题（简单的网络部分）
+源码地址在文章末尾
+达成效果
+注：本文API使用HaoService数据平台
+
+
+前言
+废话不说了，简单来说，移动网络很重要，下面让我们来实现一个简单的Demo：对网络数据的请求，并接收与展示吧。注意：是简单的！很简单的！
+
+准备工作1.文件目录结构示图（按照MVC分层）
+
+Controller: CYXOneViewController
+Model: CYXMenu">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-ef988c1eaa893eeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/10/16/十分钟搭建主流框架_简单的网络部分(OC)/"/>
+
+
+
+
+
+  <title> 十分钟搭建主流框架_简单的网络部分(OC) | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/10/16/十分钟搭建主流框架_简单的网络部分(OC)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                十分钟搭建主流框架_简单的网络部分(OC)
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-10-16T13:18:34+08:00">
+                2015-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/10/16/十分钟搭建主流框架_简单的网络部分(OC)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/16/十分钟搭建主流框架_简单的网络部分(OC)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="本节主题（简单的网络部分）"><a href="#本节主题（简单的网络部分）" class="headerlink" title="本节主题（简单的网络部分）"></a>本节主题（简单的网络部分）</h3><ul>
+<li>源码地址在文章末尾</li>
+<li>达成效果<br><img src="http://upload-images.jianshu.io/upload_images/620754-ef988c1eaa893eeb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"></li>
+<li><code>注：本文API使用HaoService数据平台</code></li>
+</ul>
+<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>废话不说了，简单来说，移动网络很重要，下面让我们来实现一个简单的Demo：对网络数据的请求，并接收与展示吧。<code>注意：是简单的！很简单的！</code></li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h4 id="1-文件目录结构示图（按照MVC分层）"><a href="#1-文件目录结构示图（按照MVC分层）" class="headerlink" title="1.文件目录结构示图（按照MVC分层）"></a>1.文件目录结构示图（按照MVC分层）</h4><p><img src="http://upload-images.jianshu.io/upload_images/620754-ab5d7ceb968dc1aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="文件目录结构图/自定义Cell"></p>
+<ul>
+<li><code>Controller: CYXOneViewController</code></li>
+<li><code>Model: CYXMenu</code></li>
+<li><code>View: CYXCell</code></li>
+</ul>
+<h4 id="2-使用cocoapods集成第三方框架"><a href="#2-使用cocoapods集成第三方框架" class="headerlink" title="2.使用cocoapods集成第三方框架"></a>2.使用cocoapods集成第三方框架</h4><ul>
+<li><code>注：这里就直接使用cocoapods插件安装第三方框架了</code></li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-620a8991c6163836.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第三方框架"></p>
+<ul>
+<li>这里要使用到的三方框架包括AFNetworking、MJExtension、SDWebImage</li>
+<li>框架用途简介<ul>
+<li>AFNetworking：用于发送网络请求</li>
+<li>MJExtension：用于把网络返回的JSON格式数据转换为模型属性</li>
+<li>SDWebImage：用于下载网络图片</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本思路简述"><a href="#基本思路简述" class="headerlink" title="基本思路简述"></a>基本思路简述</h2><ul>
+<li>1.在<code>CYXOneViewController</code>中使用<code>AFNetworking</code>发送<code>GET</code>请求,得到服务器返回的<code>JSON</code>格式的数据</li>
+<li>2.使用<code>MJExtension</code>把<code>JSON</code>格式的数据转为模型<code>CYXMenu</code>对应的属性</li>
+<li>3.在<code>- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;</code>方法内根据索引<code>indexPath.row</code>把每一行Cell的Model属性传递给自定义Cell(<code>CYXCell</code>)</li>
+<li>4.在自定义Cell(<code>CYXCell</code>)内接收模型数据并初始化Cell的内部控件</li>
+<li>5.不要忘记在AFN框架内的GET请求成功调用的block中刷新TableView的数据</li>
+</ul>
+<h2 id="详细实现-上代码"><a href="#详细实现-上代码" class="headerlink" title="详细实现 上代码"></a>详细实现 上代码</h2><ul>
+<li>第一步：设计模型属性（CYXMenu.h），这里的属性名根据<a href="http://www.haoservice.com/docs/30" target="_blank" rel="external">API文档设计</a>，本Demo只是使用了其中几个简单的</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXMenu</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="comment">/** 图片 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> * albums;</div><div class="line"><span class="comment">/** 标题 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>) <span class="built_in">NSString</span> *title;</div><div class="line"><span class="comment">/** 材料 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">copy</span>) <span class="built_in">NSString</span> *ingredients;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>第二步：自定义cell（这里使用Xib了）</p>
+<ul>
+<li>2.1 拖控件到Xib中（见文件目录结构图）</li>
+<li><p>2.2 在<code>CYXCell.h</code>中定义一个模型属性，用于供外界（CYXOneViewController）访问并传递模型进来。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@class</span> <span class="title">CYXMenu</span>;</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXCell</span> : <span class="title">UITableViewCell</span></span></div><div class="line"></div><div class="line"><span class="comment">/** 菜单模型 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) CYXMenu * menu;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>2.3 在<code>CYXCell.m</code>中实现menu属性的<code>- (void)setMenu:(CYXMenu *)menu</code>方法，将取到的menu模型值给cell自身的控件赋值<br><code>由于这里需要通过URL下载网络图片，使用到了SDWebImage框架</code></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"CYXCell.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"CYXMenu.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIImageView+WebCache.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXCell</span> ()</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UIImageView</span> *albumsImageView;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *titleLable;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="keyword">IBOutlet</span> <span class="built_in">UILabel</span> *ingredientsLabel;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CYXCell</span></span></div><div class="line">- (<span class="keyword">void</span>)setMenu:(CYXMenu *)menu&#123;</div><div class="line"></div><div class="line">    _menu = menu;</div><div class="line">    <span class="comment">// 利用SDWebImage框架加载图片资源</span></div><div class="line">    [<span class="keyword">self</span>.albumsImageView sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:menu.albums]];</div><div class="line">    <span class="comment">// 设置标题</span></div><div class="line">    <span class="keyword">self</span>.titleLable.text = menu.title;</div><div class="line">    <span class="comment">// 设置材料数据</span></div><div class="line">    <span class="keyword">self</span>.ingredientsLabel.text = menu.ingredients;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>第三步，到这里我们需要在<code>CYXOneViewController.m</code>内实现 <code>网络数据请求</code>/<code>JSON数据转模型</code>/<code>给自定义cell传递模型数据</code> 的操作</p>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"CYXOneViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"CYXCell.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"CYXMenu.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;AFNetworking.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;MJExtension.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXOneViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="comment">/** 存放数据模型的数组 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSMutableArray</span> * menus;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CYXOneViewController</span></span></div><div class="line"></div><div class="line"><span class="meta">#pragma mark - 全局常量</span></div><div class="line"><span class="comment">// 发送请求URL</span></div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> * <span class="keyword">const</span> CYXRequestURL = <span class="string">@"http://apis.haoservice.com/lifeservice/cook/query?"</span>;</div><div class="line"><span class="comment">// 重用cell标识符</span></div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> * <span class="keyword">const</span> CYXCellID = <span class="string">@"cell"</span>;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - life cycle 生命周期方法</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.tableView.rowHeight = <span class="number">90</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 注册重用Cell</span></div><div class="line">    [<span class="keyword">self</span>.tableView registerNib:[<span class="built_in">UINib</span> nibWithNibName:<span class="built_in">NSStringFromClass</span>([CYXCell <span class="keyword">class</span>]) bundle:<span class="literal">nil</span>] forCellReuseIdentifier:CYXCellID];</div><div class="line"></div><div class="line">    <span class="comment">// 调用加载数据方法</span></div><div class="line">    [<span class="keyword">self</span> loadData];</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.view.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - private methods 私有方法</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> *  发送请求并获取数据方法</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)loadData&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 请求参数（根据接口文档编写）</span></div><div class="line">    <span class="built_in">NSMutableDictionary</span> *params = [<span class="built_in">NSMutableDictionary</span> dictionary];</div><div class="line">    params[<span class="string">@"menu"</span>] = <span class="string">@"西红柿"</span>;</div><div class="line">    params[<span class="string">@"pn"</span>] = <span class="string">@"1"</span>;</div><div class="line">    params[<span class="string">@"rn"</span>] = <span class="string">@"20"</span>;</div><div class="line">    params[<span class="string">@"key"</span>] = <span class="string">@"2ba215a3f83b4b898d0f6fdca4e16c7c"</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 在AFN的block内使用，防止造成循环引用</span></div><div class="line">    __<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</div><div class="line"></div><div class="line">    [[AFHTTPSessionManager manager] GET:CYXRequestURL parameters:params success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nonnull responseObject) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"请求成功"</span>);</div><div class="line"></div><div class="line">        <span class="comment">// 利用MJExtension框架进行字典转模型</span></div><div class="line">        weakSelf.menus = [CYXMenu objectArrayWithKeyValuesArray:responseObject[<span class="string">@"result"</span>]];</div><div class="line"></div><div class="line">        <span class="comment">// 刷新数据（若不刷新数据会显示不出）</span></div><div class="line">        [weakSelf.tableView reloadData];</div><div class="line"></div><div class="line">    &#125; failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"请求失败 原因：%@"</span>,error);</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - UITableviewDatasource 数据源方法</span></div><div class="line"></div><div class="line">- (<span class="built_in">NSInteger</span>)tableView:(<span class="built_in">UITableView</span> *)tableView numberOfRowsInSection:(<span class="built_in">NSInteger</span>)section&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.menus.count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line"></div><div class="line">    CYXCell *cell = [tableView dequeueReusableCellWithIdentifier:<span class="string">@"cell"</span>];</div><div class="line"></div><div class="line">    cell.menu = <span class="keyword">self</span>.menus[indexPath.row];</div><div class="line"></div><div class="line">    <span class="keyword">return</span> cell;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - UITableviewDelegate 代理方法</span></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView didSelectRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    <span class="comment">// 点击了第indexPath.row行Cell所做的操作</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ul>
+<li>到这里只是简单实现了网络数据的请求，还有很多细节，例如下拉/上拉刷新，、cell的点击事件等等，有时间再讨论了。</li>
+<li>附：<a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">源码github地址</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/十分钟入门iOS系列/" rel="tag"># 十分钟入门iOS系列</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/12/五分钟搭建App设置页面_纯代码 + 模型思想(OC)/" rel="next" title="五分钟搭建App设置页面_纯代码 + 模型思想(OC)">
+                <i class="fa fa-chevron-left"></i> 五分钟搭建App设置页面_纯代码 + 模型思想(OC)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/05/十分钟搭建主流框架_下拉:上拉刷新数据(OC)/" rel="prev" title="十分钟搭建主流框架_下拉/上拉刷新数据(OC)">
+                十分钟搭建主流框架_下拉/上拉刷新数据(OC) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/16/十分钟搭建主流框架_简单的网络部分(OC)/"
+           data-title="十分钟搭建主流框架_简单的网络部分(OC)" data-url="http://yoursite.com/2015/10/16/十分钟搭建主流框架_简单的网络部分(OC)/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#本节主题（简单的网络部分）"><span class="nav-number">1.</span> <span class="nav-text">本节主题（简单的网络部分）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number"></span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number"></span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-文件目录结构示图（按照MVC分层）"><span class="nav-number">0.1.</span> <span class="nav-text">1.文件目录结构示图（按照MVC分层）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-使用cocoapods集成第三方框架"><span class="nav-number">0.2.</span> <span class="nav-text">2.使用cocoapods集成第三方框架</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思路简述"><span class="nav-number"></span> <span class="nav-text">基本思路简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细实现-上代码"><span class="nav-number"></span> <span class="nav-text">详细实现 上代码</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>

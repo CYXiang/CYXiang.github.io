@@ -1,0 +1,1012 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS笔试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="机试题目如下
+用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目
+
+将下面的问题在一个UITabView里面列出所有问题，单击每一行进入一个新的页面，里面是问题和答案。
+1.1 什么是VFL，请说出“H:[_aImageView(==50)]-10-[_aButton]”代表的意思？
+1.2 NSPersistentSto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS笔试-上机题（附个人见解）">
+<meta property="og:url" content="http://yoursite.com/2015/11/12/iOS笔试-上机题（附个人见解）/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="机试题目如下
+用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目
+
+将下面的问题在一个UITabView里面列出所有问题，单击每一行进入一个新的页面，里面是问题和答案。
+1.1 什么是VFL，请说出“H:[_aImageView(==50)]-10-[_aButton]”代表的意思？
+1.2 NSPersistentSto">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-ca33a2fc0c135df8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-ac36519e5c7efd45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-21T14:54:33.611Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS笔试-上机题（附个人见解）">
+<meta name="twitter:description" content="机试题目如下
+用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目
+
+将下面的问题在一个UITabView里面列出所有问题，单击每一行进入一个新的页面，里面是问题和答案。
+1.1 什么是VFL，请说出“H:[_aImageView(==50)]-10-[_aButton]”代表的意思？
+1.2 NSPersistentSto">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-ca33a2fc0c135df8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/11/12/iOS笔试-上机题（附个人见解）/"/>
+
+
+
+
+
+  <title> iOS笔试-上机题（附个人见解） | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/11/12/iOS笔试-上机题（附个人见解）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS笔试-上机题（附个人见解）
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-12T01:04:38+08:00">
+                2015-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/11/12/iOS笔试-上机题（附个人见解）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/12/iOS笔试-上机题（附个人见解）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/620754-ca33a2fc0c135df8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="随机配图"></p>
+<h3 id="机试题目如下"><a href="#机试题目如下" class="headerlink" title="机试题目如下"></a>机试题目如下</h3><hr>
+<h6 id="用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目"><a href="#用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目" class="headerlink" title="用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目"></a>用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目</h6><ul>
+<li><ol>
+<li>将下面的问题在一个UITabView里面列出所有问题，单击每一行进入一个新的页面，里面是问题和答案。<ul>
+<li>1.1 什么是VFL，请说出“H:[_aImageView(==50)]-10-[_aButton]”代表的意思？</li>
+<li>1.2 NSPersistentStoreCoordinator\NSManagedObjectContext和NSManagedObject三者什么关系</li>
+<li>1.3 ARC下什么时候使用Strong，什么时候使用Weak，如何避免循环引用？</li>
+<li>1.4 将一个MRC的项目转换为ARC的项目，应该遵循什么规则？</li>
+<li>1.5 Objective-C如何对内存管理的，有哪些情况会导致崩溃，说说你的看法和解决方法？</li>
+<li>1.6 简述GCD是如何简化线程编程的？</li>
+<li>1.7 Extensions有哪些类型，每种类型可以完成的功能有哪些？</li>
+<li>1.8 如何衡量ViewController的规模？</li>
+<li>1.9 MVVM是什么，请简述MVVM的特点以及解决了哪些问题？</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>2.请使用UIScrollerView控件实现图片的循环切换</li>
+<li>3.请使用UICollectionView控件实现图片数据绑定，要求每行两列</li>
+</ul>
+<hr>
+<h2 id="参考思路"><a href="#参考思路" class="headerlink" title="参考思路"></a>参考思路</h2><h3 id="1-新建以CocoaPods管理的项目"><a href="#1-新建以CocoaPods管理的项目" class="headerlink" title="1.新建以CocoaPods管理的项目"></a>1.新建以CocoaPods管理的项目</h3><ul>
+<li>在命令行窗口输入以下命令</li>
+<li><code>pod init</code></li>
+<li><code>pod install</code></li>
+<li>等待Updating完毕以后文件夹的样式<br><img src="http://upload-images.jianshu.io/upload_images/620754-ac36519e5c7efd45.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="文件夹样式"></li>
+<li>打开<code>test-cyx.xcworkspace</code>文件</li>
+</ul>
+<p><code>PS:下面只写思路，由于有点强迫症，想把题目做的完整一点，时间又不允许，就只把思路写写就好了</code></p>
+<h3 id="2-第一题（创建一个TableViewController）"><a href="#2-第一题（创建一个TableViewController）" class="headerlink" title="2.第一题（创建一个TableViewController）"></a>2.第一题（创建一个TableViewController）</h3><ul>
+<li>1.我们假定问题和答案分别是字典的Key和Value,把十道题目分别存放到一个.plist文件中，使之能从.plist文件中读取</li>
+<li><p>2.根据MVC思想，我们面向模型开发，而不是面向字典开发，因此，我们从plist文件中读出的字典数组需要转化为模型数组</p>
+<ul>
+<li>（1）（M）我们需要定义模型<code>test</code>类，里面有两个属性：</li>
+<li><code>@property (nonatomic, copy) NSString *testName;</code>题目</li>
+<li><code>@property (nonatomic, copy) NSString *testContext;</code>答案</li>
+<li>（2）（V）创建一个用于展示问题和答案的<code>PageViewController</code>类，.h头文件里向外暴露了<code>@property (nonatomic, strong) YXTest * text;</code>属性</li>
+<li><p>（3）（C）通过<code>TableViewController</code>类里面使用KVC把字典数据转为模型数据，再在以下方法把模型数据传递给<code>PageViewController</code>用于展示。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView didSelectRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath&#123;</div><div class="line">    PageViewController *page = [[PageViewController alloc]init];</div><div class="line">    page.text = <span class="keyword">self</span>.text;</div><div class="line">    [<span class="keyword">self</span>.navigationController pushViewController:page animated:<span class="literal">YES</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="上面的Demo骨架已经搭完了，下面是解析一下问题的答案（当然，这些问题都可以从网上直接找到答案，这里只是简单说说我个人的理解，如有纰漏，欢迎指正）"><a href="#上面的Demo骨架已经搭完了，下面是解析一下问题的答案（当然，这些问题都可以从网上直接找到答案，这里只是简单说说我个人的理解，如有纰漏，欢迎指正）" class="headerlink" title="上面的Demo骨架已经搭完了，下面是解析一下问题的答案（当然，这些问题都可以从网上直接找到答案，这里只是简单说说我个人的理解，如有纰漏，欢迎指正）"></a>上面的Demo骨架已经搭完了，下面是解析一下问题的答案（当然，这些问题都可以从网上直接找到答案，这里只是简单说说我个人的理解，如有纰漏，欢迎指正）</h4><ul>
+<li><p>什么是VFL，请说出“H:[_aImageView(==50)]-10-[_aButton]”代表的意思？</p>
+<ul>
+<li>VFL:苹果为了简化手写Autolayout代码发明出来的，好像叫可视化格式语言（表示真的很久没用过啊！自从发现了Masonry），那行代码的意思应该是设置水平方向的约束。</li>
+<li>手写Autolayout代码我一般使用第三方框架：Masonry。用Masonry写出来的代码的可读性非常好。</li>
+</ul>
+</li>
+<li><p>NSPersistentStoreCoordinator\\\\NSManagedObjectContext和NSManagedObject三者什么关系</p>
+<ul>
+<li>CoreData里面的属性，NSPersistentStoreCoordinator：持久性数据协调器；NSManagedObjectModel：管理数据模型；NSManagedObjectContext：管理数据内容。三者的关系：CoreData根据NSManagedObjectModel对象确定如何将底层的持久化文件中的数据映射为NSManagedObject对象。</li>
+<li>对于数据持久化的操作，我使用比较多的是通过FMDB框架操作SQLite，因为CoreData是基于OC封装了SQLite，性能并没有SQLite好。例如GCD性能比NSOperation好。</li>
+</ul>
+</li>
+<li><p>ARC下什么时候使用Strong，什么时候使用Weak，如何避免循环引用？</p>
+<ul>
+<li>ARC下，是Xcode编译器自动判断是否有强指针引用着对象，从而自动帮我们在恰当的位置加上引用计数加一或减一的代码<retain release="" autorelease="">。使用Strong就表明这个OC对象是被使用强指针引用的。</retain></li>
+<li>因此，我们自己定义的需要使用的OC属性（UI控件除外）时，一般使用Strong；UI控件一般使用weak，因为在UI控件通常被父控件的subViews数组强引用着。</li>
+<li>首先，循环引用的意思是两个对象互相强引用着(或者多个对象引用循环)，造成互相都无法释放，效果类似与‘死锁’。避免循环引用的方式是将其中一个对象设置为weak。我印象比较深的在使用block时造成的循环引用，例如<a href="http://www.jianshu.com/p/6eb7eabda386" target="_blank" rel="external">使用AFN的时候</a><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在AFN的block内使用，防止造成循环引用</span></div><div class="line">   __<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</div><div class="line"></div><div class="line">   [[AFHTTPSessionManager manager] GET:CYXRequestURL parameters:params success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nonnull responseObject) &#123;</div><div class="line">       <span class="built_in">NSLog</span>(<span class="string">@"请求成功"</span>);</div><div class="line"></div><div class="line">       <span class="comment">// 利用MJExtension框架进行字典转模型</span></div><div class="line">       weakSelf.menus = [CYXMenu objectArrayWithKeyValuesArray:responseObject[<span class="string">@"result"</span>]];</div><div class="line"></div><div class="line">       <span class="comment">// 刷新数据（若不刷新数据会显示不出）</span></div><div class="line">       [weakSelf.tableView reloadData];</div><div class="line"></div><div class="line">   &#125; failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</div><div class="line">       <span class="built_in">NSLog</span>(<span class="string">@"请求失败 原因：%@"</span>,error);</div><div class="line">   &#125;];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>将一个MRC的项目转换为ARC的项目，应该遵循什么规则？</p>
+<ul>
+<li>(我也不太确定，猜的)规则难道是，需要转换为ARC文件的就转换，，不需要转换的就不转换？过滤掉无需转换的文件(不支持ARC的文件)。无需转换的文件应添加<code>-fno-objc-arc</code>标记</li>
+</ul>
+</li>
+<li><p>Objective-C如何对内存管理的，有哪些情况会导致崩溃，说说你的看法和解决方法？</p>
+<ul>
+<li>(…上面已经问过ARC了，这题我猜是问iOS系统的内存管理原则了吧？)</li>
+<li>当App收到三次内存警告还不做处理时，会造成闪退。</li>
+<li>处理方法：在<code>didReceiveMemoryWarning</code>内释放不必要的资源。</li>
+</ul>
+</li>
+<li><p>简述GCD是如何简化线程编程的？</p>
+<ul>
+<li>GCD相对于pthread/NSThread，通过自动管理线程的生命周期，从而简化了线程编程。</li>
+</ul>
+</li>
+<li><p>Extensions有哪些类型，每种类型可以完成的功能有哪些？</p>
+<ul>
+<li>(那时候有几个忘了….)六种类型：Today、Share、Action、Photo Editing、Storage Provider、Custom keyboard</li>
+<li>完成的功能可以顾名思义</li>
+</ul>
+</li>
+<li><p>如何衡量ViewController的规模？<br>  -（这个真的不太清楚。。求大神指导）是代码量？业务逻辑的复杂程度？还是ViewController做了过多数据加工的事情，造成ViewController的规模变大？</p>
+</li>
+<li><p>MVVM是什么，请简述MVVM的特点以及解决了哪些问题</p>
+<ul>
+<li>M(Model)V(View)VM(ViewModel)，是一种View层的架构模式，衍生自MVC。</li>
+<li>特点：把数据加工的任务从Controller中移到了ViewModel，使得Controller只需要专注于数据调配的工作，ViewModel则去负责数据加工并通过通知机制让View响应ViewModel的改变。</li>
+<li>目标：为MVC中的Controller减负</li>
+</ul>
+</li>
+</ul>
+<h4 id="请使用UIScrollerView控件实现图片的循环切换"><a href="#请使用UIScrollerView控件实现图片的循环切换" class="headerlink" title="请使用UIScrollerView控件实现图片的循环切换"></a>请使用UIScrollerView控件实现图片的循环切换</h4><p><code>- CYXInfiniteScrollView.h文件</code></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;UIKit/UIKit.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXInfiniteScrollView</span> : <span class="title">UIView</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSArray</span> *images;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">UIPageControl</span> *pageControl;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>, <span class="keyword">getter</span>=isScrollDirectionPortrait) <span class="built_in">BOOL</span> scrollDirectionPortrait;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p><code>- CYXInfiniteScrollView.m文件</code><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"CYXInfiniteScrollView.h"</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> <span class="keyword">const</span> ImageViewCount = <span class="number">3</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXInfiniteScrollView</span>() &lt;<span class="title">UIScrollViewDelegate</span>&gt;</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">weak</span>, <span class="keyword">nonatomic</span>) <span class="built_in">UIScrollView</span> *scrollView;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CYXInfiniteScrollView</span></span></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame]) &#123;</div><div class="line">        <span class="comment">// 滚动视图</span></div><div class="line">        <span class="built_in">UIScrollView</span> *scrollView = [[<span class="built_in">UIScrollView</span> alloc] init];</div><div class="line">        scrollView.showsHorizontalScrollIndicator = <span class="literal">NO</span>;</div><div class="line">        scrollView.showsVerticalScrollIndicator = <span class="literal">NO</span>;</div><div class="line">        scrollView.pagingEnabled = <span class="literal">YES</span>;</div><div class="line">        scrollView.bounces = <span class="literal">NO</span>;</div><div class="line">        scrollView.delegate = <span class="keyword">self</span>;</div><div class="line">        [<span class="keyword">self</span> addSubview:scrollView];</div><div class="line">        <span class="keyword">self</span>.scrollView = scrollView;</div><div class="line"></div><div class="line">        <span class="comment">// 图片控件</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;ImageViewCount; i++) &#123;</div><div class="line">            <span class="built_in">UIImageView</span> *imageView = [[<span class="built_in">UIImageView</span> alloc] init];</div><div class="line">            [scrollView addSubview:imageView];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 页码视图</span></div><div class="line">        <span class="built_in">UIPageControl</span> *pageControl = [[<span class="built_in">UIPageControl</span> alloc] init];</div><div class="line">        [<span class="keyword">self</span> addSubview:pageControl];</div><div class="line">        _pageControl = pageControl;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)layoutSubviews</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">super</span> layoutSubviews];</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.scrollView.frame = <span class="keyword">self</span>.bounds;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.isScrollDirectionPortrait) &#123;</div><div class="line">        <span class="keyword">self</span>.scrollView.contentSize = <span class="built_in">CGSizeMake</span>(<span class="number">0</span>, ImageViewCount * <span class="keyword">self</span>.bounds.size.height);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">self</span>.scrollView.contentSize = <span class="built_in">CGSizeMake</span>(ImageViewCount * <span class="keyword">self</span>.bounds.size.width, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;ImageViewCount; i++) &#123;</div><div class="line">        <span class="built_in">UIImageView</span> *imageView = <span class="keyword">self</span>.scrollView.subviews[i];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.isScrollDirectionPortrait) &#123;</div><div class="line">            imageView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, i * <span class="keyword">self</span>.scrollView.frame.size.height, <span class="keyword">self</span>.scrollView.frame.size.width, <span class="keyword">self</span>.scrollView.frame.size.height);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            imageView.frame = <span class="built_in">CGRectMake</span>(i * <span class="keyword">self</span>.scrollView.frame.size.width, <span class="number">0</span>, <span class="keyword">self</span>.scrollView.frame.size.width, <span class="keyword">self</span>.scrollView.frame.size.height);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">CGFloat</span> pageW = <span class="number">100</span>;</div><div class="line">    <span class="built_in">CGFloat</span> pageH = <span class="number">100</span>;</div><div class="line">    <span class="built_in">CGFloat</span> pageX = <span class="keyword">self</span>.scrollView.frame.size.width - pageW;</div><div class="line">    <span class="built_in">CGFloat</span> pageY = <span class="keyword">self</span>.scrollView.frame.size.height - pageH;</div><div class="line">    <span class="keyword">self</span>.pageControl.frame = <span class="built_in">CGRectMake</span>(pageX, pageY, pageW, pageH);</div><div class="line"></div><div class="line">    [<span class="keyword">self</span> updateContent];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setImages:(<span class="built_in">NSArray</span> *)images</div><div class="line">&#123;</div><div class="line">    _images = images;</div><div class="line"></div><div class="line">    <span class="comment">// 设置页码</span></div><div class="line">    <span class="keyword">self</span>.pageControl.numberOfPages = images.count;</div><div class="line">    <span class="keyword">self</span>.pageControl.currentPage = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 设置内容</span></div><div class="line">    [<span class="keyword">self</span> updateContent];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - <span class="meta-string">&lt;UIScrollViewDelegate&gt;</span></span></div><div class="line">- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 找出最中间的那个图片控件</span></div><div class="line">    <span class="built_in">NSInteger</span> page = <span class="number">0</span>;</div><div class="line">    <span class="built_in">CGFloat</span> minDistance = MAXFLOAT;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;<span class="keyword">self</span>.scrollView.subviews.count; i++) &#123;</div><div class="line">        <span class="built_in">UIImageView</span> *imageView = <span class="keyword">self</span>.scrollView.subviews[i];</div><div class="line">        <span class="built_in">CGFloat</span> distance = <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">self</span>.isScrollDirectionPortrait) &#123;</div><div class="line">            distance = ABS(imageView.frame.origin.y - scrollView.contentOffset.y);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            distance = ABS(imageView.frame.origin.x - scrollView.contentOffset.x);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (distance &lt; minDistance) &#123;</div><div class="line">            minDistance = distance;</div><div class="line">            page = imageView.tag;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">self</span>.pageControl.currentPage = page;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)scrollViewDidEndDecelerating:(<span class="built_in">UIScrollView</span> *)scrollView</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">self</span> updateContent];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)scrollViewDidEndScrollingAnimation:(<span class="built_in">UIScrollView</span> *)scrollView</div><div class="line">&#123;</div><div class="line">    [<span class="keyword">self</span> updateContent];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - 内容更新</span></div><div class="line">- (<span class="keyword">void</span>)updateContent</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 设置图片</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;<span class="keyword">self</span>.scrollView.subviews.count; i++) &#123;</div><div class="line">        <span class="built_in">UIImageView</span> *imageView = <span class="keyword">self</span>.scrollView.subviews[i];</div><div class="line">        <span class="built_in">NSInteger</span> index = <span class="keyword">self</span>.pageControl.currentPage;</div><div class="line">        <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</div><div class="line">            index--;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="number">2</span>) &#123;</div><div class="line">            index++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (index &lt; <span class="number">0</span>) &#123;</div><div class="line">            index = <span class="keyword">self</span>.pageControl.numberOfPages - <span class="number">1</span>;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (index &gt;= <span class="keyword">self</span>.pageControl.numberOfPages) &#123;</div><div class="line">            index = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        imageView.tag = index;</div><div class="line">        imageView.image = <span class="keyword">self</span>.images[index];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 设置偏移量在中间</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.isScrollDirectionPortrait) &#123;</div><div class="line">        <span class="keyword">self</span>.scrollView.contentOffset = <span class="built_in">CGPointMake</span>(<span class="number">0</span>, <span class="keyword">self</span>.scrollView.frame.size.height);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">self</span>.scrollView.contentOffset = <span class="built_in">CGPointMake</span>(<span class="keyword">self</span>.scrollView.frame.size.width, <span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="请使用UICollectionView控件实现图片数据绑定，要求每行两列"><a href="#请使用UICollectionView控件实现图片数据绑定，要求每行两列" class="headerlink" title="请使用UICollectionView控件实现图片数据绑定，要求每行两列"></a>请使用UICollectionView控件实现图片数据绑定，要求每行两列</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"CYXCollectionViewController.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXCollectionViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CYXCollectionViewController</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> * <span class="keyword">const</span> CYXCell = <span class="string">@"cell"</span>;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)init</div><div class="line">&#123;</div><div class="line">    <span class="comment">// 流水布局</span></div><div class="line">    <span class="built_in">UICollectionViewFlowLayout</span> *layout = [[<span class="built_in">UICollectionViewFlowLayout</span> alloc] init];</div><div class="line"></div><div class="line">    layout.itemSize = <span class="built_in">CGSizeMake</span>(<span class="number">150</span>, <span class="number">150</span>);</div><div class="line"></div><div class="line">    layout.minimumLineSpacing = <span class="number">0</span>;</div><div class="line"></div><div class="line">    layout.minimumInteritemSpacing = <span class="number">20</span>;</div><div class="line"></div><div class="line">    layout.sectionInset = <span class="built_in">UIEdgeInsetsMake</span>(<span class="number">20</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> initWithCollectionViewLayout:layout];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"></div><div class="line">    <span class="keyword">self</span>.collectionView.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</div><div class="line"></div><div class="line">    <span class="comment">// 注册cell</span></div><div class="line">    [<span class="keyword">self</span>.collectionView registerClass:[<span class="built_in">UICollectionViewCell</span> <span class="keyword">class</span>] forCellWithReuseIdentifier: CYXCell];</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - <span class="meta-string">&lt;UICollectionViewDataSource&gt;</span></span></div><div class="line"></div><div class="line">- (<span class="built_in">NSInteger</span>)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView numberOfItemsInSection:(<span class="built_in">NSInteger</span>)section</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">30</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">UICollectionViewCell</span> *)collectionView:(<span class="built_in">UICollectionView</span> *)collectionView cellForItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</div><div class="line">&#123;</div><div class="line"></div><div class="line">   <span class="built_in">UICollectionViewCell</span> *cell = [collectionView dequeueReusableCellWithReuseIdentifier: CYXCell forIndexPath:indexPath];</div><div class="line">    <span class="built_in">UIImageView</span> *view = [[<span class="built_in">UIImageView</span> alloc]initWithImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"xxx"</span>]];</div><div class="line">    cell.backgroundView = view;</div><div class="line">    <span class="keyword">return</span> cell;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS笔试/" rel="tag"># iOS笔试</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/05/十分钟搭建主流框架_下拉:上拉刷新数据(OC)/" rel="next" title="十分钟搭建主流框架_下拉/上拉刷新数据(OC)">
+                <i class="fa fa-chevron-left"></i> 十分钟搭建主流框架_下拉/上拉刷新数据(OC)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/23/iOS底层-KVC使用实践以及实现原理/" rel="prev" title="iOS底层-KVC使用实践以及实现原理">
+                iOS底层-KVC使用实践以及实现原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/11/12/iOS笔试-上机题（附个人见解）/"
+           data-title="iOS笔试-上机题（附个人见解）" data-url="http://yoursite.com/2015/11/12/iOS笔试-上机题（附个人见解）/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#机试题目如下"><span class="nav-number">1.</span> <span class="nav-text">机试题目如下</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">用命令行创建一个以CocoaPods管理的项目【Test-你的姓名拼音】，新建3个ViewController，完成以下题目</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考思路"><span class="nav-number"></span> <span class="nav-text">参考思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-新建以CocoaPods管理的项目"><span class="nav-number">1.</span> <span class="nav-text">1.新建以CocoaPods管理的项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-第一题（创建一个TableViewController）"><span class="nav-number">2.</span> <span class="nav-text">2.第一题（创建一个TableViewController）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上面的Demo骨架已经搭完了，下面是解析一下问题的答案（当然，这些问题都可以从网上直接找到答案，这里只是简单说说我个人的理解，如有纰漏，欢迎指正）"><span class="nav-number">2.1.</span> <span class="nav-text">上面的Demo骨架已经搭完了，下面是解析一下问题的答案（当然，这些问题都可以从网上直接找到答案，这里只是简单说说我个人的理解，如有纰漏，欢迎指正）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请使用UIScrollerView控件实现图片的循环切换"><span class="nav-number">2.2.</span> <span class="nav-text">请使用UIScrollerView控件实现图片的循环切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请使用UICollectionView控件实现图片数据绑定，要求每行两列"><span class="nav-number">2.3.</span> <span class="nav-text">请使用UICollectionView控件实现图片数据绑定，要求每行两列</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>

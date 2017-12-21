@@ -1,0 +1,1094 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS动画," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="附：(github)示例Demo地址，希望点个⭐️Star。thx☺
+
+CABasicAnimation 基本动画
+动画的本质就是修改图层的某些属性
+核心动画,利用核心动画修改Layer某些属性
+简介
+
+基本动画是CAPropertyAnimation的子类
+
+
+属性说明：
+
+fromValue：keyPath相应属性的初始值
+toValue：keyPath相对应的结束值
+
+
+动画过程说明：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS动画-Core Animation实现思路全解<附示例Demo>(OC)">
+<meta property="og:url" content="http://yoursite.com/2016/03/28/iOS动画-Core Animation实现思路全解<附示例Demo>(OC)/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="附：(github)示例Demo地址，希望点个⭐️Star。thx☺
+
+CABasicAnimation 基本动画
+动画的本质就是修改图层的某些属性
+核心动画,利用核心动画修改Layer某些属性
+简介
+
+基本动画是CAPropertyAnimation的子类
+
+
+属性说明：
+
+fromValue：keyPath相应属性的初始值
+toValue：keyPath相对应的结束值
+
+
+动画过程说明：">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-ef617c867468df20.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-21T14:56:06.611Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS动画-Core Animation实现思路全解<附示例Demo>(OC)">
+<meta name="twitter:description" content="附：(github)示例Demo地址，希望点个⭐️Star。thx☺
+
+CABasicAnimation 基本动画
+动画的本质就是修改图层的某些属性
+核心动画,利用核心动画修改Layer某些属性
+简介
+
+基本动画是CAPropertyAnimation的子类
+
+
+属性说明：
+
+fromValue：keyPath相应属性的初始值
+toValue：keyPath相对应的结束值
+
+
+动画过程说明：">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-ef617c867468df20.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/03/28/iOS动画-Core Animation实现思路全解<附示例Demo>(OC)/"/>
+
+
+
+
+
+  <title> iOS动画-Core Animation实现思路全解<附示例Demo>(OC) | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/03/28/iOS动画-Core Animation实现思路全解<附示例Demo>(OC)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS动画-Core Animation实现思路全解<附示例Demo>(OC)
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-28T01:04:38+08:00">
+                2016-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/03/28/iOS动画-Core Animation实现思路全解<附示例Demo>(OC)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/28/iOS动画-Core Animation实现思路全解<附示例Demo>(OC)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://upload-images.jianshu.io/upload_images/620754-ef617c867468df20.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="听说放妹纸图片会增加点击量"></p>
+<ul>
+<li>附：<a href="https://github.com/CYXiang/CYXCoreAnimationTest" target="_blank" rel="external">(github)示例Demo地址，希望点个⭐️Star。thx☺</a></li>
+</ul>
+<h3 id="CABasicAnimation-基本动画"><a href="#CABasicAnimation-基本动画" class="headerlink" title="CABasicAnimation 基本动画"></a>CABasicAnimation 基本动画</h3><ul>
+<li>动画的本质就是修改图层的某些属性</li>
+<li>核心动画,利用核心动画修改Layer某些属性</li>
+<li><p>简介</p>
+<ul>
+<li>基本动画是<code>CAPropertyAnimation</code>的子类</li>
+</ul>
+</li>
+<li><p>属性说明：</p>
+<ul>
+<li><code>fromValue</code>：<code>keyPath</code>相应属性的初始值</li>
+<li><code>toValue</code>：<code>keyPath</code>相对应的结束值</li>
+</ul>
+</li>
+<li>动画过程说明：<ul>
+<li>随着动画的进行，在长度为<code>duration</code>的持续时间内，<code>keyPath</code>相应的属性值从<code>fromValue</code>渐渐变为<code>toValue</code></li>
+<li><code>keyPath</code>内容是<code>CALayer</code>的可动画<code>Animatable</code>属性</li>
+<li>如果<code>fillMode=kCAFillModeForwards</code>同时<code>removedOnComletion=NO</code>，那么在动画执行完毕后，图层会保持显示动画执行后的状态。。<code>但在实质上，图层的属性值还是动画执行前的初始值，并没有真正被改变。</code></li>
+</ul>
+</li>
+<li>以下是代码实现步骤：<ul>
+<li>1.创建基础核心动画<br><code>CABasicAnimation *anim = [CABasicAnimation animation];</code></li>
+<li>2.描述修改Layer的某个属性(@”transform.rotation”…)<br><code>anim.keyPath = @&quot;position”;</code></li>
+<li>3.描述修改Layer属性的值</li>
+<li>动画的起点（如果不设，以默认值为终点）<br><code>anim.fromValue = @0</code></li>
+<li>动画的终点<br><code>anim.toValue = [NSValue valueWithCGPoint:CGPointMake(300, 400)];</code></li>
+<li>4.动画时长<br><code>anim.duration = 1;</code></li>
+<li>5.取消反弹<ul>
+<li>(1)在动画完成的时候不要给我把动画销毁<br><code>anim.removedOnCompletion = NO;</code></li>
+<li>(2)动画永远保持最新的状态<br><code>anim.fillMode = kCAFillModeForwards;</code></li>
+</ul>
+</li>
+<li>6.添加核心动画<br><code>[_reaView.layer addAnimation:anim forKey:nil];</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="CAKeyframeAnimation——关键帧动画"><a href="#CAKeyframeAnimation——关键帧动画" class="headerlink" title="CAKeyframeAnimation——关键帧动画"></a>CAKeyframeAnimation——关键帧动画</h3><ul>
+<li>简介<ul>
+<li>关键帧动画，也是<code>CAPropertyAnimation</code>的子类，</li>
+<li>与<code>CABasicAnimation</code>的区别是：<ul>
+<li><code>CABasicAnimation</code>只能从一个数值（<code>fromValue</code>）变到另一个数值（<code>toValue</code>），而<code>CAKeyframeAnimation</code>会使用一个<code>NSArray</code>保存这些数值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>属性说明：</p>
+<ul>
+<li><code>values</code>：上述的NSArray对象。里面的元素称为“关键帧”(keyframe)。动画对象会在指定的时间（duration）内，依次显示values数组中的每一个关键帧</li>
+<li><code>path</code>：可以设置一个CGPathRef、CGMutablePathRef，让图层按照路径轨迹移动。path只对CALayer的anchorPoint和position起作用。<code>如果设置了path，那么values将被忽略</code></li>
+<li><code>keyTimes</code>：可以为对应的关键帧指定对应的时间点，其取值范围为0到1.0，keyTimes中的每一个时间值都对应values中的每一帧。<code>如果没有设置keyTimes，各个关键帧的时间是平分的</code></li>
+</ul>
+</li>
+<li><p><code>CABasicAnimation</code>可看做是只有2个关键帧的<code>CAKeyframeAnimation</code></p>
+</li>
+<li><p>代码实现思路与步骤：</p>
+<ul>
+<li>1.初始化帧动画<br>  <code>CAKeyframeAnimation *anim = [CAKeyframeAnimation animation];</code></li>
+<li>2.描述修改layer的属性,<ul>
+<li>transform.rotation只能二维旋转<br>  <code>anim.keyPath = @&quot;transform.rotation&quot;;</code></li>
+<li>position<br>  <code>anim.keyPath = @&quot;position&quot;;</code></li>
+</ul>
+</li>
+<li>3.修改Layer值<ul>
+<li><code>anim.values = @[@(angle2Radion(-5)),@(angle2Radion(5)),@(angle2Radion(-5))];</code></li>
+<li>创建路径<br><code>UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:_imageView.center radius:100 startAngle:0 endAngle:M_PI * 2 clockwise:YES];</code></li>
+</ul>
+</li>
+<li>4.设置动画的属性值<ul>
+<li>设置动画执行时间<br><code>anim.duration = 2;</code></li>
+<li>动画执行次数<br><code>anim.repeatCount = MAXFLOAT;</code></li>
+</ul>
+</li>
+<li>5.添加动画到图层（Layer）<br><code>[_imageView.layer addAnimation:anim forKey:nil];</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="CAAnimationGroup——动画组"><a href="#CAAnimationGroup——动画组" class="headerlink" title="CAAnimationGroup——动画组"></a>CAAnimationGroup——动画组</h3><ul>
+<li><p>简介</p>
+<ul>
+<li>动画组，是<code>CAAnimation</code>的子类，可以保存一组动画对象，<code>将CAAnimationGroup</code>对象加入层后，组中所有动画对象可以<code>同时并发运行</code></li>
+</ul>
+</li>
+<li><p>属性说明：</p>
+<ul>
+<li><code>animations</code>：用来保存一组动画对象的NSArray<br>默认情况下，一组动画对象是同时运行的，也可以通过设置动画对象的<code>beginTime</code>属性来更改动画的开始时间</li>
+</ul>
+</li>
+</ul>
+<h3 id="CATransition——转场动画"><a href="#CATransition——转场动画" class="headerlink" title="CATransition——转场动画"></a>CATransition——转场动画</h3><ul>
+<li>简介:<ul>
+<li><code>CATransition</code>是<code>CAAnimation</code>的子类，用于做转场动画，能够为层提供移出屏幕和移入屏幕的动画效果。iOS比Mac OS X的转场动画效果少一点</li>
+</ul>
+</li>
+<li><code>UINavigationController</code>就是通过`CATransition实现将控制器的视图推入(puch)屏幕的动画效果</li>
+<li>动画属性:<ul>
+<li><code>type</code>：动画过渡类型</li>
+<li><code>subtype</code>：动画过渡方向</li>
+<li><code>startProgress</code>：动画起点(在整体动画的百分比)</li>
+<li><code>endProgress</code>：动画终点(在整体动画的百分比)</li>
+</ul>
+</li>
+<li><p>代码实现思路与步骤：</p>
+<ul>
+<li><code>注意点</code>：<ul>
+<li>只要切换界面 都可以使用转场动画</li>
+<li>谁切换界面 就添加到谁上</li>
+<li>转场动画代码必须和界面切换的代码放在一起</li>
+</ul>
+</li>
+<li><p>1.写界面切换的代码（切换界面）</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置在touchBegin方法中</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">2</span>;</div><div class="line"><span class="built_in">NSString</span> *imageName = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%d"</span>,i];</div><div class="line">_imageView.image = [<span class="built_in">UIImage</span> imageNamed:imageName];</div><div class="line">i++;`</div></pre></td></tr></table></figure>
+</li>
+<li><p>2.初始化转场动画<br><code>CATransition *anim = [CATransition animation];</code></p>
+</li>
+<li>3.指定转场类型(其他样式见过度效果)<br><code>anim.type = @&quot;pageCurl&quot;;</code></li>
+<li>4.设置转场动画属性<ul>
+<li>(1)设置动画开始的进度<br><code>anim.startProgress = 0.5;</code></li>
+<li>(2)设置动画结束的进度<br><code>anim.endProgress = 0.8;</code></li>
+<li>(3)设置动画的时间<br><code>anim.duration = 3;</code></li>
+</ul>
+</li>
+<li>5.添加转场动画到图层<br><code>[_imageView.layer addAnimation:anim forKey:nil];</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="转场动画过渡效果"><a href="#转场动画过渡效果" class="headerlink" title="转场动画过渡效果"></a>转场动画过渡效果</h4><h3 id="CADisplayLink定时器"><a href="#CADisplayLink定时器" class="headerlink" title="CADisplayLink定时器"></a>CADisplayLink定时器</h3><ul>
+<li><code>CADisplayLink</code>是一种以屏幕刷新频率触发的时钟机制，每秒钟执行大约60次左右，可以暂停<code>CADisplayLink</code>定时器</li>
+<li><code>CADisplayLink</code>是一个计时器，可以使绘图代码与视图的刷新频率保持同步，而<code>NSTimer</code>无法确保计时器实际被触发的准确时间，无法暂停</li>
+<li><p>使用方法：</p>
+<ul>
+<li>定义<code>CADisplayLink</code>并制定触发调用方法</li>
+<li>将显示链接添加到主运行循环队列</li>
+</ul>
+</li>
+<li><p>代码实现步骤：</p>
+<ul>
+<li>1.由于定时器只需要创建一次，因此定义为成员属性<br><code>@property (nonatomic, weak) CADisplayLink *link;</code></li>
+<li><p>2.使用懒加载link属性</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (<span class="built_in">CADisplayLink</span> *)link</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (_link == <span class="literal">nil</span>) &#123;</div><div class="line"></div><div class="line">        <span class="comment">//(1)定义CADisplayLink并制定触发调用方法</span></div><div class="line">        <span class="built_in">CADisplayLink</span> *link = [<span class="built_in">CADisplayLink</span> displayLinkWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(timeChange)];</div><div class="line"></div><div class="line">        _link = link;</div><div class="line"></div><div class="line">        <span class="comment">//(2)加到主运行循环队列</span></div><div class="line">        [_link addToRunLoop:[<span class="built_in">NSRunLoop</span> mainRunLoop] forMode:<span class="built_in">NSDefaultRunLoopMode</span>];</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _link;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>3.实现触发调用方法</p>
+  <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1秒调用60次 每次旋转45 / 60.0度</span></div><div class="line">- (<span class="keyword">void</span>)timeChange</div><div class="line">&#123;</div><div class="line">    _wheelView.transform = <span class="built_in">CGAffineTransformRotate</span>(_wheelView.transform, (<span class="number">45</span> / <span class="number">60.0</span>) / <span class="number">180.0</span> * M_PI);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>4.开启定时器<br><code>self.link.paused = NO;</code>(YES为暂停)</p>
+</li>
+</ul>
+</li>
+<li>附：<a href="https://github.com/CYXiang/CYXCoreAnimationTest" target="_blank" rel="external">(github)示例Demo地址，希望点个⭐️Star。thx☺</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS动画/" rel="tag"># iOS动画</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/23/iOS底层-KVC使用实践以及实现原理/" rel="next" title="iOS底层-KVC使用实践以及实现原理">
+                <i class="fa fa-chevron-left"></i> iOS底层-KVC使用实践以及实现原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/27/iOS重构-轻量级的网络请求封装实践/" rel="prev" title="iOS重构-轻量级的网络请求封装实践">
+                iOS重构-轻量级的网络请求封装实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/03/28/iOS动画-Core Animation实现思路全解<附示例Demo>(OC)/"
+           data-title="iOS动画-Core Animation实现思路全解<附示例Demo>(OC)" data-url="http://yoursite.com/2016/03/28/iOS动画-Core Animation实现思路全解<附示例Demo>(OC)/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#CABasicAnimation-基本动画"><span class="nav-number">1.</span> <span class="nav-text">CABasicAnimation 基本动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAKeyframeAnimation——关键帧动画"><span class="nav-number">2.</span> <span class="nav-text">CAKeyframeAnimation——关键帧动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CAAnimationGroup——动画组"><span class="nav-number">3.</span> <span class="nav-text">CAAnimationGroup——动画组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CATransition——转场动画"><span class="nav-number">4.</span> <span class="nav-text">CATransition——转场动画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#转场动画过渡效果"><span class="nav-number">4.1.</span> <span class="nav-text">转场动画过渡效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CADisplayLink定时器"><span class="nav-number">5.</span> <span class="nav-text">CADisplayLink定时器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>

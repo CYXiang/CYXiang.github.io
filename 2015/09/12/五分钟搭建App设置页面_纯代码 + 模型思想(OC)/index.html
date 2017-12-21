@@ -1,0 +1,1016 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="十分钟入门iOS系列," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本节主题（Storyboard/模型思想搭建设置页面）
+源码地址在文章末尾
+设置（Setting）页面的搭建(实现效果)
+注：本文部分图标及效果图来自[IT江湖] https://github.com/itjhDev/itjh
+
+
+
+
+
+开发方式（这里提供两种，个人感觉第二种重用性较高，推荐使用。但第一种较为简单，视开发需求选择）
+（1）纯代码 + StoryBoard混合 开发
+（2）纯代码 +">
+<meta property="og:type" content="article">
+<meta property="og:title" content="五分钟搭建App设置页面_纯代码 + 模型思想(OC)">
+<meta property="og:url" content="http://yoursite.com/2015/09/12/五分钟搭建App设置页面_纯代码 + 模型思想(OC)/index.html">
+<meta property="og:site_name" content="Coder_CYX's Blog">
+<meta property="og:description" content="本节主题（Storyboard/模型思想搭建设置页面）
+源码地址在文章末尾
+设置（Setting）页面的搭建(实现效果)
+注：本文部分图标及效果图来自[IT江湖] https://github.com/itjhDev/itjh
+
+
+
+
+
+开发方式（这里提供两种，个人感觉第二种重用性较高，推荐使用。但第一种较为简单，视开发需求选择）
+（1）纯代码 + StoryBoard混合 开发
+（2）纯代码 +">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-43d01550469c7374.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-4b24d77d6e709d21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-28941943a758f78d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-010fc50548add10a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-1ec12c76427ceb3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-2d93aceb4060a427.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-83924e8a04e97d05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-9d7c6969381a6e4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/620754-dd25e8468c669a36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-21T14:46:18.639Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="五分钟搭建App设置页面_纯代码 + 模型思想(OC)">
+<meta name="twitter:description" content="本节主题（Storyboard/模型思想搭建设置页面）
+源码地址在文章末尾
+设置（Setting）页面的搭建(实现效果)
+注：本文部分图标及效果图来自[IT江湖] https://github.com/itjhDev/itjh
+
+
+
+
+
+开发方式（这里提供两种，个人感觉第二种重用性较高，推荐使用。但第一种较为简单，视开发需求选择）
+（1）纯代码 + StoryBoard混合 开发
+（2）纯代码 +">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/620754-43d01550469c7374.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/09/12/五分钟搭建App设置页面_纯代码 + 模型思想(OC)/"/>
+
+
+
+
+
+  <title> 五分钟搭建App设置页面_纯代码 + 模型思想(OC) | Coder_CYX's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0ae46f6df8401d63164370254be0d515";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coder_CYX's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">iOS开发者/</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/09/12/五分钟搭建App设置页面_纯代码 + 模型思想(OC)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_燕翔">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/BB45C944DA662C733AC6B97C3D251613.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder_CYX's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                五分钟搭建App设置页面_纯代码 + 模型思想(OC)
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-09-12T13:18:34+08:00">
+                2015-09-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/09/12/五分钟搭建App设置页面_纯代码 + 模型思想(OC)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/12/五分钟搭建App设置页面_纯代码 + 模型思想(OC)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="本节主题（Storyboard-模型思想搭建设置页面）"><a href="#本节主题（Storyboard-模型思想搭建设置页面）" class="headerlink" title="本节主题（Storyboard/模型思想搭建设置页面）"></a>本节主题（Storyboard/模型思想搭建设置页面）</h3><ul>
+<li>源码地址在文章末尾</li>
+<li>设置（Setting）页面的搭建(实现效果)<br><img src="http://upload-images.jianshu.io/upload_images/620754-43d01550469c7374.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="效果图"><ul>
+<li><code>注：本文部分图标及效果图来自[IT江湖] https://github.com/itjhDev/itjh</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>开发方式（这里提供两种，个人感觉第二种重用性较高，推荐使用。但第一种较为简单，视开发需求选择）<ul>
+<li>（1）纯代码 + StoryBoard混合 开发</li>
+<li>（2）纯代码 + 模型 思想</li>
+</ul>
+</li>
+<li>设置页面的搭建</li>
+<li>假设你已经搭建出了这个基本框架<br><a href="http://www.jianshu.com/p/fc71652f2f89" target="_blank" rel="external">《十分钟搭建App主流框架》</a><br>但这毕竟是个空壳，下面让我们把设置页面简单的搭建一下吧</li>
+<li>注：本文仅仅提供简略的搭建方式与实现思路，更加详细的功能需要读者深入探究。</li>
+</ul>
+<h4 id="方式一（纯代码-StoryBoard混合-开发）"><a href="#方式一（纯代码-StoryBoard混合-开发）" class="headerlink" title="方式一（纯代码 + StoryBoard混合 开发）"></a>方式一（纯代码 + StoryBoard混合 开发）</h4><ul>
+<li>第一步<ul>
+<li>新建StoryBoard文件，注意：命名与控制器相同</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-4b24d77d6e709d21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20150911_5.png"></p>
+<ul>
+<li>第二步<ul>
+<li>往StoryBoard一顿狂拖，你懂的<br><img src="http://upload-images.jianshu.io/upload_images/620754-28941943a758f78d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20150911_2.png"></li>
+<li>注意点：记得勾选第一个页面 <code>is Initial View Controller</code><br><img src="http://upload-images.jianshu.io/upload_images/620754-010fc50548add10a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20150911_13.png"></li>
+<li>设置TableViewCell的样式<br><img src="http://upload-images.jianshu.io/upload_images/620754-1ec12c76427ceb3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20150911_14.png"></li>
+</ul>
+</li>
+<li>第三步（回到CYXTabBarController.m文件）<ul>
+<li>这里只需要改第四个控制器的代码,由于是从Storyboard中加载的控制器，与前三个不同。</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-2d93aceb4060a427.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20150911_15.png"></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> *  添加所有子控制器</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)setUpAllChildViewController&#123;</div><div class="line">    <span class="comment">// 1.添加第一个控制器</span></div><div class="line">    CYXOneViewController *oneVC = [[CYXOneViewController alloc]init];</div><div class="line">    [<span class="keyword">self</span> setUpOneChildViewController:oneVC image:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"tab_home_icon"</span>] title:<span class="string">@"首页"</span>];</div><div class="line"></div><div class="line">    <span class="comment">// 2.添加第2个控制器</span></div><div class="line">    CYXTwoViewController *twoVC = [[CYXTwoViewController alloc]init];</div><div class="line">    [<span class="keyword">self</span> setUpOneChildViewController:twoVC image:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"js"</span>] title:<span class="string">@"技术"</span>];</div><div class="line"></div><div class="line">    <span class="comment">// 3.添加第3个控制器</span></div><div class="line">    CYXThreeViewController *threeVC = [[CYXThreeViewController alloc]init];</div><div class="line">    [<span class="keyword">self</span> setUpOneChildViewController:threeVC image:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"qw"</span>] title:<span class="string">@"博文"</span>];</div><div class="line"></div><div class="line">    <span class="comment">// 4.添加第4个控制器</span></div><div class="line">    <span class="comment">// 4.1 初始化并从Storyboard中加载控制器</span></div><div class="line">    <span class="built_in">UIStoryboard</span> *storyBoard = [<span class="built_in">UIStoryboard</span> storyboardWithName:<span class="string">@"CYXFourViewController"</span> bundle:<span class="literal">nil</span>];</div><div class="line">    </div><div class="line">    <span class="comment">// 4.2 关联storyBoard与CYXFourViewController</span></div><div class="line">    CYXFourViewController *fourVC = [storyBoard instantiateInitialViewController];</div><div class="line"></div><div class="line">    [<span class="keyword">self</span> setUpOneChildViewController:fourVC image:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"user"</span>] title:<span class="string">@"设置"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>设置页面已经出来了</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-83924e8a04e97d05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20150912_18.png"></p>
+<h4 id="方式二（纯代码-模型-开发）"><a href="#方式二（纯代码-模型-开发）" class="headerlink" title="方式二（纯代码 + 模型 开发）"></a>方式二（纯代码 + 模型 开发）</h4><ul>
+<li>第一步 （新建模型文件）</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/620754-9d7c6969381a6e4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20150911_17.png"></p>
+<ul>
+<li><p>第二步 （模型的设计）</p>
+<ul>
+<li><p>组模型设计(CYXGroupitem.h)，分析每一组的所有元素：比如有头部标题，尾部标题，还有若干行Cell</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXGroupItem</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="comment">/** 头部标题 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> * headerTitle;</div><div class="line"><span class="comment">/** 尾部标题 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> * footerTitle;</div><div class="line"><span class="comment">/** 组中的行数组 */</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSArray</span> * items;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>行模型的设计(CYXSettingItem.h)，分析每一行的所有元素：比如只有标题</p>
+  <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXSettingItem</span> : <span class="title">NSObject</span></span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> * title;<span class="comment">/**&lt; 标题 */</span></div><div class="line">+ (<span class="keyword">instancetype</span>)itemWithtitle:(<span class="built_in">NSString</span> *)title;<span class="comment">/**&lt; 设置标题值 类方法 */</span></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>类方法的实现(CYXSettingItem.m)</p>
+  <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">instancetype</span>)itemWithtitle:(<span class="built_in">NSString</span> *)title&#123;</div><div class="line">CYXSettingItem *item = [[CYXSettingItem alloc]init];</div><div class="line">item.title = title;</div><div class="line"><span class="keyword">return</span> item;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>第三步 回到设置页面的控制器(CYXFourViewController.m)</p>
+<ul>
+<li>(1) 实现&lt; UITableViewDataSource &gt;协议的3个方法</li>
+<li>(2) 给对应的模型设置值</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"CYXFourViewController.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"CYXSettingItem.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"CYXGroupItem.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CYXFourViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSMutableArray</span> * groups;<span class="comment">/**&lt; 组数组 描述TableView有多少组 */</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CYXFourViewController</span></span></div><div class="line"><span class="comment">/** groups 数据懒加载*/</span></div><div class="line">- (<span class="built_in">NSMutableArray</span> *)groups</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (!_groups) &#123;</div><div class="line">        _groups = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> _groups;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)init&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 设置tableView的分组样式为Group样式</span></div><div class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> initWithStyle:<span class="built_in">UITableViewStyleGrouped</span>];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"></div><div class="line">    <span class="comment">//添加第1组模型</span></div><div class="line">    [<span class="keyword">self</span> setGroup1];</div><div class="line">    <span class="comment">//添加第2组模型</span></div><div class="line">    [<span class="keyword">self</span> setGroup2];</div><div class="line">    <span class="comment">//添加第3组模型</span></div><div class="line">    [<span class="keyword">self</span> setGroup3];</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setGroup1&#123;</div><div class="line">    <span class="comment">// 创建组模型</span></div><div class="line">    CYXGroupItem *group = [[CYXGroupItem alloc]init];</div><div class="line">    <span class="comment">// 创建行模型</span></div><div class="line">    CYXSettingItem *item = [CYXSettingItem itemWithtitle:<span class="string">@"我的账号"</span>];</div><div class="line">    CYXSettingItem *item1 = [CYXSettingItem itemWithtitle:<span class="string">@"我的收藏"</span>];</div><div class="line"></div><div class="line">    <span class="comment">// 保存行模型数组</span></div><div class="line">    group.items = @[item,item1];</div><div class="line">    <span class="comment">// 把组模型保存到groups数组</span></div><div class="line">    [<span class="keyword">self</span>.groups addObject:group];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setGroup2&#123;</div><div class="line"></div><div class="line">    CYXGroupItem *group = [[CYXGroupItem alloc]init];</div><div class="line"></div><div class="line">    CYXSettingItem *item = [CYXSettingItem itemWithtitle:<span class="string">@"我去好评"</span>];</div><div class="line">    CYXSettingItem *item1 = [CYXSettingItem itemWithtitle:<span class="string">@"我去吐槽"</span>];</div><div class="line"></div><div class="line">    group.items = @[item,item1];</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.groups addObject:group];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)setGroup3&#123;</div><div class="line"></div><div class="line">    CYXGroupItem *group = [[CYXGroupItem alloc]init];</div><div class="line"></div><div class="line">    CYXSettingItem *item = [CYXSettingItem itemWithtitle:<span class="string">@"关注我们"</span>];</div><div class="line">    CYXSettingItem *item1 = [CYXSettingItem itemWithtitle:<span class="string">@"关于我们"</span>];</div><div class="line"></div><div class="line">    group.items = @[item,item1];</div><div class="line"></div><div class="line">    [<span class="keyword">self</span>.groups addObject:group];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - TableView的数据源代理方法实现</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> *  返回有多少组的代理方法</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSInteger</span>)numberOfSectionsInTableView:(<span class="built_in">UITableView</span> *)tableView &#123;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>.groups.count;</div><div class="line">&#125;</div><div class="line"><span class="comment">/**</span></div><div class="line"> *  返回每组有多少行的代理方法</div><div class="line"> */</div><div class="line">- (<span class="built_in">NSInteger</span>)tableView:(<span class="built_in">UITableView</span> *)tableView numberOfRowsInSection:(<span class="built_in">NSInteger</span>)section &#123;</div><div class="line"></div><div class="line">    CYXGroupItem *group = <span class="keyword">self</span>.groups[section];</div><div class="line">    <span class="keyword">return</span> group.items.count;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> *  返回每一行Cell的代理方法</div><div class="line"> */</div><div class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</div><div class="line"></div><div class="line">    <span class="comment">// 1 初始化Cell</span></div><div class="line">    <span class="comment">// 1.1 设置Cell的重用标识</span></div><div class="line">    <span class="keyword">static</span> <span class="built_in">NSString</span> *ID = <span class="string">@"cell"</span>;</div><div class="line">    <span class="comment">// 1.2 去缓存池中取Cell</span></div><div class="line">    <span class="built_in">UITableViewCell</span> *cell = [tableView dequeueReusableCellWithIdentifier:ID];</div><div class="line">    <span class="comment">// 1.3 若取不到便创建一个带重用标识的Cell</span></div><div class="line">    <span class="keyword">if</span> (cell == <span class="literal">nil</span>) &#123;</div><div class="line">        cell  = [[<span class="built_in">UITableViewCell</span> alloc]initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:ID];</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 设置Cell右边的小箭头</span></div><div class="line">    cell.accessoryType = <span class="built_in">UITableViewCellAccessoryDisclosureIndicator</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 2 设置数据</span></div><div class="line">    <span class="comment">// 2.1 取出组模型</span></div><div class="line">    CYXGroupItem *group = <span class="keyword">self</span>.groups[indexPath.section];</div><div class="line">    <span class="comment">// 2.2 根据组模型取出行（Cell）模型</span></div><div class="line">    CYXSettingItem *item = group.items[indexPath.row];</div><div class="line">    <span class="comment">// 2.3 根据行模型的数据赋值</span></div><div class="line">    cell.textLabel.text = item.title;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> cell;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<ul>
+<li><p>实现效果<br><img src="http://upload-images.jianshu.io/upload_images/620754-dd25e8468c669a36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Snip20150911_16.png"></p>
+</li>
+<li><p>如果你希望使用方式二实现点击Cell的跳转，需要实现下面的方法，并在里面调用navigationController的pushViewController方法跳转到你自定义的控制器。</p>
+  <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView didSelectRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath;</div></pre></td></tr></table></figure>
+</li>
+<li><p>看到这里，如果你是个iOS初学者，应该觉得方式2的实现过于繁琐，但方式2却是个一劳永逸的方式。换句话说，如果你用方式2封装了一个完整的设置页面的框架，在下一个项目中，再有类似的设置页面，你便可以直接把这个框架拷贝过去，改少量的代码便可以完美兼容，肯定比你再重新拖Storyboard要便捷，因此本人是比较推崇这种方式的。</p>
+</li>
+<li><p>附：<a href="https://github.com/CYXiang/CYXTenMinDemo" target="_blank" rel="external">源码github地址</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/十分钟入门iOS系列/" rel="tag"># 十分钟入门iOS系列</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/04/十分钟搭建App主流框架_纯代码搭建(OC)/" rel="next" title="十分钟搭建App主流框架_纯代码搭建(OC)">
+                <i class="fa fa-chevron-left"></i> 十分钟搭建App主流框架_纯代码搭建(OC)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/16/十分钟搭建主流框架_简单的网络部分(OC)/" rel="prev" title="十分钟搭建主流框架_简单的网络部分(OC)">
+                十分钟搭建主流框架_简单的网络部分(OC) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/09/12/五分钟搭建App设置页面_纯代码 + 模型思想(OC)/"
+           data-title="五分钟搭建App设置页面_纯代码 + 模型思想(OC)" data-url="http://yoursite.com/2015/09/12/五分钟搭建App设置页面_纯代码 + 模型思想(OC)/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/BB45C944DA662C733AC6B97C3D251613.png"
+               alt="_燕翔" />
+          <p class="site-author-name" itemprop="name">_燕翔</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CYXiang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3124193877/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#本节主题（Storyboard-模型思想搭建设置页面）"><span class="nav-number">1.</span> <span class="nav-text">本节主题（Storyboard/模型思想搭建设置页面）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方式一（纯代码-StoryBoard混合-开发）"><span class="nav-number">1.1.</span> <span class="nav-text">方式一（纯代码 + StoryBoard混合 开发）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式二（纯代码-模型-开发）"><span class="nav-number">1.2.</span> <span class="nav-text">方式二（纯代码 + 模型 开发）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_燕翔</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chenyanxiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+  
+
+</body>
+</html>
